@@ -18,3 +18,10 @@ const kResultTextStyle = TextStyle(
   fontFamily: "PTSans",
   fontWeight: FontWeight.w100,
 );
+
+const kUnitTextStyle = TextStyle(
+  fontSize: 17,
+  fontWeight: FontWeight.w500,
+  fontFamily: 'Roboto',
+  color: kWhiteColorText,
+);

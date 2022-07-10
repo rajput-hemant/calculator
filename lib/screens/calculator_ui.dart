@@ -25,7 +25,7 @@ class _calculator_uiState extends State<calculator_ui> {
         actions: [
           IconButton(
               onPressed: () {
-                print('Press');
+                Navigator.pushNamed(context, 'unit_converter');
               },
               icon: const Icon(
                 Icons.view_carousel_outlined,
@@ -39,7 +39,14 @@ class _calculator_uiState extends State<calculator_ui> {
               return menu.map((String mychoice) {
                 return PopupMenuItem(
                   value: mychoice,
-                  child: Text(mychoice),
+                  child: Text(
+                    mychoice,
+                    style: const TextStyle(
+                      fontFamily: 'PTSans',
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1,
+                    ),
+                  ),
                 );
               }).toList();
             },

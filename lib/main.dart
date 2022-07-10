@@ -1,4 +1,5 @@
 import 'package:calculator/screens/calculator_ui.dart';
+import 'package:calculator/screens/unit_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,8 +17,10 @@ class MyApp extends StatelessWidget {
       home: calculator_ui(),
       theme: ThemeData.dark().copyWith(
         appBarTheme: const AppBarTheme(color: Color(0xFF060606)),
-        primaryColor: const Color(0xFF060606),
       ),
+      routes: {
+        'unit_converter': ((context) => UnitConverter()),
+      },
     );
   }
 }
