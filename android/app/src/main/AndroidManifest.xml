@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jovac.calculator">
+    package="com.example.calculator">
    <application
-        android:label="Calculator"
+        android:label="calculator"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
