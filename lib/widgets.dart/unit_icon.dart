@@ -14,11 +14,11 @@ class UnitIcon extends StatelessWidget {
       children: [
         Icon(
           iconname,
-          size: 35,
+          size: 27,
           color: kWhiteColorText,
         ),
         const SizedBox(
-          height: 15,
+          height: 20,
         ),
         Text(
           textdata,

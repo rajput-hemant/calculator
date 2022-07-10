@@ -20,7 +20,7 @@ const kResultTextStyle = TextStyle(
 );
 
 const kUnitTextStyle = TextStyle(
-  fontSize: 17,
+  fontSize: 14.5,
   fontWeight: FontWeight.w500,
   fontFamily: 'Roboto',
   color: kWhiteColorText,
