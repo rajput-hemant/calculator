@@ -29,6 +29,7 @@ class _RoundButtonState extends State<RoundButton> {
         depth: 0,
         color: const Color(0xFF171717),
         boxShape: widget.buttonBoxShape,
+        
       ),
       child: SizedBox(
         height: MediaQuery.of(context).size.height / 14,

@@ -2,6 +2,7 @@ import 'package:calculator/brain/calculator_brain.dart';
 import 'package:calculator/constants.dart';
 import 'package:calculator/widgets.dart/roundButton.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets.dart/utilityButton.dart';
 
@@ -25,11 +26,11 @@ class _calculator_uiState extends State<calculator_ui> {
         actions: [
           IconButton(
               onPressed: () {
-                print('Press');
+                Navigator.pushNamed(context, 'unit_converter');
               },
               icon: const Icon(
-                Icons.view_carousel_outlined,
-                size: 30,
+                FontAwesomeIcons.boxesStacked,
+                size: 20,
               )),
           PopupMenuButton(
             onSelected: (String? newitem) {
@@ -39,7 +40,14 @@ class _calculator_uiState extends State<calculator_ui> {
               return menu.map((String mychoice) {
                 return PopupMenuItem(
                   value: mychoice,
-                  child: Text(mychoice),
+                  child: Text(
+                    mychoice,
+                    style: const TextStyle(
+                      fontFamily: 'PTSans',
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1,
+                    ),
+                  ),
                 );
               }).toList();
             },
