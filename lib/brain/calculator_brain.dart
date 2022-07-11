@@ -24,7 +24,7 @@ class CalculatorBrain {
 
       if (_output.contains('-', 0)) {
         print('Already contains a minus');
-        _output = _output;
+        _output = _output.substring(1, _output.length);
         output = _output;
         resultOperationText = output;
       } else {
