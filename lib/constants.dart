@@ -19,9 +19,27 @@ const kResultTextStyle = TextStyle(
   fontWeight: FontWeight.w100,
 );
 
+const kConverterStyle = TextStyle(
+  color: kWhiteColorText,
+  fontSize: 50,
+  fontFamily: 'PTSans',
+);
+
 const kUnitTextStyle = TextStyle(
   fontSize: 14.5,
   fontWeight: FontWeight.w500,
   fontFamily: 'Roboto',
   color: kWhiteColorText,
 );
+
+const Length = [
+  'Millimetres',
+  'Centimetres',
+  'Metres',
+  'Kilometres',
+  'Inches',
+  'Feet',
+];
+
+
+

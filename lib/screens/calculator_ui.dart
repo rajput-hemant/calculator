@@ -1,10 +1,9 @@
 import 'package:calculator/brain/calculator_brain.dart';
 import 'package:calculator/constants.dart';
-import 'package:calculator/widgets.dart/roundButton.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../widgets.dart/utilityButton.dart';
+import '../widgets/roundButton.dart';
+import '../widgets/utilityButton.dart';
 
 class calculator_ui extends StatefulWidget {
   @override
