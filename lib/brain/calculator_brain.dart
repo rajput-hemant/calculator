@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class CalculatorBrain {
   String output = '0';
   String _output = '0';
@@ -23,7 +25,7 @@ class CalculatorBrain {
       isPressedPercentageButton = true;
 
       if (_output.contains('-', 0)) {
-        print('Already contains a minus');
+        log('Already contains a minus');
         _output = _output;
         output = _output;
         resultOperationText = output;
@@ -67,11 +69,11 @@ class CalculatorBrain {
       operator = buttonText;
       resultOperationText = operator;
       isPressedPercentageButton = false;
-      print(operator);
+      log(operator);
       _output = "";
     } else if (buttonText == '.') {
       if (_output.contains('.')) {
-        print('Already contains a decimal');
+        log('Already contains a decimal');
         _output = _output;
         output = _output;
         resultOperationText = output;
@@ -111,7 +113,7 @@ class CalculatorBrain {
       output = _output;
       resultOperationText = resultOperationText + buttonText;
     }
-    print(output);
+    log(output);
     return output;
   }
 }
