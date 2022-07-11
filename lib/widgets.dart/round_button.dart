@@ -1,19 +1,22 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-class RoundButton extends StatefulWidget {
-  const RoundButton(
-    @required this.buttonText,
-    this.colorText,
-    @required this.onPressed,
-    @required this.buttonBoxShape,
-    this.buttonWidth,
-  );
+import '../utils/constants.dart';
 
+class RoundButton extends StatefulWidget {
   final String buttonText;
   final Color colorText;
   final VoidCallback onPressed;
   final NeumorphicBoxShape buttonBoxShape;
   final double buttonWidth;
+
+  const RoundButton({
+    Key? key,
+    required this.buttonText,
+    required this.onPressed,
+    this.buttonWidth = 8,
+    this.colorText = kWhiteColorText,
+    this.buttonBoxShape = const NeumorphicBoxShape.circle(),
+  }) : super(key: key);
 
   @override
   State<RoundButton> createState() => _RoundButtonState();

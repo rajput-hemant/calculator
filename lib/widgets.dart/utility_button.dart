@@ -1,14 +1,8 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-class utilityButton extends StatefulWidget {
-  const utilityButton(
-      @required this.buttonText,
-      this.colorText,
-      @required this.onPressed,
-      @required this.buttonBoxShape,
-      this.buttonWidth,
-      @required this.buttonColor);
+import '../utils/constants.dart';
 
+class UtilityButton extends StatefulWidget {
   final String buttonText;
   final Color colorText;
   final VoidCallback onPressed;
@@ -16,11 +10,21 @@ class utilityButton extends StatefulWidget {
   final double buttonWidth;
   final Color buttonColor;
 
+  const UtilityButton({
+    Key? key,
+    required this.buttonText,
+    required this.onPressed,
+    this.buttonWidth = 12,
+    this.buttonColor = kEqualColor,
+    this.colorText = kWhiteColorText,
+    this.buttonBoxShape = const NeumorphicBoxShape.circle(),
+  }) : super(key: key);
+
   @override
-  State<utilityButton> createState() => _utilityButtonState();
+  State<UtilityButton> createState() => _UtilityButtonState();
 }
 
-class _utilityButtonState extends State<utilityButton> {
+class _UtilityButtonState extends State<UtilityButton> {
   @override
   Widget build(BuildContext context) {
     return NeumorphicButton(

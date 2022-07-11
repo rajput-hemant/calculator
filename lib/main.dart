@@ -1,6 +1,7 @@
-import 'package:calculator/screens/calculator_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'screens/calculator_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -13,11 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Calculator',
-      home: calculator_ui(),
       theme: ThemeData.dark().copyWith(
         appBarTheme: const AppBarTheme(color: Color(0xFF060606)),
         primaryColor: const Color(0xFF060606),
       ),
+      home: const CalculatorScreen(),
     );
   }
 }
