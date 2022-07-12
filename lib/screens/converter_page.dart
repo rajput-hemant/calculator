@@ -6,6 +6,7 @@ import '../widgets/utilityButton.dart';
 
 class ConverterPage extends StatefulWidget {
   final List<String> unit = Length;
+  int? input;
   @override
   State<ConverterPage> createState() => _ConverterPageState();
 }
@@ -30,7 +31,7 @@ class _ConverterPageState extends State<ConverterPage> {
           const SizedBox(
             height: 30,
           ),
-          UnitDropdown(widget.unit[0], widget.unit),
+          UnitDropdown(widget.unit[1], widget.unit),
           const SizedBox(
             height: 30,
           ),
@@ -41,7 +42,7 @@ class _ConverterPageState extends State<ConverterPage> {
             endIndent: 20,
             height: 10,
           ),
-          UnitDropdown(widget.unit[1], widget.unit),
+          UnitDropdown(widget.unit[4], widget.unit),
           const SizedBox(
             height: 30,
           ),

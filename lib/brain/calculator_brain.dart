@@ -21,9 +21,11 @@ class CalculatorBrain {
       return output;
     } else if (buttonText == '+/-') {
       isPressedPercentageButton = true;
-
-      if (_output.contains('-', 0)) {
-        print('Already contains a minus');
+      if (_output == '0') {
+        _output = '-';
+        output = _output;
+        resultOperationText = output;
+      } else if (_output.contains('-', 0)) {
         _output = _output.substring(1, _output.length);
         output = _output;
         resultOperationText = output;
@@ -36,9 +38,9 @@ class CalculatorBrain {
     } else if (buttonText == '%') {
       if (isPressedPercentageButton) {
         if (output.contains('.')) {
-          num1 = int.parse(output);
+          num1 = double.parse(output);
         } else {
-          num2 = int.parse(output);
+          num1 = int.parse(output);
         }
         _output = (num1 / 100).toString();
         output = _output;
@@ -71,7 +73,6 @@ class CalculatorBrain {
       _output = "";
     } else if (buttonText == '.') {
       if (_output.contains('.')) {
-        print('Already contains a decimal');
         _output = _output;
         output = _output;
         resultOperationText = output;
@@ -105,8 +106,10 @@ class CalculatorBrain {
       resultOperationText = '';
       _output = '';
     } else {
-      if (_output == '0') _output = '';
-      if (resultOperationText == '0') resultOperationText = '';
+      if (_output == '0' || _output == '0.0') _output = '';
+      if (resultOperationText == '0' || resultOperationText == '0.0') {
+        resultOperationText = '';
+      }
       _output = _output + buttonText;
       output = _output;
       resultOperationText = resultOperationText + buttonText;
