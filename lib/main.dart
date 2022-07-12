@@ -1,5 +1,5 @@
-import 'package:calculator/constants.dart';
-import 'package:calculator/screens/calculator_ui.dart';
+import 'package:calculator/utils/constants.dart';
+import 'package:calculator/screens/calculator_screen.dart';
 import 'package:calculator/screens/converter_page.dart';
 import 'package:calculator/screens/unit_converter.dart';
 import 'package:flutter/material.dart';

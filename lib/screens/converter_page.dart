@@ -1,4 +1,4 @@
-import 'package:calculator/constants.dart';
+import 'package:calculator/utils/constants.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import '../widgets/roundButton.dart';
 import '../widgets/unit_dropdown.dart';
@@ -6,12 +6,100 @@ import '../widgets/utilityButton.dart';
 
 class ConverterPage extends StatefulWidget {
   final List<String> unit = Length;
-  int? input;
+
   @override
   State<ConverterPage> createState() => _ConverterPageState();
 }
 
 class _ConverterPageState extends State<ConverterPage> {
+  late String setvalue1 = widget.unit[1];
+  late String setvalue2 = widget.unit[4];
+  String initout = '0';
+  String targetout = '0';
+  bool inputreversed = false;
+
+  void cmtoin() {
+    if (inputreversed) {
+      initout = (double.parse(targetout) * 2.54).toString();
+      if (initout.length > 7) {
+        initout = double.parse(initout).toStringAsFixed(7);
+      }
+      if (initout.length > 7) initout = initout.substring(0, 7);
+    } else {
+      targetout = (double.parse(initout) / 2.54).toString().substring(0, 6);
+      if (targetout.length > 7) {
+        targetout = double.parse(targetout).toStringAsFixed(7);
+      }
+      if (targetout.length > 7) targetout = targetout.substring(0, 7);
+    }
+  }
+
+  void numtap(String a) {
+    if (inputreversed) {
+      if (targetout == '0') {
+        targetout = a;
+      } else {
+        targetout += a;
+      }
+    } else {
+      if (initout == '0') {
+        initout = a;
+      } else {
+        initout += a;
+      }
+    }
+    cmtoin();
+    setState(() {});
+  }
+
+  void decimaltap() {
+    if (inputreversed) {
+      if (targetout == '') {
+        targetout = '0.';
+      } else if (targetout.contains('.')) {
+        null;
+      } else {
+        targetout += '.';
+      }
+    } else {
+      if (initout == '') {
+        initout = '0.';
+      } else if (initout.contains('.')) {
+        null;
+      } else {
+        initout += '.';
+      }
+    }
+    if (initout == '' || targetout == '') cleartap();
+    cmtoin();
+    setState(() {});
+  }
+
+  void backtap() {
+    if (inputreversed) {
+      if (targetout == '') {
+        null;
+      } else {
+        targetout = targetout.substring(0, targetout.length - 2);
+      }
+    } else {
+      if (initout == '') {
+        null;
+      } else {
+        initout = initout.substring(0, initout.length - 2);
+      }
+    }
+    cmtoin();
+    setState(() {});
+  }
+
+  void cleartap() {
+    targetout = '0';
+    initout = '0';
+    cmtoin();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +119,45 @@ class _ConverterPageState extends State<ConverterPage> {
           const SizedBox(
             height: 30,
           ),
-          UnitDropdown(widget.unit[1], widget.unit),
+          Row(
+            children: [
+              const SizedBox(
+                width: 20,
+              ),
+              const Spacer(
+                flex: 10,
+              ),
+              SelectableText(
+                initout,
+                style: kConverterStyle,
+                showCursor: true,
+              ),
+              const Spacer(
+                flex: 80,
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: DropdownButton(
+                  dropdownColor: const Color(0xFF060606),
+                  value: setvalue1,
+                  onChanged: (String? selected) {
+                    setState(() {
+                      setvalue1 = selected!;
+                    });
+                  },
+                  items: widget.unit.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ),
+              const Spacer(
+                flex: 10,
+              )
+            ],
+          ),
           const SizedBox(
             height: 30,
           ),
@@ -42,7 +168,45 @@ class _ConverterPageState extends State<ConverterPage> {
             endIndent: 20,
             height: 10,
           ),
-          UnitDropdown(widget.unit[4], widget.unit),
+          Row(
+            children: [
+              const SizedBox(
+                width: 20,
+              ),
+              const Spacer(
+                flex: 10,
+              ),
+              SelectableText(
+                targetout,
+                style: kConverterStyle,
+                showCursor: true,
+              ),
+              const Spacer(
+                flex: 80,
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: DropdownButton(
+                  dropdownColor: const Color(0xFF060606),
+                  value: setvalue2,
+                  onChanged: (String? selected) {
+                    setState(() {
+                      setvalue2 = selected!;
+                    });
+                  },
+                  items: widget.unit.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ),
+              const Spacer(
+                flex: 10,
+              )
+            ],
+          ),
           const SizedBox(
             height: 30,
           ),
@@ -65,7 +229,7 @@ class _ConverterPageState extends State<ConverterPage> {
                   '7',
                   kWhiteColorText,
                   () {
-                    setState(() {});
+                    numtap('7');
                   },
                   const NeumorphicBoxShape.circle(),
                   8,
@@ -74,7 +238,7 @@ class _ConverterPageState extends State<ConverterPage> {
                   '8',
                   kWhiteColorText,
                   () {
-                    setState(() {});
+                    numtap('8');
                   },
                   const NeumorphicBoxShape.circle(),
                   8,
@@ -83,7 +247,7 @@ class _ConverterPageState extends State<ConverterPage> {
                   '9',
                   kWhiteColorText,
                   () {
-                    setState(() {});
+                    numtap('9');
                   },
                   const NeumorphicBoxShape.circle(),
                   8,
@@ -113,7 +277,7 @@ class _ConverterPageState extends State<ConverterPage> {
                   '4',
                   kWhiteColorText,
                   () {
-                    setState(() {});
+                    numtap('4');
                   },
                   const NeumorphicBoxShape.circle(),
                   8,
@@ -122,7 +286,7 @@ class _ConverterPageState extends State<ConverterPage> {
                   '5',
                   kWhiteColorText,
                   () {
-                    setState(() {});
+                    numtap('5');
                   },
                   const NeumorphicBoxShape.circle(),
                   8,
@@ -131,7 +295,7 @@ class _ConverterPageState extends State<ConverterPage> {
                   '6',
                   kWhiteColorText,
                   () {
-                    setState(() {});
+                    numtap('6');
                   },
                   const NeumorphicBoxShape.circle(),
                   8,
@@ -161,7 +325,7 @@ class _ConverterPageState extends State<ConverterPage> {
                   '1',
                   kWhiteColorText,
                   () {
-                    setState(() {});
+                    numtap('1');
                   },
                   const NeumorphicBoxShape.circle(),
                   8,
@@ -170,7 +334,7 @@ class _ConverterPageState extends State<ConverterPage> {
                   '2',
                   kWhiteColorText,
                   () {
-                    setState(() {});
+                    numtap('2');
                   },
                   const NeumorphicBoxShape.circle(),
                   8,
@@ -179,19 +343,20 @@ class _ConverterPageState extends State<ConverterPage> {
                   '3',
                   kWhiteColorText,
                   () {
-                    setState(() {});
+                    numtap('3');
                   },
                   const NeumorphicBoxShape.circle(),
                   8,
                 ),
-                RoundButton(
-                  '',
+                utilityButton(
+                  '🗘',
                   kWhiteColorText,
                   () {
                     setState(() {});
                   },
                   const NeumorphicBoxShape.circle(),
                   12,
+                  kButtonColor,
                 ),
               ],
             ),
@@ -208,7 +373,7 @@ class _ConverterPageState extends State<ConverterPage> {
                   '00',
                   kWhiteColorText,
                   () {
-                    setState(() {});
+                    numtap('00');
                   },
                   const NeumorphicBoxShape.circle(),
                   8,
@@ -217,7 +382,7 @@ class _ConverterPageState extends State<ConverterPage> {
                   '0',
                   kWhiteColorText,
                   () {
-                    setState(() {});
+                    numtap('0');
                   },
                   const NeumorphicBoxShape.circle(),
                   8,
@@ -226,7 +391,7 @@ class _ConverterPageState extends State<ConverterPage> {
                   '.',
                   kWhiteColorText,
                   () {
-                    setState(() {});
+                    decimaltap();
                   },
                   const NeumorphicBoxShape.circle(),
                   8,

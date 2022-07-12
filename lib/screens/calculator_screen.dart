@@ -1,5 +1,5 @@
 import 'package:calculator/brain/calculator_brain.dart';
-import 'package:calculator/constants.dart';
+import 'package:calculator/utils/constants.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/roundButton.dart';
