@@ -1,12 +1,17 @@
-import 'dart:developer';
-
-import 'package:calculator/screens/exchange_rate_screen.dart';
-import 'package:calculator/screens/length_conversion_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'area_conversion_screen.dart';
+import 'exchange_rate_screen.dart';
+import 'length_conversion_screen.dart';
 import '../widgets/unit_box.dart';
 import '../widgets/unit_icon.dart';
+import 'power_conversion_screen.dart';
+import 'pressure_conversion_screen.dart';
+import 'speed_conversion_screen.dart';
+import 'temperature_conversion_screen.dart';
+import 'volume_conversion_screen.dart';
+import 'weigth_conversion_screen.dart';
 
 class UnitConverterScreen extends StatelessWidget {
   static const routeName = '/unit-converter';
@@ -19,11 +24,7 @@ class UnitConverterScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           "Unit converter",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 22,
-            fontFamily: 'Roboto',
-          ),
+          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
         ),
       ),
       body: SafeArea(
@@ -37,69 +38,72 @@ class UnitConverterScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 UnitBox(
-                    icondata:
-                        const UnitIcon(FontAwesomeIcons.globe, 'Currency'),
-                    iconfunction: () {
-                      Navigator.pushNamed(
-                          context, ExchangeRateScreen.routeName);
-                    }),
+                  icondata: const UnitIcon(
+                      iconName: FontAwesomeIcons.globe, textData: 'Currency'),
+                  iconfunction: () => Navigator.pushNamed(
+                      context, ExchangeRateScreen.routeName),
+                ),
                 UnitBox(
-                    icondata: const UnitIcon(FontAwesomeIcons.ruler, 'Length'),
-                    iconfunction: () {
-                      Navigator.pushNamed(
-                          context, LengthConversionScreen.routeName);
-                    }),
+                  icondata: const UnitIcon(
+                      iconName: FontAwesomeIcons.ruler, textData: 'Length'),
+                  iconfunction: () => Navigator.pushNamed(
+                      context, LengthConversionScreen.routeName),
+                ),
                 UnitBox(
-                    icondata:
-                        const UnitIcon(FontAwesomeIcons.chartArea, 'Area'),
-                    iconfunction: () {
-                      log('Call');
-                    }),
+                  icondata: const UnitIcon(
+                      iconName: FontAwesomeIcons.chartArea, textData: 'Area'),
+                  iconfunction: () => Navigator.pushNamed(
+                      context, AreaConversionScreen.routeName),
+                ),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 UnitBox(
-                    icondata:
-                        const UnitIcon(FontAwesomeIcons.gaugeHigh, 'Speed'),
-                    iconfunction: () {
-                      log('Call');
-                    }),
+                  icondata: const UnitIcon(
+                      iconName: FontAwesomeIcons.gaugeHigh, textData: 'Speed'),
+                  iconfunction: () => Navigator.pushNamed(
+                      context, SpeedConversionScreen.routeName),
+                ),
                 UnitBox(
-                    icondata: const UnitIcon(
-                        FontAwesomeIcons.weightHanging, 'Weight'),
-                    iconfunction: () {
-                      log('Call');
-                    }),
+                  icondata: const UnitIcon(
+                      iconName: FontAwesomeIcons.weightHanging,
+                      textData: 'Weight'),
+                  iconfunction: () => Navigator.pushNamed(
+                      context, WeightConversionScreen.routeName),
+                ),
                 UnitBox(
-                    icondata: const UnitIcon(
-                        FontAwesomeIcons.temperatureThreeQuarters,
-                        'Temperature'),
-                    iconfunction: () {
-                      log('Call');
-                    }),
+                  icondata: const UnitIcon(
+                      iconName: FontAwesomeIcons.temperatureThreeQuarters,
+                      textData: 'Temperature'),
+                  iconfunction: () => Navigator.pushNamed(
+                      context, TemperatureConversionScreen.routeName),
+                ),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 UnitBox(
-                    icondata: const UnitIcon(FontAwesomeIcons.bolt, 'Power'),
-                    iconfunction: () {
-                      log('Call');
-                    }),
+                  icondata: const UnitIcon(
+                      iconName: FontAwesomeIcons.bolt, textData: 'Power'),
+                  iconfunction: () => Navigator.pushNamed(
+                      context, PowerConversionScreen.routeName),
+                ),
                 UnitBox(
-                    icondata: const UnitIcon(
-                        FontAwesomeIcons.gaugeSimple, 'Pressure'),
-                    iconfunction: () {
-                      log('Call');
-                    }),
+                  icondata: const UnitIcon(
+                      iconName: FontAwesomeIcons.gaugeSimple,
+                      textData: 'Pressure'),
+                  iconfunction: () => Navigator.pushNamed(
+                      context, PressureConversionScreen.routeName),
+                ),
                 UnitBox(
-                    icondata: const UnitIcon(FontAwesomeIcons.cube, 'Volume'),
-                    iconfunction: () {
-                      log('Call');
-                    }),
+                  icondata: const UnitIcon(
+                      iconName: FontAwesomeIcons.cube, textData: 'Volume'),
+                  iconfunction: () => Navigator.pushNamed(
+                      context, VolumeConversionScreen.routeName),
+                ),
               ],
             ),
           ],
