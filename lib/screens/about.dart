@@ -7,24 +7,29 @@ class About extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(0xFF060606),
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: const Color(0xFF060606),
           title: const Text(
-            "About",
-            style: TextStyle(color: Colors.white, fontSize: 24),
+            "About us",
+            style: TextStyle(
+                color: Colors.white, fontSize: 24, fontFamily: 'Roboto'),
           ),
         ),
         body: ListView(
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             Container(
               child: const Center(
                 child: Text(
                   "Calculator",
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
+                      fontSize: 35,
+                      fontWeight: FontWeight.w500,
                       backgroundColor: Colors.black12),
                 ),
               ),

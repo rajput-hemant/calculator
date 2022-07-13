@@ -110,14 +110,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       buttonText: 'C',
                       onPressed: () =>
                           setState(() => result = calc.buttonPressed('AC')),
-                      backgroundColor: const Color(0xFF43A749),
+                      backgroundColor: const Color(0xFFF2392E),
                       buttonWidth: 12,
                     ),
                     RoundButton(
                       buttonText: '⌫',
                       onPressed: () =>
                           setState(() => result = calc.buttonPressed('⌫')),
-                      backgroundColor: const Color(0xFFF2392E),
+                      backgroundColor: const Color(0xFF060606),
+                      colorText: const Color(0xFFF2392E),
                       buttonWidth: 12,
                     ),
                     RoundButton(
