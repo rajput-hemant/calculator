@@ -4,7 +4,7 @@ class Pressure {
 
   Pressure({required this.id, required this.name, required this.rate});
   //Basic Unit Hectopascal
-  var pressure = [
+  static var pressure = [
     Pressure(id: "hPa", name: "Hectopascal", rate: 1.0),
     Pressure(id: "atm", name: "Standard atmosphere", rate: 9.86923e-4),
     Pressure(id: "kPa", name: "Kilopascal", rate: 0.1),
