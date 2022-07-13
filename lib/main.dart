@@ -1,3 +1,4 @@
+import 'package:calculator/screens/area_conversion_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -33,6 +34,8 @@ class MyApp extends StatelessWidget {
         ExchangeRateScreen.routeName: (context) => const ExchangeRateScreen(),
         LengthConversionScreen.routeName: (context) =>
             const LengthConversionScreen(),
+        AreaConversionScreen.routeName: (context) =>
+            const AreaConversionScreen(),
         UnitConverter.routeName: (context) => const UnitConverter(),
         Settings.routeName: (context) => const Settings(),
         About.routename: ((context) => const About()),
