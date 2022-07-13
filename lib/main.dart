@@ -1,4 +1,10 @@
 import 'package:calculator/screens/area_conversion_screen.dart';
+import 'package:calculator/screens/power_conversion_screen.dart';
+import 'package:calculator/screens/pressure_conversion_screen.dart';
+import 'package:calculator/screens/speed_conversion_screen.dart';
+import 'package:calculator/screens/temperature_conversion_screen.dart';
+import 'package:calculator/screens/volume_conversion_screen.dart';
+import 'package:calculator/screens/weigth_conversion_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -36,6 +42,18 @@ class MyApp extends StatelessWidget {
             const LengthConversionScreen(),
         AreaConversionScreen.routeName: (context) =>
             const AreaConversionScreen(),
+        SpeedConversionScreen.routeName: (context) =>
+            const SpeedConversionScreen(),
+        WeightConversionScreen.routeName: (context) =>
+            const WeightConversionScreen(),
+        TemperatureConversionScreen.routeName: (context) =>
+            const TemperatureConversionScreen(),
+        PowerConversionScreen.routeName: (context) =>
+            const PowerConversionScreen(),
+        PressureConversionScreen.routeName: (context) =>
+            const PressureConversionScreen(),
+        VolumeConversionScreen.routeName: (context) =>
+            const VolumeConversionScreen(),
         UnitConverter.routeName: (context) => const UnitConverter(),
         Settings.routeName: (context) => const Settings(),
         About.routename: ((context) => const About()),
