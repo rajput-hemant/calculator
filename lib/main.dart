@@ -12,7 +12,7 @@ import 'screens/about.dart';
 import 'screens/calculator_screen.dart';
 import 'screens/exchange_rate_screen.dart';
 import 'screens/length_conversion_screen.dart';
-import 'screens/settings.dart';
+import 'screens/settings_screen.dart';
 import 'screens/unit_converter.dart';
 
 void main() {
@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
         VolumeConversionScreen.routeName: (context) =>
             const VolumeConversionScreen(),
         UnitConverter.routeName: (context) => const UnitConverter(),
-        Settings.routeName: (context) => const Settings(),
+        SettingsScreen.routeName: (context) => const SettingsScreen(),
         About.routename: ((context) => const About()),
       },
     );
