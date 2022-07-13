@@ -3,7 +3,7 @@ class Weight {
   double rate;
 
   Weight({required this.id, required this.name, required this.rate});
-
+  //Base Unit Kilogram
   static var weight = [
     Weight(id: 'kg', name: 'Kilogram', rate: 1.0),
     Weight(id: 'g', name: 'Gram', rate: 1000.0),

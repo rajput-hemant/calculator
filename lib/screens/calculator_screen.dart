@@ -1,4 +1,4 @@
-import 'package:calculator/screens/unit_converter.dart';
+import 'package:calculator/screens/unit_converter_screen.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -28,7 +28,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, UnitConverter.routeName);
+                Navigator.pushNamed(context, UnitConverterScreen.routeName);
               },
               icon: const Icon(
                 FontAwesomeIcons.boxesStacked,
