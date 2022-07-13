@@ -121,6 +121,14 @@ class _LengthConversionScreenState extends State<LengthConversionScreen> {
     required int to,
     required double amount,
   }) {
+    var result = (amount / _lengthList[from].rate) * _lengthList[to].rate;
+    setState(() {
+      if (_isFirstField) {
+        _secondField = result.toStringAsFixed(2);
+      } else {
+        _firstField = result.toStringAsFixed(2);
+      }
+    });
   }
 
   void convertButton() {
