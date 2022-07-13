@@ -4,7 +4,7 @@ import '../utils/constants.dart';
 
 class RoundButton extends StatefulWidget {
   final String buttonText;
-  final Color colorText;
+  final Color colorText, backgroundColor;
   final VoidCallback onPressed;
   final NeumorphicBoxShape buttonBoxShape;
   final double buttonWidth;
@@ -16,6 +16,7 @@ class RoundButton extends StatefulWidget {
     this.buttonWidth = 8,
     this.colorText = kWhiteColorText,
     this.buttonBoxShape = const NeumorphicBoxShape.circle(),
+    this.backgroundColor = const Color(0xFF171717),
   }) : super(key: key);
 
   @override
@@ -30,7 +31,7 @@ class _RoundButtonState extends State<RoundButton> {
       style: NeumorphicStyle(
         shape: NeumorphicShape.flat,
         depth: 0,
-        color: const Color(0xFF171717),
+        color: widget.backgroundColor,
         boxShape: widget.buttonBoxShape,
       ),
       child: SizedBox(
