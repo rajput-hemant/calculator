@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/currency.dart';
 import '../utils/money_converter.dart';
-import '../widgets/currency_tile.dart';
+import '../widgets/bottom_sheet_tile.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad_builder.dart';
 
@@ -53,17 +53,22 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                 children: [
                   FieldListTile(
                     field: _firstField,
+                    fieldTitle:
+                        CurrenciesData.currenciesData[_firstFieldIndex].name,
                     index: _firstFieldIndex,
-                    currencyList: _currencyList,
+                    list: _currencyList,
                     bottomSheetHeader: "Select Currency",
-                    onTappingAmount: onTappingAmount,
+                    onTappingField: () {
+                      _isFirstField = true;
+                      _secondField = '0';
+                    },
                     child: ListView.builder(
                       itemCount: _currencyList.length,
                       itemBuilder: (context, i) {
-                        return CurrencyTile(
-                          currencyIndex: i,
-                          currencyList: _currencyList,
-                          onSelectingCurrency: () {
+                        return BottomSheetTile(
+                          index: i,
+                          list: _currencyList,
+                          onSelecting: () {
                             setState(() => _firstFieldIndex = i);
                             Navigator.pop(context);
                           },
@@ -77,17 +82,22 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                   ),
                   FieldListTile(
                     field: _secondField,
+                    fieldTitle:
+                        CurrenciesData.currenciesData[_secondFieldIndex].name,
                     index: _secondFieldIndex,
-                    currencyList: _currencyList,
+                    list: _currencyList,
                     bottomSheetHeader: "Select Currency",
-                    onTappingAmount: onTappingAmount,
+                    onTappingField: () {
+                      _isFirstField = false;
+                      _firstField = '0';
+                    },
                     child: ListView.builder(
                       itemCount: _currencyList.length,
                       itemBuilder: (context, i) {
-                        return CurrencyTile(
-                          currencyIndex: i,
-                          currencyList: _currencyList,
-                          onSelectingCurrency: () {
+                        return BottomSheetTile(
+                          index: i,
+                          list: _currencyList,
+                          onSelecting: () {
                             setState(() => _secondFieldIndex = i);
                             Navigator.pop(context);
                           },
@@ -123,11 +133,6 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
         ],
       ),
     );
-  }
-
-  void onTappingAmount() {
-    _isFirstField = true;
-    _firstField = '0';
   }
 
   void convertButton() {
