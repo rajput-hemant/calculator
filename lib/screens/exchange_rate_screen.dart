@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/currency.dart';
 import '../utils/money_converter.dart';
-import '../widgets/round_button.dart';
+import '../widgets/keypad_builder.dart';
 
 class ExchangeRateScreen extends StatefulWidget {
   static const routeName = '/exchange-rate';
@@ -19,12 +19,12 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
   dynamic _firstField = '0', _secondField = '0';
 
   void convert({
-    required String? from,
-    required String? to,
-    required double? amount,
+    required String from,
+    required String to,
+    required double amount,
   }) async {
     var result = await MoneyConverter.convert(
-        Currency(from!, amount: amount), Currency(to!));
+        Currency(from, amount: amount), Currency(to));
     setState(() {
       if (_isFirstField) {
         _secondField = result.toStringAsFixed(2);
@@ -211,207 +211,37 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
               ),
             ),
           ),
-          Expanded(
-            flex: 3,
-            child: Container(
-              color: Colors.black12,
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      RoundButton(
-                        buttonText: '7',
-                        onPressed: () => onPressed(strToConcate: "7"),
-                      ),
-                      RoundButton(
-                        buttonText: '8',
-                        onPressed: () => onPressed(strToConcate: "8"),
-                      ),
-                      RoundButton(
-                        buttonText: '9',
-                        onPressed: () => onPressed(strToConcate: "9"),
-                      ),
-                      RoundButton(
-                        buttonText: 'C',
-                        onPressed: () => setState(
-                          () {
-                            _firstField = '0';
-                            _secondField = '0';
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      RoundButton(
-                        buttonText: '4',
-                        onPressed: () => onPressed(strToConcate: "4"),
-                      ),
-                      RoundButton(
-                        buttonText: '5',
-                        onPressed: () => onPressed(strToConcate: "5"),
-                      ),
-                      RoundButton(
-                        buttonText: '6',
-                        onPressed: () => onPressed(strToConcate: "6"),
-                      ),
-                      RoundButton(
-                        buttonText: 'Del',
-                        onPressed: () => setState(() {
-                          if (_isFirstField) {
-                            if (_firstField.length == 1) {
-                              _firstField = '0';
-                              _secondField = '0';
-                            } else {
-                              _firstField = _firstField.substring(
-                                  0, _firstField.length - 1);
-                              convert(
-                                from: _currencyList[_firstFieldIndex].id,
-                                to: _currencyList[_secondFieldIndex].id,
-                                amount: double.parse(_firstField),
-                              );
-                            }
-                          } else {
-                            if (_secondField.length == 1) {
-                              _firstField = '0';
-                              _secondField = '0';
-                            } else {
-                              _secondField = _secondField.substring(
-                                  0, _secondField.length - 1);
-                              convert(
-                                from: _currencyList[_secondFieldIndex].id,
-                                to: _currencyList[_firstFieldIndex].id,
-                                amount: double.parse(_secondField),
-                              );
-                            }
-                          }
-                        }),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      RoundButton(
-                        buttonText: '1',
-                        onPressed: () => onPressed(strToConcate: "1"),
-                      ),
-                      RoundButton(
-                        buttonText: '2',
-                        onPressed: () => onPressed(strToConcate: "2"),
-                      ),
-                      RoundButton(
-                        buttonText: '3',
-                        onPressed: () => onPressed(strToConcate: "3"),
-                      ),
-                      RoundButton(
-                        buttonText: '',
-                        onPressed: () {},
-                        backgroundColor: Colors.black,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      RoundButton(
-                        buttonText: '00',
-                        onPressed: () => onPressed(strToConcate: "00"),
-                      ),
-                      RoundButton(
-                        buttonText: '0',
-                        onPressed: () => onPressed(strToConcate: "0"),
-                      ),
-                      RoundButton(
-                        buttonText: '.',
-                        onPressed: () {
-                          setState(() {
-                            if (_isFirstField &&
-                                !_firstField.toString().contains(".")) {
-                              _firstField =
-                                  double.parse(_firstField + '.').toString();
-                              convert(
-                                from: _currencyList[_firstFieldIndex].id,
-                                to: _currencyList[_secondFieldIndex].id,
-                                amount: double.parse(_firstField),
-                              );
-                            } else if (!_isFirstField &&
-                                !_secondField.toString().contains(".")) {
-                              _secondField =
-                                  double.parse(_secondField + '.').toString();
-                              convert(
-                                from: _currencyList[_secondFieldIndex].id,
-                                to: _currencyList[_firstFieldIndex].id,
-                                amount: double.parse(_secondField),
-                              );
-                            }
-                          });
-                        },
-                      ),
-                      RoundButton(
-                        buttonText: '',
-                        backgroundColor: Colors.black,
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+          KeyPad(
+            onPressed0: () => onPressed(strToConcate: "0"),
+            onPressed1: () => onPressed(strToConcate: "1"),
+            onPressed2: () => onPressed(strToConcate: "2"),
+            onPressed3: () => onPressed(strToConcate: "3"),
+            onPressed4: () => onPressed(strToConcate: "4"),
+            onPressed5: () => onPressed(strToConcate: "5"),
+            onPressed6: () => onPressed(strToConcate: "6"),
+            onPressed7: () => onPressed(strToConcate: "7"),
+            onPressed8: () => onPressed(strToConcate: "8"),
+            onPressed9: () => onPressed(strToConcate: "9"),
+            onPressed00: () => onPressed(strToConcate: "00"),
+            onPressedDot: () => onPressed(strToConcate: "."),
+            onPressedDel: deleteButton,
+            onPressedClear: clearButton,
+            onPressedConvert: convertButton,
           )
         ],
       ),
     );
   }
 
-  void onPressed({String? strToConcate}) {
+  void convertButton() {
     return setState(() {
       if (_isFirstField) {
-        if (_firstField == '0.0') {
-          _firstField = strToConcate!;
-        } else {
-          if (strToConcate == "00") {
-            _firstField = (int.parse(_firstField) * 100).toString();
-          } else if (strToConcate == '0') {
-            _firstField = (int.parse(_firstField) * 10).toString();
-          } else {
-            if (_firstField.toString().contains('.')) {
-              _firstField =
-                  (double.parse(_firstField + strToConcate!)).toString();
-            } else {
-              _firstField = (int.parse(_firstField + strToConcate!)).toString();
-            }
-          }
-        }
         convert(
           from: _currencyList[_firstFieldIndex].id,
           to: _currencyList[_secondFieldIndex].id,
           amount: double.parse(_firstField),
         );
       } else {
-        if (_secondField == '0.0') {
-          _secondField = strToConcate!;
-        } else {
-          if (strToConcate == "00") {
-            _secondField = (int.parse(_secondField) * 100).toString();
-          } else if (strToConcate == '0') {
-            _secondField = (int.parse(_secondField) * 10).toString();
-          } else {
-            if (_firstField.toString().contains('.')) {
-              _secondField =
-                  (double.parse(_secondField + strToConcate!)).toString();
-            } else {
-              _secondField =
-                  (int.parse(_secondField + strToConcate!)).toString();
-            }
-          }
-        }
         convert(
           from: _currencyList[_secondFieldIndex].id,
           to: _currencyList[_firstFieldIndex].id,
@@ -419,5 +249,88 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
         );
       }
     });
+  }
+
+  void decimalButton() {
+    return setState(() {
+      if (_isFirstField && !_firstField.toString().contains(".")) {
+        _firstField = double.parse(_firstField + '.').toString();
+      } else if (!_isFirstField && !_secondField.toString().contains(".")) {
+        _secondField = double.parse(_secondField + '.').toString();
+      }
+    });
+  }
+
+  void clearButton() {
+    return setState(
+      () {
+        _firstField = '0';
+        _secondField = '0';
+      },
+    );
+  }
+
+  void deleteButton() {
+    return setState(() {
+      if (_isFirstField) {
+        if (_firstField.length == 1) {
+          _firstField = '0';
+          _secondField = '0';
+        } else {
+          _firstField = _firstField.substring(0, _firstField.length - 1);
+        }
+      } else {
+        if (_secondField.length == 1) {
+          _firstField = '0';
+          _secondField = '0';
+        } else {
+          _secondField = _secondField.substring(0, _secondField.length - 1);
+        }
+      }
+    });
+  }
+
+  void onPressed({String? strToConcate}) {
+    return setState(
+      () {
+        if (_isFirstField) {
+          if (_firstField == '0.0') {
+            _firstField = strToConcate!;
+          } else {
+            if (strToConcate == "00") {
+              _firstField = (int.parse(_firstField) * 100).toString();
+            } else if (strToConcate == '0') {
+              _firstField = (int.parse(_firstField) * 10).toString();
+            } else {
+              if (_firstField.toString().contains('.')) {
+                _firstField =
+                    (double.parse(_firstField + strToConcate!)).toString();
+              } else {
+                _firstField =
+                    (int.parse(_firstField + strToConcate!)).toString();
+              }
+            }
+          }
+        } else {
+          if (_secondField == '0.0') {
+            _secondField = strToConcate!;
+          } else {
+            if (strToConcate == "00") {
+              _secondField = (int.parse(_secondField) * 100).toString();
+            } else if (strToConcate == '0') {
+              _secondField = (int.parse(_secondField) * 10).toString();
+            } else {
+              if (_firstField.toString().contains('.')) {
+                _secondField =
+                    (double.parse(_secondField + strToConcate!)).toString();
+              } else {
+                _secondField =
+                    (int.parse(_secondField + strToConcate!)).toString();
+              }
+            }
+          }
+        }
+      },
+    );
   }
 }
