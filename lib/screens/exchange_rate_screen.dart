@@ -36,7 +36,64 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                     title: GestureDetector(
                       child: Text(
                           CurrenciesData.currenciesData[_firstFieldIndex].name),
-                      onTap: () {},
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                            ),
+                          ),
+                          builder: (_) {
+                            return DraggableScrollableSheet(
+                              expand: false,
+                              maxChildSize: 0.95,
+                              initialChildSize: 0.9,
+                              builder: (context, scrollController) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text(
+                                        "Select Currency",
+                                        style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const Divider(),
+                                      Expanded(
+                                        child: ListView.builder(
+                                          scrollDirection: Axis.vertical,
+                                          shrinkWrap: true,
+                                          // controller: controller,
+                                          itemCount: _currencyList.length,
+                                          itemBuilder: (context, i) {
+                                            return ListTile(
+                                              title: GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    _firstFieldIndex = i;
+                                                  });
+                                                  Navigator.pop(context);
+                                                },
+                                                child:
+                                                    Text(_currencyList[i].name),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
                     ),
                     subtitle: Text(_currencyList[_firstFieldIndex].id),
                     trailing: InkWell(
@@ -58,7 +115,64 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                     title: GestureDetector(
                       child: Text(CurrenciesData
                           .currenciesData[_secondFieldIndex].name),
-                      onTap: () {},
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                            ),
+                          ),
+                          builder: (_) {
+                            return DraggableScrollableSheet(
+                              expand: false,
+                              maxChildSize: 0.95,
+                              initialChildSize: 0.9,
+                              builder: (context, scrollController) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text(
+                                        "Select Currency",
+                                        style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const Divider(),
+                                      Expanded(
+                                        child: ListView.builder(
+                                          scrollDirection: Axis.vertical,
+                                          shrinkWrap: true,
+                                          // controller: controller,
+                                          itemCount: _currencyList.length,
+                                          itemBuilder: (context, i) {
+                                            return ListTile(
+                                              title: GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    _secondFieldIndex = i;
+                                                  });
+                                                  Navigator.pop(context);
+                                                },
+                                                child:
+                                                    Text(_currencyList[i].name),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
                     ),
                     subtitle: Text(_currencyList[_secondFieldIndex].id),
                     trailing: InkWell(
