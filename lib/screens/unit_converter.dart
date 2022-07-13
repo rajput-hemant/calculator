@@ -9,6 +9,8 @@ import '../widgets/unit_icon.dart';
 
 class UnitConverter extends StatelessWidget {
   static const routeName = '/unit-converter';
+
+  const UnitConverter({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,50 +35,69 @@ class UnitConverter extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                UnitBox(const UnitIcon(FontAwesomeIcons.globe, 'Currency'), () {
-                  Navigator.pushNamed(context, ExchangeRateScreen.routeName);
-                }),
-                UnitBox(const UnitIcon(FontAwesomeIcons.ruler, 'Length'), () {
-                  log('Length');
-                }),
-                UnitBox(const UnitIcon(FontAwesomeIcons.chartArea, 'Area'), () {
-                  log('Call');
-                }),
+                UnitBox(
+                    icondata:
+                        const UnitIcon(FontAwesomeIcons.globe, 'Currency'),
+                    iconfunction: () {
+                      Navigator.pushNamed(
+                          context, ExchangeRateScreen.routeName);
+                    }),
+                UnitBox(
+                    icondata: const UnitIcon(FontAwesomeIcons.ruler, 'Length'),
+                    iconfunction: () {
+                      log('Length');
+                    }),
+                UnitBox(
+                    icondata:
+                        const UnitIcon(FontAwesomeIcons.chartArea, 'Area'),
+                    iconfunction: () {
+                      log('Call');
+                    }),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                UnitBox(const UnitIcon(FontAwesomeIcons.gaugeHigh, 'Speed'),
-                    () {
-                  log('Call');
-                }),
                 UnitBox(
-                    const UnitIcon(FontAwesomeIcons.weightHanging, 'Weight'),
-                    () {
-                  log('Call');
-                }),
+                    icondata:
+                        const UnitIcon(FontAwesomeIcons.gaugeHigh, 'Speed'),
+                    iconfunction: () {
+                      log('Call');
+                    }),
                 UnitBox(
-                    const UnitIcon(FontAwesomeIcons.temperatureThreeQuarters,
-                        'Temperature'), () {
-                  log('Call');
-                }),
+                    icondata: const UnitIcon(
+                        FontAwesomeIcons.weightHanging, 'Weight'),
+                    iconfunction: () {
+                      log('Call');
+                    }),
+                UnitBox(
+                    icondata: const UnitIcon(
+                        FontAwesomeIcons.temperatureThreeQuarters,
+                        'Temperature'),
+                    iconfunction: () {
+                      log('Call');
+                    }),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                UnitBox(const UnitIcon(FontAwesomeIcons.bolt, 'Power'), () {
-                  log('Call');
-                }),
                 UnitBox(
-                    const UnitIcon(FontAwesomeIcons.gaugeSimple, 'Pressure'),
-                    () {
-                  log('Call');
-                }),
-                UnitBox(const UnitIcon(FontAwesomeIcons.cube, 'Volume'), () {
-                  log('Call');
-                }),
+                    icondata: const UnitIcon(FontAwesomeIcons.bolt, 'Power'),
+                    iconfunction: () {
+                      log('Call');
+                    }),
+                UnitBox(
+                    icondata: const UnitIcon(
+                        FontAwesomeIcons.gaugeSimple, 'Pressure'),
+                    iconfunction: () {
+                      log('Call');
+                    }),
+                UnitBox(
+                    icondata: const UnitIcon(FontAwesomeIcons.cube, 'Volume'),
+                    iconfunction: () {
+                      log('Call');
+                    }),
               ],
             ),
           ],

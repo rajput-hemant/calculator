@@ -1,3 +1,4 @@
+import 'package:calculator/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'round_button.dart';
@@ -55,7 +56,12 @@ class KeyPad extends StatelessWidget {
                 RoundButton(buttonText: '7', onPressed: onPressed7),
                 RoundButton(buttonText: '8', onPressed: onPressed8),
                 RoundButton(buttonText: '9', onPressed: onPressed9),
-                RoundButton(buttonText: 'C', onPressed: onPressedClear),
+                RoundButton(
+                  buttonText: 'C',
+                  onPressed: onPressedClear,
+                  backgroundColor: kButtonColor,
+                  buttonWidth: 12,
+                ),
               ],
             ),
             Row(
@@ -64,7 +70,12 @@ class KeyPad extends StatelessWidget {
                 RoundButton(buttonText: '4', onPressed: onPressed4),
                 RoundButton(buttonText: '5', onPressed: onPressed5),
                 RoundButton(buttonText: '6', onPressed: onPressed6),
-                RoundButton(buttonText: 'Del', onPressed: onPressedDel),
+                RoundButton(
+                  buttonText: '⌫',
+                  onPressed: onPressedDel,
+                  backgroundColor: kButtonColor,
+                  buttonWidth: 12,
+                ),
               ],
             ),
             Row(
@@ -76,7 +87,8 @@ class KeyPad extends StatelessWidget {
                 RoundButton(
                   buttonText: '',
                   onPressed: () {},
-                  backgroundColor: Colors.black,
+                  backgroundColor: const Color(0xFF060606),
+                  buttonWidth: 12,
                 ),
               ],
             ),
@@ -94,6 +106,7 @@ class KeyPad extends StatelessWidget {
                   colorText: Colors.black,
                   backgroundColor: Colors.blue,
                   onPressed: onPressedConvert,
+                  buttonWidth: 12,
                 ),
               ],
             ),

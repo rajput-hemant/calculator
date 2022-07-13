@@ -1,3 +1,5 @@
+import 'package:calculator/screens/settings.dart';
+import 'package:calculator/screens/about.dart';
 import 'package:calculator/screens/unit_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,8 +30,9 @@ class MyApp extends StatelessWidget {
       home: const CalculatorScreen(),
       routes: {
         ExchangeRateScreen.routeName: (context) => const ExchangeRateScreen(),
-        UnitConverter.routeName:(context) => UnitConverter(),
-
+        UnitConverter.routeName: (context) => const UnitConverter(),
+        Settings.routeName: (context) => const Settings(),
+        About.routename: ((context) => const About()),
       },
     );
   }
