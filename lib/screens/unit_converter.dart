@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:calculator/screens/exchange_rate_screen.dart';
+import 'package:calculator/screens/length_conversion_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -45,7 +46,8 @@ class UnitConverter extends StatelessWidget {
                 UnitBox(
                     icondata: const UnitIcon(FontAwesomeIcons.ruler, 'Length'),
                     iconfunction: () {
-                      log('Length');
+                      Navigator.pushNamed(
+                          context, LengthConversionScreen.routeName);
                     }),
                 UnitBox(
                     icondata:
