@@ -27,7 +27,7 @@ class ScrollableSheet extends StatelessWidget {
                 ),
               ),
               const Divider(),
-              listViewBuilder,
+              Expanded(child: listViewBuilder),
             ],
           ),
         );
