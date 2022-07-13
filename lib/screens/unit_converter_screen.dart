@@ -8,10 +8,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/unit_box.dart';
 import '../widgets/unit_icon.dart';
 
-class UnitConverter extends StatelessWidget {
+class UnitConverterScreen extends StatelessWidget {
   static const routeName = '/unit-converter';
 
-  const UnitConverter({Key? key}) : super(key: key);
+  const UnitConverterScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
