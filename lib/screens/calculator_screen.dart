@@ -3,9 +3,10 @@ import 'dart:developer';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import '../brain/calculator_brain.dart';
+import 'exchange_rate_screen.dart';
 import '../utils/constants.dart';
-import '../widgets.dart/round_button.dart';
-import '../widgets.dart/utility_button.dart';
+import '../widgets/round_button.dart';
+import '../widgets/utility_button.dart';
 
 class CalculatorScreen extends StatefulWidget {
   const CalculatorScreen({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                log('Press');
+                Navigator.pushNamed(context, ExchangeRateScreen.routeName);
               },
               icon: const Icon(
                 Icons.view_carousel_outlined,
@@ -113,13 +114,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                             setState(() => result = calc.buttonPressed('AC'))),
                     RoundButton(
                       buttonText: '⌫',
-                      colorText: kWhiteColorText,
                       onPressed: () =>
                           setState(() => result = calc.buttonPressed('⌫')),
                     ),
                     RoundButton(
                       buttonText: '+/-',
-                      colorText: kWhiteColorText,
                       onPressed: () =>
                           setState(() => result = calc.buttonPressed('+/-')),
                     ),
@@ -141,13 +140,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                   children: <Widget>[
                     RoundButton(
                       buttonText: '7',
-                      colorText: kWhiteColorText,
                       onPressed: () =>
                           setState(() => result = calc.buttonPressed('7')),
                     ),
                     RoundButton(
                       buttonText: '8',
-                      colorText: kWhiteColorText,
                       onPressed: () =>
                           setState(() => result = calc.buttonPressed('8')),
                     ),
