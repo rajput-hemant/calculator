@@ -1,9 +1,10 @@
 import 'dart:developer';
 
+import 'package:calculator/screens/unit_converter.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../brain/calculator_brain.dart';
-import 'exchange_rate_screen.dart';
 import '../utils/constants.dart';
 import '../widgets/round_button.dart';
 import '../widgets/utility_button.dart';
@@ -30,11 +31,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, ExchangeRateScreen.routeName);
+                Navigator.pushNamed(context, UnitConverter.routeName);
               },
               icon: const Icon(
-                Icons.view_carousel_outlined,
-                size: 30,
+                FontAwesomeIcons.boxesStacked,
+                size: 20,
               )),
           PopupMenuButton(
             onSelected: (String? newitem) {
@@ -250,6 +251,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       buttonText: '=',
                       onPressed: () =>
                           setState(() => result = calc.buttonPressed('=')),
+                      buttonColor: kEqualColor,
                     ),
                   ],
                 ),

@@ -15,7 +15,7 @@ class UtilityButton extends StatefulWidget {
     required this.buttonText,
     required this.onPressed,
     this.buttonWidth = 12,
-    this.buttonColor = kEqualColor,
+    this.buttonColor = kButtonColor,
     this.colorText = kWhiteColorText,
     this.buttonBoxShape = const NeumorphicBoxShape.circle(),
   }) : super(key: key);
