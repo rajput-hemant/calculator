@@ -8,11 +8,11 @@ import 'package:calculator/screens/weigth_conversion_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'screens/about.dart';
+import 'screens/about_screen.dart';
 import 'screens/calculator_screen.dart';
 import 'screens/exchange_rate_screen.dart';
 import 'screens/length_conversion_screen.dart';
-import 'screens/settings.dart';
+import 'screens/settings_screen.dart';
 import 'screens/unit_converter.dart';
 
 void main() {
@@ -55,8 +55,8 @@ class MyApp extends StatelessWidget {
         VolumeConversionScreen.routeName: (context) =>
             const VolumeConversionScreen(),
         UnitConverter.routeName: (context) => const UnitConverter(),
-        Settings.routeName: (context) => const Settings(),
-        About.routename: ((context) => const About()),
+        SettingsScreen.routeName: (context) => const SettingsScreen(),
+        AboutScreen.routename: ((context) => const AboutScreen()),
       },
     );
   }
