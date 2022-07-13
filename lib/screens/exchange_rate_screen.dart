@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../models/currency.dart';
 import '../utils/money_converter.dart';
+import '../widgets/currency_tile.dart';
+import '../widgets/field_list_tile.dart';
 import '../widgets/keypad_builder.dart';
 
 class ExchangeRateScreen extends StatefulWidget {
@@ -49,158 +51,48 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
-                  ListTile(
-                    title: GestureDetector(
-                      child: Text(
-                          CurrenciesData.currenciesData[_firstFieldIndex].name),
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
-                            ),
-                          ),
-                          builder: (_) {
-                            return DraggableScrollableSheet(
-                              expand: false,
-                              maxChildSize: 0.95,
-                              initialChildSize: 0.9,
-                              builder: (context, scrollController) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Text(
-                                        "Select Currency",
-                                        style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      const Divider(),
-                                      Expanded(
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.vertical,
-                                          shrinkWrap: true,
-                                          // controller: controller,
-                                          itemCount: _currencyList.length,
-                                          itemBuilder: (context, i) {
-                                            return ListTile(
-                                              title: GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    _firstFieldIndex = i;
-                                                  });
-                                                  Navigator.pop(context);
-                                                },
-                                                child:
-                                                    Text(_currencyList[i].name),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
+                  FieldListTile(
+                    field: _firstField,
+                    index: _firstFieldIndex,
+                    currencyList: _currencyList,
+                    bottomSheetHeader: "Select Currency",
+                    onTappingAmount: onTappingAmount,
+                    child: ListView.builder(
+                      itemCount: _currencyList.length,
+                      itemBuilder: (context, i) {
+                        return CurrencyTile(
+                          currencyIndex: i,
+                          currencyList: _currencyList,
+                          onSelectingCurrency: () {
+                            setState(() => _firstFieldIndex = i);
+                            Navigator.pop(context);
                           },
                         );
                       },
-                    ),
-                    subtitle: Text(_currencyList[_firstFieldIndex].id),
-                    trailing: InkWell(
-                      onTap: () {
-                        _isFirstField = true;
-                        _firstField = '0';
-                      },
-                      child: Text(
-                        _firstField,
-                        style: const TextStyle(fontSize: 24),
-                      ),
                     ),
                   ),
                   const Divider(
                     height: 15,
                     color: Colors.grey,
                   ),
-                  ListTile(
-                    title: GestureDetector(
-                      child: Text(CurrenciesData
-                          .currenciesData[_secondFieldIndex].name),
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
-                            ),
-                          ),
-                          builder: (_) {
-                            return DraggableScrollableSheet(
-                              expand: false,
-                              maxChildSize: 0.95,
-                              initialChildSize: 0.9,
-                              builder: (context, scrollController) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Text(
-                                        "Select Currency",
-                                        style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      const Divider(),
-                                      Expanded(
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.vertical,
-                                          shrinkWrap: true,
-                                          // controller: controller,
-                                          itemCount: _currencyList.length,
-                                          itemBuilder: (context, i) {
-                                            return ListTile(
-                                              title: GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    _secondFieldIndex = i;
-                                                  });
-                                                  Navigator.pop(context);
-                                                },
-                                                child:
-                                                    Text(_currencyList[i].name),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
+                  FieldListTile(
+                    field: _secondField,
+                    index: _secondFieldIndex,
+                    currencyList: _currencyList,
+                    bottomSheetHeader: "Select Currency",
+                    onTappingAmount: onTappingAmount,
+                    child: ListView.builder(
+                      itemCount: _currencyList.length,
+                      itemBuilder: (context, i) {
+                        return CurrencyTile(
+                          currencyIndex: i,
+                          currencyList: _currencyList,
+                          onSelectingCurrency: () {
+                            setState(() => _secondFieldIndex = i);
+                            Navigator.pop(context);
                           },
                         );
                       },
-                    ),
-                    subtitle: Text(_currencyList[_secondFieldIndex].id),
-                    trailing: InkWell(
-                      onTap: () {
-                        _isFirstField = false;
-                        _secondField = '0';
-                      },
-                      child: Text(
-                        _secondField,
-                        style: const TextStyle(fontSize: 24),
-                      ),
                     ),
                   ),
                   const Divider(
@@ -231,6 +123,11 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
         ],
       ),
     );
+  }
+
+  void onTappingAmount() {
+    _isFirstField = true;
+    _firstField = '0';
   }
 
   void convertButton() {
