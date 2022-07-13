@@ -125,7 +125,7 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
             onPressed8: () => onPressed(strToConcate: "8"),
             onPressed9: () => onPressed(strToConcate: "9"),
             onPressed00: () => onPressed(strToConcate: "00"),
-            onPressedDot: () => onPressed(strToConcate: "."),
+            onPressedDot: () => decimalButton(),
             onPressedDel: deleteButton,
             onPressedClear: clearButton,
             onPressedConvert: convertButton,
@@ -156,9 +156,9 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
   void decimalButton() {
     return setState(() {
       if (_isFirstField && !_firstField.toString().contains(".")) {
-        _firstField = double.parse(_firstField + '.').toString();
+        _firstField += '.';
       } else if (!_isFirstField && !_secondField.toString().contains(".")) {
-        _secondField = double.parse(_secondField + '.').toString();
+        _secondField += '.';
       }
     });
   }
