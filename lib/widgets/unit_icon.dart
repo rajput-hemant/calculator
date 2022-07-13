@@ -2,10 +2,10 @@ import 'package:calculator/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class UnitIcon extends StatelessWidget {
-  const UnitIcon(this.iconname, this.textdata);
+  final String textData;
+  final IconData iconName;
 
-  final String textdata;
-  final IconData iconname;
+  const UnitIcon({super.key, required this.textData, required this.iconName});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class UnitIcon extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(
-          iconname,
+          iconName,
           size: 27,
           color: kWhiteColorText,
         ),
@@ -21,7 +21,7 @@ class UnitIcon extends StatelessWidget {
           height: 20,
         ),
         Text(
-          textdata,
+          textData,
           style: kUnitTextStyle,
         )
       ],
