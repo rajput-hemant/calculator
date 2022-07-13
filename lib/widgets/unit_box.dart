@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class UnitBox extends StatelessWidget {
-  const UnitBox(this.icondata, this.iconfunction);
 
   final Widget icondata;
   final VoidCallback iconfunction;
+
+  const UnitBox({Key? key, required this.icondata, required this.iconfunction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
