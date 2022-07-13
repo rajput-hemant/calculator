@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/currency.dart';
 import '../utils/money_converter.dart';
-import '../widgets.dart/round_button.dart';
+import '../widgets/round_button.dart';
 
 class ExchangeRateScreen extends StatefulWidget {
   static const routeName = '/exchange-rate';
