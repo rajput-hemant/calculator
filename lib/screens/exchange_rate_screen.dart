@@ -37,7 +37,7 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xFF060606),
       appBar: AppBar(
         title: const Text('Currency'),
       ),
