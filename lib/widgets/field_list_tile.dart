@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 
-import '../models/currency.dart';
 import 'scrollable_sheet.dart';
 
 class FieldListTile extends StatelessWidget {
-  final Widget child;
   final int index;
+  final List list;
+  final Widget child;
   final dynamic field;
+  final String fieldTitle;
   final String bottomSheetHeader;
-  final VoidCallback onTappingAmount;
-  final List<CurrenciesData> currencyList;
+  final VoidCallback onTappingField;
 
   const FieldListTile({
     super.key,
     required this.index,
     required this.field,
-    required this.onTappingAmount,
-    required this.currencyList,
+    required this.fieldTitle,
+    required this.onTappingField,
+    required this.list,
     required this.child,
     required this.bottomSheetHeader,
   });
@@ -25,7 +26,7 @@ class FieldListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: GestureDetector(
-        child: Text(CurrenciesData.currenciesData[index].name),
+        child: Text(fieldTitle),
         onTap: () {
           showModalBottomSheet(
             context: context,
@@ -45,9 +46,9 @@ class FieldListTile extends StatelessWidget {
           );
         },
       ),
-      subtitle: Text(currencyList[index].id),
+      subtitle: Text(list[index].id),
       trailing: InkWell(
-        onTap: onTappingAmount,
+        onTap: onTappingField,
         child: Text(
           field,
           style: const TextStyle(fontSize: 24),
