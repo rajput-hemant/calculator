@@ -1,11 +1,12 @@
-import 'package:calculator/screens/settings.dart';
-import 'package:calculator/screens/about.dart';
-import 'package:calculator/screens/unit_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'screens/about.dart';
 import 'screens/calculator_screen.dart';
 import 'screens/exchange_rate_screen.dart';
+import 'screens/length_conversion_screen.dart';
+import 'screens/settings.dart';
+import 'screens/unit_converter.dart';
 
 void main() {
   WidgetsFlutterBinding();
@@ -30,6 +31,8 @@ class MyApp extends StatelessWidget {
       home: const CalculatorScreen(),
       routes: {
         ExchangeRateScreen.routeName: (context) => const ExchangeRateScreen(),
+        LengthConversionScreen.routeName: (context) =>
+            const LengthConversionScreen(),
         UnitConverter.routeName: (context) => const UnitConverter(),
         Settings.routeName: (context) => const Settings(),
         About.routename: ((context) => const About()),
