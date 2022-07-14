@@ -5,10 +5,30 @@ class Speed {
   Speed({required this.id, required this.name, required this.rate});
   //Basic Unit Metre/second
   static var speed = [
-    Speed(id: 'm/s', name: 'Metre/second', rate: 1.0),
-    Speed(id: 'km/s', name: 'Kilometer/second', rate: 0.001),
-    Speed(id: 'c', name: 'Speed of light', rate: 3.356e-9),
-    Speed(id: 'km/h', name: 'Kilometer/hour', rate: 3.6),
-    Speed(id: 'mph', name: 'Mile/hour', rate: 2.236936),
+    Speed(
+      name: 'Kilometer/hour',
+      id: 'km/h',
+      rate: 3.6,
+    ),
+    Speed(
+      name: 'Kilometer/second',
+      id: 'km/s',
+      rate: 0.001,
+    ),
+    Speed(
+      name: 'Metre/second',
+      id: 'm/s',
+      rate: 1.0,
+    ),
+    Speed(
+      name: 'Mile/hour',
+      id: 'mph',
+      rate: 2.236936,
+    ),
+    Speed(
+      name: 'Speed of light',
+      id: 'c',
+      rate: 3.356e-9,
+    ),
   ];
 }
