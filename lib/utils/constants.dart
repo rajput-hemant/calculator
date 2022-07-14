@@ -7,14 +7,14 @@ const kEqualColor = Color(0xFF2760F5);
 
 const kOperationTextStyle = TextStyle(
   fontSize: 30,
-  color: Colors.blue,
+  color: Colors.grey,
   fontFamily: 'PTSans',
   fontWeight: FontWeight.w100,
 );
 
 const kResultTextStyle = TextStyle(
   fontSize: 70,
-  color: Colors.orange,
+  color: Colors.blue,
   fontFamily: "PTSans",
   fontWeight: FontWeight.w100,
 );
@@ -26,7 +26,7 @@ const kConverterStyle = TextStyle(
 );
 
 const kUnitTextStyle = TextStyle(
-  fontSize: 15,
+  fontSize: 18,
   fontWeight: FontWeight.w600,
   fontFamily: 'Roboto',
   color: kWhiteColorText,
