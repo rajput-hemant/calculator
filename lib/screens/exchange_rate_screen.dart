@@ -41,7 +41,13 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF060606),
       appBar: AppBar(
-        title: const Text('Currency'),
+        title: const Text(
+          'Currency',
+          style: TextStyle(
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: Column(
         children: [
@@ -53,14 +59,17 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                 children: [
                   FieldListTile(
                     field: _firstField,
+                    isSelectedField: _isFirstField,
                     fieldTitle:
                         CurrenciesData.currenciesData[_firstFieldIndex].name,
                     index: _firstFieldIndex,
                     list: _currencyList,
                     bottomSheetHeader: "Select Currency",
                     onTappingField: () {
-                      _isFirstField = true;
-                      _secondField = '0';
+                      setState(() {
+                        setState(() => _isFirstField = true);
+                        clearButton();
+                      });
                     },
                     child: ListView.builder(
                       itemCount: _currencyList.length,
@@ -76,20 +85,20 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                       },
                     ),
                   ),
-                  const Divider(
-                    height: 15,
-                    color: Colors.grey,
-                  ),
+                  const Divider(),
                   FieldListTile(
                     field: _secondField,
+                    isSelectedField: !_isFirstField,
                     fieldTitle:
                         CurrenciesData.currenciesData[_secondFieldIndex].name,
                     index: _secondFieldIndex,
                     list: _currencyList,
                     bottomSheetHeader: "Select Currency",
                     onTappingField: () {
-                      _isFirstField = false;
-                      _firstField = '0';
+                      setState(() {
+                        setState(() => _isFirstField = false);
+                        clearButton();
+                      });
                     },
                     child: ListView.builder(
                       itemCount: _currencyList.length,
@@ -105,10 +114,7 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                       },
                     ),
                   ),
-                  const Divider(
-                    height: 15,
-                    color: Colors.grey,
-                  ),
+                  const Divider(),
                 ],
               ),
             ),
