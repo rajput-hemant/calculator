@@ -22,12 +22,12 @@ class Pressure {
     ),
     Pressure(
       name: "Kilogram-force/square centimetre",
-      id: "kgf/cm2",
+      id: "kg.f/cm2",
       rate: 0.0010197,
     ),
     Pressure(
       name: "Kilogram-force/square metre",
-      id: "kgf/m2",
+      id: "kg.f/m2",
       rate: 10.1971621,
     ),
     Pressure(
