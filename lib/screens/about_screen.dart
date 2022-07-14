@@ -1,371 +1,184 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+import 'package:calculator/widgets/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
-  static const routename = 'About';
+  static const routeName = 'About';
   const AboutScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: const Color(0xFF060606),
-        appBar: AppBar(
-          backgroundColor: const Color(0xFF060606),
-          title: const Text(
-            "About us",
-            style: TextStyle(
-                color: Colors.white, fontSize: 24, fontFamily: 'Roboto'),
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(colors: [
+          Color(0xFF141414),
+          (Colors.black),
+        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+      ),
+      child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: const Text(
+              'About us',
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+            ),
           ),
-        ),
-        body: ListView(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            const Center(
-              child: Text(
-                "Calculator",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Montserrat',
-                    fontSize: 35,
-                    fontWeight: FontWeight.w500,
-                    backgroundColor: Colors.black12),
+          backgroundColor: Colors.transparent,
+          body: ListView(
+            children: [
+              const SizedBox(
+                height: 30,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Row(children: [
-                const Image(
-                  image: NetworkImage(
-                      'https://c8.alamy.com/zooms/9/c1ae20f4f9dd4bb1904efa49479a42ac/tb0yme.jpg'),
-                  width: 100,
-                  height: 100,
-                ),
-                const SizedBox(
-                  width: 40,
-                ),
-                Column(
-                  children: const [
-                    Text("Khushal Agarwal",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    Text("201500340"),
-                    SizedBox(
-                      height: 8,
+              const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Center(
+                  child: Text(
+                    'Calculator',
+                    style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Montserrat',
+                      decoration: TextDecoration.underline,
                     ),
-                    Text(
-                      "Developer",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                )
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Row(children: [
-                const Image(
-                  image: NetworkImage(
-                      'https://cdn3.vectorstock.com/i/1000x1000/62/87/young-woman-profile-cartoon-vector-19116287.jpg'),
-                  width: 100,
-                  height: 100,
+                  ),
                 ),
-                const SizedBox(
-                  width: 40,
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              const Padding(
+                padding: EdgeInsets.all(14),
+                child: Text(
+                  'Our Calculator is an Flutter application which follows Google\'s Material Design Concept.\n\nIn this application each feature is handcrafted with attention to the smallest details!\n\nMake your day Today tidious Calculations a lot easier and faster with our application.',
+                  style: TextStyle(fontSize: 22, fontFamily: 'PTSans'),
                 ),
-                Column(
-                  children: const [
-                    Text(
-                      "Kuhoo Saxena",
-                      style: TextStyle(
-                        fontSize: 21,
-                        fontWeight: FontWeight.bold,
+              ),
+              SizedBox(
+                width: 100,
+                child: Divider(
+                  color: Colors.grey[850],
+                  thickness: 0.2,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Alert(
+                      context: context,
+                      title: 'TEAM',
+                      content: Column(
+                        children: <Widget>[
+                          ListTile(
+                            title: const Text('Khushal Agarwal'),
+                            trailing: IconButton(
+                              onPressed: () {
+                                UrlLauncher('https://github.com/Khushal-ag');
+                              },
+                              icon: const Icon(FontAwesomeIcons.github),
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('Hemant Rajput'),
+                            trailing: IconButton(
+                              onPressed: () {
+                                UrlLauncher('https://github.com/rajput-hemant');
+                              },
+                              icon: const Icon(FontAwesomeIcons.github),
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('Kuhoo Saxena'),
+                            trailing: IconButton(
+                              onPressed: () {
+                                UrlLauncher('https://github.com/SaxenaKuhoo');
+                              },
+                              icon: const Icon(FontAwesomeIcons.github),
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('Ritik Kuntal'),
+                            trailing: IconButton(
+                              onPressed: () {
+                                UrlLauncher('https://github.com/b49-Ritik');
+                              },
+                              icon: const Icon(FontAwesomeIcons.github),
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('Shruti'),
+                            trailing: IconButton(
+                              onPressed: () {
+                                UrlLauncher('https://github.com/Khushal-ag');
+                              },
+                              icon: const Icon(FontAwesomeIcons.github),
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('Suhani Pachouri'),
+                            trailing: IconButton(
+                              onPressed: () {
+                                UrlLauncher(
+                                    'https://github.com/Suhanipachouri');
+                              },
+                              icon: const Icon(FontAwesomeIcons.github),
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('Sakshi Chaudhry'),
+                            trailing: IconButton(
+                              onPressed: () {
+                                UrlLauncher('https://github.com/Sakshi-Chy27');
+                              },
+                              icon: const Icon(FontAwesomeIcons.github),
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('Vikas Singh'),
+                            trailing: IconButton(
+                              onPressed: () {
+                                UrlLauncher('https://github.com/B-63Vikas');
+                              },
+                              icon: const Icon(FontAwesomeIcons.github),
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('Ayush Sharma'),
+                            trailing: IconButton(
+                              onPressed: () {
+                                UrlLauncher(
+                                    'https://github.com/AyushSharma3566');
+                              },
+                              icon: const Icon(FontAwesomeIcons.github),
+                            ),
+                          ),
+                        ],
                       ),
+                      buttons: [
+                        DialogButton(
+                          color: Colors.blue[700],
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text(
+                            "Cancel",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        )
+                      ]).show();
+                },
+                child: const ListTile(
+                  title: Text(
+                    'Our Team',
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'PTSans',
                     ),
-                    Text("201500358"),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "Developer",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                )
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Row(children: [
-                const Image(
-                  image: NetworkImage(
-                      'https://c8.alamy.com/comp/TC2G3D/young-man-avatar-cartoon-character-profile-picture-TC2G3D.jpg'),
-                  width: 100,
-                  height: 85,
+                  ),
+                  trailing: Icon(Icons.arrow_forward_ios_outlined),
                 ),
-                const SizedBox(
-                  width: 40,
-                ),
-                Column(
-                  children: const [
-                    Text("Hemant Rajput",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    Text("201500289"),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "Developer",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                )
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Row(children: [
-                const Image(
-                  image: NetworkImage(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDZGmXvuE-fuBVWGnJcQfdUSFNXaqTUWQjEv3lP8va3eMSPL5eRKEE4zE2Fow-kre17Vk&usqp=CAU'),
-                  width: 100,
-                  height: 80,
-                ),
-                const SizedBox(
-                  width: 50,
-                ),
-                Column(
-                  children: const [
-                    Text("Shruti",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    Text("201500676"),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "Content",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                )
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Row(children: [
-                const Image(
-                  image: NetworkImage(
-                      'https://thumbs.dreamstime.com/z/executive-businessman-smilig-profile-cartoon-vector-illustration-graphic-design-154894398.jpg'),
-                  width: 100,
-                  height: 90,
-                ),
-                const SizedBox(
-                  width: 45,
-                ),
-                Column(
-                  children: const [
-                    Text(
-                      "Ritik Kuntal",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text("201500576"),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "Content",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                )
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Row(children: [
-                const Image(
-                  image: NetworkImage(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW8_CUvB10teIOsE_HOSMiGRMGjogfXVDV_biBoe7VlMGfTCfGYUF9QJZ1jeg-tavCiNQ&usqp=CAU'),
-                  width: 70,
-                  height: 100,
-                ),
-                const SizedBox(
-                  width: 70,
-                ),
-                Column(
-                  children: const [
-                    Text("Suhani Pachouri",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    Text("201500715"),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "Content",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                )
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Row(children: [
-                const Image(
-                  image: NetworkImage(
-                      'https://thumbs.dreamstime.com/z/elegant-man-business-suit-badge-man-business-avatar-profile-picture-vector-illustration-isolated-elegant-man-business-107918671.jpg'),
-                  width: 70,
-                  height: 100,
-                ),
-                const SizedBox(
-                  width: 70,
-                ),
-                Column(
-                  children: const [
-                    Text(
-                      "Ayush Sharma",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text("201500183"),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "Content",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                )
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Row(children: [
-                const Padding(padding: EdgeInsets.only(left: 4)),
-                const Image(
-                  image: NetworkImage(
-                      'https://img.lovepik.com/element/40145/1025.png_860.png'),
-                  width: 90,
-                  height: 100,
-                ),
-                const SizedBox(
-                  width: 45,
-                ),
-                Column(
-                  children: const [
-                    Text("Sakshi Chaudhary",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    Text("201500607"),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "Content",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                )
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Row(children: [
-                const Image(
-                  image: NetworkImage(
-                      'https://image.shutterstock.com/image-illustration/portrait-europe-businessman-600w-1758016598.jpg'),
-                  width: 100,
-                  height: 80,
-                ),
-                const SizedBox(
-                  width: 45,
-                ),
-                Column(
-                  children: const [
-                    Text(
-                      "Vikas Singh",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text("201500785"),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "Content",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                )
-              ]),
-            ),
-          ],
-        ));
+              )
+            ],
+          )),
+    );
   }
 }

@@ -37,6 +37,8 @@ dependencies:
   http: ^0.13.4
   flutter_neumorphic: ^3.2.0
   font_awesome_flutter: ^10.1.0
+  rflutter_alert: ^2.0.4
+  url_launcher: ^6.1.5
 
 dev_dependencies:
   flutter_test:

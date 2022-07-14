@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
             const VolumeConversionScreen(),
         UnitConverterScreen.routeName: (context) => const UnitConverterScreen(),
         SettingsScreen.routeName: (context) => const SettingsScreen(),
-        AboutScreen.routename: ((context) => const AboutScreen()),
+        AboutScreen.routeName: ((context) => const AboutScreen()),
       },
     );
   }
