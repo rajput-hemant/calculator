@@ -6,37 +6,37 @@ class Data {
     required this.name,
     required this.rate,
   });
-
+  //Basic Unit Megabit
   static var data = [
     Data(
       name: 'Bit',
       id: 'b',
-      rate: 1e+6,
+      rate: 1048576,
     ),
     Data(
       name: 'Byte',
       id: 'B',
-      rate: 125000,
+      rate: 131072,
     ),
     Data(
       name: 'Gigabit',
       id: 'gb',
-      rate: 0.001,
+      rate: 0.0009765625,
     ),
     Data(
       name: 'GigaByte',
       id: 'GB',
-      rate: 0.000125,
+      rate: 0.0001220703125,
     ),
     Data(
       name: 'Kilobit',
       id: 'kb',
-      rate: 1000,
+      rate: 1024,
     ),
     Data(
       name: 'KiloByte',
       id: 'KB',
-      rate: 125,
+      rate: 128,
     ),
     Data(
       name: 'Megabit',
@@ -49,24 +49,29 @@ class Data {
       rate: 0.125,
     ),
     Data(
+      name: 'Nibble',
+      id: 'nibble',
+      rate: 262144,
+    ),
+    Data(
       name: 'Petabit',
       id: 'pb',
-      rate: 1e-9,
+      rate: 0.931322e-11,
     ),
     Data(
       name: 'PetaByte',
       id: 'PB',
-      rate: 1.25e-10,
+      rate: 1.16415e-10,
     ),
     Data(
       name: 'Terabit',
       id: 'tb',
-      rate: 1e-6,
+      rate: 9.5367e-7,
     ),
     Data(
       name: 'TeraByte',
       id: 'TB',
-      rate: 1.25e-7,
+      rate: 1.1920e-7,
     ),
   ];
 }
