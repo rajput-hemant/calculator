@@ -12,47 +12,42 @@ class Area {
     Area(
       name: 'Acre',
       id: 'ac',
-      rate: 4046.8564224,
+      rate: 0.0002471,
     ),
     Area(
       name: 'Are',
       id: 'ar',
-      rate: 100,
+      rate: 0.01,
     ),
     Area(
       name: 'Hectares',
       id: 'ha',
-      rate: 10000,
+      rate: 0.0001,
     ),
     Area(
       name: 'Square Centimeter',
       id: 'cm2',
-      rate: 0.0001,
+      rate: 10000.0,
     ),
     Area(
       name: 'Square Decimeter',
       id: 'dm2',
-      rate: 0.01,
+      rate: 100.0,
     ),
     Area(
       name: 'Square Foot',
       id: 'ft2',
-      rate: 0.3048,
-    ),
-    Area(
-      name: 'Square Hectometer',
-      id: 'hm2',
-      rate: 10000,
+      rate: 10.764,
     ),
     Area(
       name: 'Square Inch',
       id: 'in2',
-      rate: 0.00064516,
+      rate: 1550.0031,
     ),
     Area(
       name: 'Square kilometer',
       id: 'km2',
-      rate: 1000000,
+      rate: 1e-6,
     ),
     Area(
       name: 'Square Metre',
@@ -60,24 +55,19 @@ class Area {
       rate: 1,
     ),
     Area(
-      name: 'Square Micrometer',
-      id: 'μm2',
-      rate: 0.0000000000010,
-    ),
-    Area(
       name: 'Square Mile',
       id: 'mi2',
-      rate: 2589988.110336,
+      rate: 3.86e-7,
     ),
     Area(
       name: 'Square Milimeter',
       id: 'mm2',
-      rate: 0.0000010,
+      rate: 1000000.0,
     ),
     Area(
       name: 'Square Yard',
       id: 'yd2',
-      rate: 0.83612736,
+      rate: 1.19599,
     ),
   ];
 }
