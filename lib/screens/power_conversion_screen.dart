@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:calculator/models/power.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +18,7 @@ class PowerConversionScreen extends StatefulWidget {
 class _PowerConversionScreenState extends State<PowerConversionScreen> {
   final _powerList = Power.power;
   bool _isFirstField = true;
-  int _firstFieldIndex = 1, _secondFieldIndex = 2;
+  int _firstFieldIndex = 9, _secondFieldIndex = 6;
   dynamic _firstField = '0', _secondField = '0';
 
   @override
@@ -56,6 +58,7 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
                           list: _powerList,
                           onSelecting: () {
                             setState(() => _firstFieldIndex = i);
+                            log("First Field Index: $_firstFieldIndex");
                             Navigator.pop(context);
                           },
                         );
@@ -82,6 +85,7 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
                           list: _powerList,
                           onSelecting: () {
                             setState(() => _secondFieldIndex = i);
+                            log("Second Field Index: $_secondFieldIndex");
                             Navigator.pop(context);
                           },
                         );

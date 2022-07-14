@@ -116,7 +116,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                   ),
                   RoundButton(
                     buttonText: '⌫',
-                    textWidth: 20,
+                    textWidth: 26,
                     onPressed: () =>
                         setState(() => result = calc.buttonPressed('⌫')),
                     colorText: Colors.red.shade500,

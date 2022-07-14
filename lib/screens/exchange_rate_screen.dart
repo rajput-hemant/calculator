@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../models/currency.dart';
@@ -17,7 +19,7 @@ class ExchangeRateScreen extends StatefulWidget {
 class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
   final _currencyList = CurrenciesData.currenciesData;
   bool _isFirstField = true;
-  int _firstFieldIndex = 0, _secondFieldIndex = 17;
+  int _firstFieldIndex = 13, _secondFieldIndex = 37;
   dynamic _firstField = '0', _secondField = '0';
 
   void convert({
@@ -79,6 +81,7 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                           list: _currencyList,
                           onSelecting: () {
                             setState(() => _firstFieldIndex = i);
+                            log("First Field Index: $_firstFieldIndex");
                             Navigator.pop(context);
                           },
                         );
@@ -108,6 +111,7 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                           list: _currencyList,
                           onSelecting: () {
                             setState(() => _secondFieldIndex = i);
+                            log("Second Field Index: $_secondFieldIndex");
                             Navigator.pop(context);
                           },
                         );

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:calculator/models/pressure.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,7 @@ class PressureConversionScreen extends StatefulWidget {
 class _PressureConversionScreenState extends State<PressureConversionScreen> {
   final _pressureList = Pressure.pressure;
   bool _isFirstField = true;
-  int _firstFieldIndex = 1, _secondFieldIndex = 3;
+  int _firstFieldIndex = 1, _secondFieldIndex = 12;
   dynamic _firstField = '0', _secondField = '0';
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,7 @@ class _PressureConversionScreenState extends State<PressureConversionScreen> {
                           list: _pressureList,
                           onSelecting: () {
                             setState(() => _firstFieldIndex = i);
+                            log("First Field Index: $_firstFieldIndex");
                             Navigator.pop(context);
                           },
                         );
@@ -82,6 +85,7 @@ class _PressureConversionScreenState extends State<PressureConversionScreen> {
                           list: _pressureList,
                           onSelecting: () {
                             setState(() => _secondFieldIndex = i);
+                            log("Second Field Index: $_secondFieldIndex");
                             Navigator.pop(context);
                           },
                         );
