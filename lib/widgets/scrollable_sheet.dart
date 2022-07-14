@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ScrollableSheet extends StatelessWidget {
   final Widget listViewBuilder;
@@ -11,14 +12,20 @@ class ScrollableSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
       expand: false,
-      maxChildSize: 0.95,
-      initialChildSize: 0.9,
+      minChildSize: 0.25,
+      initialChildSize: 0.95,
       builder: (context, scrollController) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              const Icon(
+                FontAwesomeIcons.gripLines,
+                size: 20,
+                color: Colors.grey,
+              ),
+              const Divider(),
               Text(
                 sheetHeader,
                 style: const TextStyle(
