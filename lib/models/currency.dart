@@ -10,43 +10,157 @@ class CurrenciesData {
   CurrenciesData({required this.id, required this.name});
 
   static var currenciesData = [
-    CurrenciesData(id: "USD", name: "United States Dollar"),
-    CurrenciesData(id: "EGP", name: "Egyptian Pound"),
-    CurrenciesData(id: "LKR", name: "Sri Lankan Rupee"),
-    CurrenciesData(id: "EUR", name: "Euro"),
-    CurrenciesData(id: "JPY", name: "Japanese Yen"),
-    CurrenciesData(id: "GBP", name: "British Pound"),
-    CurrenciesData(id: "AUD", name: "Australian Dollar"),
-    CurrenciesData(id: "CAD", name: "Canadian Dollar"),
-    CurrenciesData(id: "CHF", name: "Swiss Franc"),
-    CurrenciesData(id: "CNY", name: "Chinese Yuan"),
-    CurrenciesData(id: "HKD", name: "Hong Kong Dollar"),
-    CurrenciesData(id: "NZD", name: "New Zealand Dollar"),
-    CurrenciesData(id: "SEK", name: "Swedish Krona"),
-    CurrenciesData(id: "KRW", name: "South Korean Won"),
-    CurrenciesData(id: "SGD", name: "Singapore Dollar"),
-    CurrenciesData(id: "NOK", name: "Norwegian Krone"),
-    CurrenciesData(id: "MXN", name: "Mexican Peso"),
-    CurrenciesData(id: "INR", name: "Indian Rupee"),
-    CurrenciesData(id: "RUB", name: "Russian Ruble"),
-    CurrenciesData(id: "ZAR", name: "South African Rand"),
-    CurrenciesData(id: "TRY", name: "Turkish New Lira"),
-    CurrenciesData(id: "BRL", name: "Brazilian Real"),
-    CurrenciesData(id: "TWD", name: "New Taiwan Dollar"),
-    CurrenciesData(id: "DKK", name: "Danish Krone"),
-    CurrenciesData(id: "PLN", name: "Polish Zloty"),
-    CurrenciesData(id: "THB", name: "Thai Baht"),
-    CurrenciesData(id: "IDR", name: "Indonesian Rupiah"),
-    CurrenciesData(id: "HUF", name: "Hungarian Forint"),
-    CurrenciesData(id: "CZK", name: "Czech Koruna"),
-    CurrenciesData(id: "ILS", name: "Israeli New Sheqel"),
-    CurrenciesData(id: "CLP", name: "Chilean Peso"),
-    CurrenciesData(id: "PHP", name: "Philippine Peso"),
-    CurrenciesData(id: "AED", name: "UAE Dirham"),
-    CurrenciesData(id: "COP", name: "Colombian Peso"),
-    CurrenciesData(id: "SAR", name: "Saudi Riyal"),
-    CurrenciesData(id: "MYR", name: "Malaysian Ringgit"),
-    CurrenciesData(id: "RON", name: "Romanian Leu"),
-    CurrenciesData(id: "KWD", name: "Kuwaiti Dinar"),
+    CurrenciesData(
+      name: "Australian Dollar",
+      id: "AUD",
+    ),
+    CurrenciesData(
+      name: "Brazilian Real",
+      id: "BRL",
+    ),
+    CurrenciesData(
+      name: "British Pound",
+      id: "GBP",
+    ),
+    CurrenciesData(
+      name: "Canadian Dollar",
+      id: "CAD",
+    ),
+    CurrenciesData(
+      name: "Chilean Peso",
+      id: "CLP",
+    ),
+    CurrenciesData(
+      name: "Chinese Yuan",
+      id: "CNY",
+    ),
+    CurrenciesData(
+      name: "Colombian Peso",
+      id: "COP",
+    ),
+    CurrenciesData(
+      name: "Czech Koruna",
+      id: "CZK",
+    ),
+    CurrenciesData(
+      name: "Danish Krone",
+      id: "DKK",
+    ),
+    CurrenciesData(
+      name: "Egyptian Pound",
+      id: "EGP",
+    ),
+    CurrenciesData(
+      name: "Euro",
+      id: "EUR",
+    ),
+    CurrenciesData(
+      name: "Hong Kong Dollar",
+      id: "HKD",
+    ),
+    CurrenciesData(
+      name: "Hungarian Forint",
+      id: "HUF",
+    ),
+    CurrenciesData(
+      name: "Indian Rupee",
+      id: "INR",
+    ),
+    CurrenciesData(
+      name: "Indonesian Rupiah",
+      id: "IDR",
+    ),
+    CurrenciesData(
+      name: "Israeli New Sheqel",
+      id: "ILS",
+    ),
+    CurrenciesData(
+      name: "Japanese Yen",
+      id: "JPY",
+    ),
+    CurrenciesData(
+      name: "Kuwaiti Dinar",
+      id: "KWD",
+    ),
+    CurrenciesData(
+      name: "Malaysian Ringgit",
+      id: "MYR",
+    ),
+    CurrenciesData(
+      name: "Mexican Peso",
+      id: "MXN",
+    ),
+    CurrenciesData(
+      name: "New Taiwan Dollar",
+      id: "TWD",
+    ),
+    CurrenciesData(
+      name: "New Zealand Dollar",
+      id: "NZD",
+    ),
+    CurrenciesData(
+      name: "Norwegian Krone",
+      id: "NOK",
+    ),
+    CurrenciesData(
+      name: "Philippine Peso",
+      id: "PHP",
+    ),
+    CurrenciesData(
+      name: "Polish Zloty",
+      id: "PLN",
+    ),
+    CurrenciesData(
+      name: "Romanian Leu",
+      id: "RON",
+    ),
+    CurrenciesData(
+      name: "Russian Ruble",
+      id: "RUB",
+    ),
+    CurrenciesData(
+      name: "Saudi Riyal",
+      id: "SAR",
+    ),
+    CurrenciesData(
+      name: "Singapore Dollar",
+      id: "SGD",
+    ),
+    CurrenciesData(
+      name: "South African Rand",
+      id: "ZAR",
+    ),
+    CurrenciesData(
+      name: "South Korean Won",
+      id: "KRW",
+    ),
+    CurrenciesData(
+      name: "Sri Lankan Rupee",
+      id: "LKR",
+    ),
+    CurrenciesData(
+      name: "Swedish Krona",
+      id: "SEK",
+    ),
+    CurrenciesData(
+      name: "Swiss Franc",
+      id: "CHF",
+    ),
+    CurrenciesData(
+      name: "Thai Baht",
+      id: "THB",
+    ),
+    CurrenciesData(
+      name: "Turkish New Lira",
+      id: "TRY",
+    ),
+    CurrenciesData(
+      name: "UAE Dirham",
+      id: "AED",
+    ),
+    CurrenciesData(
+      name: "United States Dollar",
+      id: "USD",
+    ),
   ];
 }
