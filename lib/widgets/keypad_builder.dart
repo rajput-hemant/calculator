@@ -44,7 +44,7 @@ class KeyPad extends StatelessWidget {
       flex: 3,
       child: Container(
         color: Colors.black12,
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -60,7 +60,7 @@ class KeyPad extends StatelessWidget {
                   textWidth: 30,
                   onPressed: onPressedClear,
                   colorText: Colors.black,
-                  backgroundColor: Colors.red[500]!,
+                  backgroundColor: Colors.red.shade500,
                 ),
               ],
             ),
@@ -74,7 +74,7 @@ class KeyPad extends StatelessWidget {
                   buttonText: '⌫',
                   textWidth: 26,
                   onPressed: onPressedDel,
-                  colorText: Colors.red[500]!,
+                  colorText: Colors.red.shade500,
                 ),
               ],
             ),

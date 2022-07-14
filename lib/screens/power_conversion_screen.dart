@@ -22,7 +22,7 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF060606),
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text(
           'Power Conversion',

@@ -21,7 +21,7 @@ class _AreaConversionScreenState extends State<AreaConversionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF060606),
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text(
           'Area Conversion',

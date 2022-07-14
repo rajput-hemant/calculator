@@ -21,7 +21,7 @@ class _ConversionScreenState extends State<VolumeConversionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF060606),
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text('Volume Conversion'),
       ),

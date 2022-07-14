@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Calculator',
       theme: ThemeData.dark().copyWith(
-        appBarTheme: const AppBarTheme(color: Color(0xFF060606)),
-        primaryColor: const Color(0xFF060606),
+        appBarTheme: const AppBarTheme(color: Colors.black),
+        primaryColor: Colors.black,
       ),
       home: const CalculatorScreen(),
       routes: {

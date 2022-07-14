@@ -13,7 +13,7 @@ class ScrollableSheet extends StatelessWidget {
     return DraggableScrollableSheet(
       expand: false,
       minChildSize: 0.25,
-      initialChildSize: 0.95,
+      initialChildSize: 0.88,
       builder: (context, scrollController) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
