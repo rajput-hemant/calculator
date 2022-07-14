@@ -16,7 +16,7 @@ class LengthConversionScreen extends StatefulWidget {
 class _LengthConversionScreenState extends State<LengthConversionScreen> {
   final _lengthList = Length.length;
   bool _isFirstField = true;
-  int _firstFieldIndex = 0, _secondFieldIndex = 1;
+  int _firstFieldIndex = 1, _secondFieldIndex = 3;
   dynamic _firstField = '0', _secondField = '0';
 
   @override
@@ -24,7 +24,10 @@ class _LengthConversionScreenState extends State<LengthConversionScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF060606),
       appBar: AppBar(
-        title: const Text('Length Conversion'),
+        title: const Text(
+          'Length Conversion',
+          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Column(
         children: [
@@ -36,13 +39,14 @@ class _LengthConversionScreenState extends State<LengthConversionScreen> {
                 children: [
                   FieldListTile(
                     field: _firstField,
+                    isSelectedField: _isFirstField,
                     fieldTitle: _lengthList[_firstFieldIndex].name,
                     index: _firstFieldIndex,
                     list: _lengthList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
-                      _isFirstField = true;
-                      _secondField = '0';
+                      setState(() => _isFirstField = true);
+                      clearButton();
                     },
                     child: ListView.builder(
                       itemCount: _lengthList.length,
@@ -58,19 +62,17 @@ class _LengthConversionScreenState extends State<LengthConversionScreen> {
                       },
                     ),
                   ),
-                  const Divider(
-                    height: 15,
-                    color: Colors.grey,
-                  ),
+                  const Divider(),
                   FieldListTile(
                     field: _secondField,
+                    isSelectedField: !_isFirstField,
                     fieldTitle: _lengthList[_secondFieldIndex].name,
                     index: _secondFieldIndex,
                     list: _lengthList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
-                      _isFirstField = false;
-                      _firstField = '0';
+                      setState(() => _isFirstField = false);
+                      clearButton();
                     },
                     child: ListView.builder(
                       itemCount: _lengthList.length,
@@ -86,10 +88,7 @@ class _LengthConversionScreenState extends State<LengthConversionScreen> {
                       },
                     ),
                   ),
-                  const Divider(
-                    height: 15,
-                    color: Colors.grey,
-                  ),
+                  const Divider(),
                 ],
               ),
             ),
