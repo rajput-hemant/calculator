@@ -9,19 +9,75 @@ class Area {
   });
   // Base Unit Square metre
   static var area = [
-    Area(id: 'm2', name: 'Square Metre', rate: 1),
-    Area(id: 'mm2', name: 'Square Milimeter', rate: 0.0000010),
-    Area(id: 'cm2', name: 'Square Centimeter', rate: 0.0001),
-    Area(id: 'dm2', name: 'Square Decimeter', rate: 0.01),
-    Area(id: 'hm2', name: 'Square Hectometer', rate: 10000),
-    Area(id: 'km2', name: 'Square kilometer', rate: 1000000),
-    Area(id: 'ar', name: 'Are', rate: 100),
-    Area(id: 'ha', name: 'Hectares', rate: 10000),
-    Area(id: 'ft2', name: 'Square Foot', rate: 0.3048),
-    Area(id: 'in2', name: 'Square Inch', rate: 0.00064516),
-    Area(id: 'μm2', name: 'Square Micrometer', rate: 0.0000000000010),
-    Area(id: 'mi2', name: 'Square Mile', rate: 2589988.110336),
-    Area(id: 'ac', name: 'Acre', rate: 4046.8564224),
-    Area(id: 'yd2', name: 'Square Yard', rate: 0.83612736),
+    Area(
+      name: 'Acre',
+      id: 'ac',
+      rate: 4046.8564224,
+    ),
+    Area(
+      name: 'Are',
+      id: 'ar',
+      rate: 100,
+    ),
+    Area(
+      name: 'Hectares',
+      id: 'ha',
+      rate: 10000,
+    ),
+    Area(
+      name: 'Square Centimeter',
+      id: 'cm2',
+      rate: 0.0001,
+    ),
+    Area(
+      name: 'Square Decimeter',
+      id: 'dm2',
+      rate: 0.01,
+    ),
+    Area(
+      name: 'Square Foot',
+      id: 'ft2',
+      rate: 0.3048,
+    ),
+    Area(
+      name: 'Square Hectometer',
+      id: 'hm2',
+      rate: 10000,
+    ),
+    Area(
+      name: 'Square Inch',
+      id: 'in2',
+      rate: 0.00064516,
+    ),
+    Area(
+      name: 'Square kilometer',
+      id: 'km2',
+      rate: 1000000,
+    ),
+    Area(
+      name: 'Square Metre',
+      id: 'm2',
+      rate: 1,
+    ),
+    Area(
+      name: 'Square Micrometer',
+      id: 'μm2',
+      rate: 0.0000000000010,
+    ),
+    Area(
+      name: 'Square Mile',
+      id: 'mi2',
+      rate: 2589988.110336,
+    ),
+    Area(
+      name: 'Square Milimeter',
+      id: 'mm2',
+      rate: 0.0000010,
+    ),
+    Area(
+      name: 'Square Yard',
+      id: 'yd2',
+      rate: 0.83612736,
+    ),
   ];
 }
