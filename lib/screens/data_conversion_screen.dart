@@ -21,7 +21,7 @@ class _DataConversionScreenState extends State<DataConversionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF060606),
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text(
           'Data Conversion',
@@ -61,10 +61,7 @@ class _DataConversionScreenState extends State<DataConversionScreen> {
                       },
                     ),
                   ),
-                  const Divider(
-                    height: 15,
-                    color: Colors.grey,
-                  ),
+                  const Divider(height: 15),
                   FieldListTile(
                     field: _secondField,
                     isSelectedField: !_isFirstField,
@@ -90,10 +87,7 @@ class _DataConversionScreenState extends State<DataConversionScreen> {
                       },
                     ),
                   ),
-                  const Divider(
-                    height: 15,
-                    color: Colors.grey,
-                  ),
+                  const Divider(height: 15),
                 ],
               ),
             ),

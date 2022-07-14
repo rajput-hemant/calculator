@@ -16,9 +16,9 @@ class SettingsScreen extends StatelessWidget {
               fontFamily: 'Roboto',
             ),
           ),
-          backgroundColor: const Color(0xFF060606),
+          // backgroundColor: Colors.black,
         ),
-        backgroundColor: const Color(0xFF060606),
+        backgroundColor: Colors.black,
         body: SafeArea(
             child: Column(
           children: [

@@ -55,18 +55,15 @@ class FieldListTile extends StatelessWidget {
         ),
       ),
       subtitle: Text(list[index].id),
-      trailing: Expanded(
-        flex: 5,
-        child: GestureDetector(
-          onTap: onTappingField,
-          child: Text(
-            field,
-            style: TextStyle(
-              fontSize: isSelectedField ? 32 : 24,
-              color: isSelectedField ? Colors.blue[300] : Colors.white,
-            ),
-            maxLines: 1,
+      trailing: GestureDetector(
+        onTap: onTappingField,
+        child: Text(
+          field,
+          style: TextStyle(
+            fontSize: isSelectedField ? 32 : 24,
+            color: isSelectedField ? Colors.blue[300] : Colors.white,
           ),
+          maxLines: 1,
         ),
       ),
     );

@@ -23,21 +23,30 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF060606),
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.only(top: 8, left: 8, bottom: 8),
+          child: Image.asset('assets/images/app_icon.png'),
+        ),
         title: const Text(
           "Calculator",
-          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         actions: [
           IconButton(
-              onPressed: () =>
-                  Navigator.pushNamed(context, UnitConverterScreen.routeName),
-              icon: const Icon(
-                FontAwesomeIcons.boxesStacked,
-                size: 20,
-              )),
+            onPressed: () =>
+                Navigator.pushNamed(context, UnitConverterScreen.routeName),
+            icon: const Icon(
+              FontAwesomeIcons.boxesStacked,
+              size: 20,
+            ),
+          ),
           PopupMenuButton(
+            color: const Color(0xFF171717),
             onSelected: (String? newitem) =>
                 Navigator.pushNamed(context, newitem!),
             itemBuilder: (context) {
@@ -49,14 +58,13 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               }).toList();
             },
             elevation: 30,
-            color: kButtonColor,
             offset: Offset(0.0, appBarHeight),
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(8.0),
-                bottomRight: Radius.circular(8.0),
-                topLeft: Radius.circular(8.0),
-                topRight: Radius.circular(8.0),
+                bottomLeft: Radius.circular(8),
+                bottomRight: Radius.circular(8),
+                topLeft: Radius.circular(8),
+                topRight: Radius.circular(8),
               ),
             ),
           )
@@ -76,7 +84,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                   child: Text(
                     result,
                     style: kResultTextStyle,
-                    // softWrap: false,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -89,7 +96,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 child: Text(
                   calc.resultOperationText,
                   style: kOperationTextStyle,
-                  softWrap: false,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -105,29 +111,29 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     textWidth: 30,
                     onPressed: () =>
                         setState(() => result = calc.buttonPressed('AC')),
-                    backgroundColor: const Color(0xFFF2392E),
+                    backgroundColor: Colors.red.shade500,
+                    colorText: Colors.black,
                   ),
                   RoundButton(
                     buttonText: '⌫',
-                    textWidth: 26,
+                    textWidth: 20,
                     onPressed: () =>
                         setState(() => result = calc.buttonPressed('⌫')),
-                    backgroundColor: kButtonColor,
-                    colorText: const Color(0xFFF2392E),
+                    colorText: Colors.red.shade500,
                   ),
                   RoundButton(
                     buttonText: '±',
                     textWidth: 30,
                     onPressed: () =>
                         setState(() => result = calc.buttonPressed('+/-')),
-                    backgroundColor: kButtonColor,
+                    colorText: Colors.blue,
                   ),
                   RoundButton(
                     buttonText: '÷',
                     textWidth: 35,
                     onPressed: () =>
                         setState(() => result = calc.buttonPressed('÷')),
-                    backgroundColor: kButtonColor,
+                    colorText: Colors.blue,
                   ),
                 ],
               ),
@@ -159,7 +165,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     buttonText: 'x',
                     onPressed: () =>
                         setState(() => result = calc.buttonPressed('x')),
-                    backgroundColor: kButtonColor,
+                    colorText: Colors.blue,
                   ),
                 ],
               ),
@@ -192,7 +198,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     textWidth: 30,
                     onPressed: () =>
                         setState(() => result = calc.buttonPressed('-')),
-                    backgroundColor: kButtonColor,
+                    colorText: Colors.blue,
                   ),
                 ],
               ),
@@ -225,7 +231,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     textWidth: 30,
                     onPressed: () =>
                         setState(() => result = calc.buttonPressed('+')),
-                    backgroundColor: kButtonColor,
+                    colorText: Colors.blue,
                   ),
                 ],
               ),
