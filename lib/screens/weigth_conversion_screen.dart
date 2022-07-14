@@ -38,13 +38,14 @@ class _WeightConversionScreenState extends State<WeightConversionScreen> {
                 children: [
                   FieldListTile(
                     field: _firstField,
+                    isSelectedField: _isFirstField,
                     fieldTitle: _weightList[_firstFieldIndex].name,
                     index: _firstFieldIndex,
                     list: _weightList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
-                      _isFirstField = true;
-                      _secondField = '0';
+                      setState(() => _isFirstField = true);
+                      clearButton();
                     },
                     child: ListView.builder(
                       itemCount: _weightList.length,
@@ -60,19 +61,19 @@ class _WeightConversionScreenState extends State<WeightConversionScreen> {
                       },
                     ),
                   ),
-                  const Divider(
-                    height: 15,
-                    color: Colors.grey,
-                  ),
+                  const Divider(),
                   FieldListTile(
                     field: _secondField,
+                    isSelectedField: !_isFirstField,
                     fieldTitle: _weightList[_secondFieldIndex].name,
                     index: _secondFieldIndex,
                     list: _weightList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
-                      _isFirstField = false;
-                      _firstField = '0';
+                      setState(() {
+                        setState(() => _isFirstField = false);
+                        clearButton();
+                      });
                     },
                     child: ListView.builder(
                       itemCount: _weightList.length,
@@ -88,10 +89,7 @@ class _WeightConversionScreenState extends State<WeightConversionScreen> {
                       },
                     ),
                   ),
-                  const Divider(
-                    height: 15,
-                    color: Colors.grey,
-                  ),
+                  const Divider(),
                 ],
               ),
             ),

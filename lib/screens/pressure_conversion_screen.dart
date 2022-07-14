@@ -39,13 +39,14 @@ class _PressureConversionScreenState extends State<PressureConversionScreen> {
                 children: [
                   FieldListTile(
                     field: _firstField,
+                    isSelectedField: _isFirstField,
                     fieldTitle: _pressureList[_firstFieldIndex].name,
                     index: _firstFieldIndex,
                     list: _pressureList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
-                      _isFirstField = true;
-                      _secondField = '0';
+                      setState(() => _isFirstField = true);
+                      clearButton();
                     },
                     child: ListView.builder(
                       itemCount: _pressureList.length,
@@ -61,19 +62,17 @@ class _PressureConversionScreenState extends State<PressureConversionScreen> {
                       },
                     ),
                   ),
-                  const Divider(
-                    height: 15,
-                    color: Colors.grey,
-                  ),
+                  const Divider(),
                   FieldListTile(
                     field: _secondField,
+                    isSelectedField: !_isFirstField,
                     fieldTitle: _pressureList[_secondFieldIndex].name,
                     index: _secondFieldIndex,
                     list: _pressureList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
-                      _isFirstField = false;
-                      _firstField = '0';
+                      setState(() => _isFirstField = false);
+                      clearButton();
                     },
                     child: ListView.builder(
                       itemCount: _pressureList.length,
@@ -89,10 +88,7 @@ class _PressureConversionScreenState extends State<PressureConversionScreen> {
                       },
                     ),
                   ),
-                  const Divider(
-                    height: 15,
-                    color: Colors.grey,
-                  ),
+                  const Divider(),
                 ],
               ),
             ),
