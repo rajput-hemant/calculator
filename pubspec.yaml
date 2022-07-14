@@ -78,8 +78,8 @@ flutter:
   fonts:
     - family: Montserrat
       fonts:
-        - asset: fonts/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat-Regular.ttf
 
     - family: PTSans
       fonts:
-        - asset: fonts/PTSans-Regular.ttf
+        - asset: assets/fonts/PTSans-Regular.ttf
