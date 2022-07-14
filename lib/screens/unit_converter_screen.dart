@@ -1,8 +1,8 @@
-import 'package:calculator/screens/digitalStorage_conversion_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'area_conversion_screen.dart';
+import 'data_conversion_screen.dart';
 import 'exchange_rate_screen.dart';
 import 'length_conversion_screen.dart';
 import '../widgets/unit_box.dart';
@@ -78,7 +78,7 @@ class UnitConverterScreen extends StatelessWidget {
                       iconName: FontAwesomeIcons.hardDrive,
                       textData: 'Digital Storage'),
                   iconfunction: () => Navigator.pushNamed(
-                      context, DigitalStorageConversionScreen.routeName),
+                      context, DataConversionScreen.routeName),
                 ),
               ],
             ),
