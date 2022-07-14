@@ -39,13 +39,14 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
                 children: [
                   FieldListTile(
                     field: _firstField,
+                    isSelectedField: _isFirstField,
                     fieldTitle: _powerList[_firstFieldIndex].name,
                     index: _firstFieldIndex,
                     list: _powerList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
-                      _isFirstField = true;
-                      _secondField = '0';
+                      setState(() => _isFirstField = true);
+                      clearButton();
                     },
                     child: ListView.builder(
                       itemCount: _powerList.length,
@@ -61,19 +62,17 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
                       },
                     ),
                   ),
-                  const Divider(
-                    height: 15,
-                    color: Colors.grey,
-                  ),
+                  const Divider(),
                   FieldListTile(
                     field: _secondField,
+                    isSelectedField: !_isFirstField,
                     fieldTitle: _powerList[_secondFieldIndex].name,
                     index: _secondFieldIndex,
                     list: _powerList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
-                      _isFirstField = false;
-                      _firstField = '0';
+                      setState(() => _isFirstField = false);
+                      clearButton();
                     },
                     child: ListView.builder(
                       itemCount: _powerList.length,
@@ -89,10 +88,7 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
                       },
                     ),
                   ),
-                  const Divider(
-                    height: 15,
-                    color: Colors.grey,
-                  ),
+                  const Divider(),
                 ],
               ),
             ),
