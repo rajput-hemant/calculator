@@ -1,3 +1,4 @@
+import 'package:calculator/screens/digitalStorage_conversion_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -9,7 +10,6 @@ import '../widgets/unit_icon.dart';
 import 'power_conversion_screen.dart';
 import 'pressure_conversion_screen.dart';
 import 'speed_conversion_screen.dart';
-import 'temperature_conversion_screen.dart';
 import 'volume_conversion_screen.dart';
 import 'weigth_conversion_screen.dart';
 
@@ -75,10 +75,10 @@ class UnitConverterScreen extends StatelessWidget {
                 ),
                 UnitBox(
                   icondata: const UnitIcon(
-                      iconName: FontAwesomeIcons.temperatureThreeQuarters,
-                      textData: 'Temperature'),
+                      iconName: FontAwesomeIcons.hardDrive,
+                      textData: 'Digital Storage'),
                   iconfunction: () => Navigator.pushNamed(
-                      context, TemperatureConversionScreen.routeName),
+                      context, DigitalStorageConversionScreen.routeName),
                 ),
               ],
             ),

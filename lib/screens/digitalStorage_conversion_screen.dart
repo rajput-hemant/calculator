@@ -1,24 +1,24 @@
-import 'package:calculator/models/temperature.dart';
+import 'package:calculator/models/digital_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/bottom_sheet_tile.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad_builder.dart';
 
-class TemperatureConversionScreen extends StatefulWidget {
-  static const routeName = '/temperature-conversion-screen';
-  const TemperatureConversionScreen({Key? key}) : super(key: key);
+class DigitalStorageConversionScreen extends StatefulWidget {
+  static const routeName = '/digitalStorage-conversion-screen';
+  const DigitalStorageConversionScreen({Key? key}) : super(key: key);
 
   @override
-  State<TemperatureConversionScreen> createState() =>
-      _TemperatureConversionScreenState();
+  State<DigitalStorageConversionScreen> createState() =>
+      _DigitalStorageConversionScreenState();
 }
 
-class _TemperatureConversionScreenState
-    extends State<TemperatureConversionScreen> {
-  final _temperatureList = Temperature.temperature;
+class _DigitalStorageConversionScreenState
+    extends State<DigitalStorageConversionScreen> {
+  final _digitalStorageList = DigitalStorage.digitalStorage;
   bool _isFirstField = true;
-  int _firstFieldIndex = 1, _secondFieldIndex = 2;
+  int _firstFieldIndex = 1, _secondFieldIndex = 3;
   dynamic _firstField = '0', _secondField = '0';
   @override
   Widget build(BuildContext context) {
@@ -26,8 +26,8 @@ class _TemperatureConversionScreenState
       backgroundColor: const Color(0xFF060606),
       appBar: AppBar(
         title: const Text(
-          'Temperature Conversion',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          'Speed Conversion',
+          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
         ),
       ),
       body: Column(
@@ -40,21 +40,20 @@ class _TemperatureConversionScreenState
                 children: [
                   FieldListTile(
                     field: _firstField,
-                    isSelectedField: _isFirstField,
-                    fieldTitle: _temperatureList[_firstFieldIndex].name,
+                    fieldTitle: _digitalStorageList[_firstFieldIndex].name,
                     index: _firstFieldIndex,
-                    list: _temperatureList,
+                    list: _digitalStorageList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
-                      setState(() => _isFirstField = true);
-                      clearButton();
+                      _isFirstField = true;
+                      _secondField = '0';
                     },
                     child: ListView.builder(
-                      itemCount: _temperatureList.length,
+                      itemCount: _digitalStorageList.length,
                       itemBuilder: (context, i) {
                         return BottomSheetTile(
                           index: i,
-                          list: _temperatureList,
+                          list: _digitalStorageList,
                           onSelecting: () {
                             setState(() => _firstFieldIndex = i);
                             Navigator.pop(context);
@@ -63,24 +62,26 @@ class _TemperatureConversionScreenState
                       },
                     ),
                   ),
-                  const Divider(),
+                  const Divider(
+                    height: 15,
+                    color: Colors.grey,
+                  ),
                   FieldListTile(
                     field: _secondField,
-                    isSelectedField: !_isFirstField,
-                    fieldTitle: _temperatureList[_secondFieldIndex].name,
+                    fieldTitle: _digitalStorageList[_secondFieldIndex].name,
                     index: _secondFieldIndex,
-                    list: _temperatureList,
+                    list: _digitalStorageList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
-                      setState(() => _isFirstField = false);
-                      clearButton();
+                      _isFirstField = false;
+                      _firstField = '0';
                     },
                     child: ListView.builder(
-                      itemCount: _temperatureList.length,
+                      itemCount: _digitalStorageList.length,
                       itemBuilder: (context, i) {
                         return BottomSheetTile(
                           index: i,
-                          list: _temperatureList,
+                          list: _digitalStorageList,
                           onSelecting: () {
                             setState(() => _secondFieldIndex = i);
                             Navigator.pop(context);
@@ -89,7 +90,10 @@ class _TemperatureConversionScreenState
                       },
                     ),
                   ),
-                  const Divider(),
+                  const Divider(
+                    height: 15,
+                    color: Colors.grey,
+                  ),
                 ],
               ),
             ),
@@ -121,8 +125,8 @@ class _TemperatureConversionScreenState
     required int to,
     required double amount,
   }) {
-    var result =
-        (amount / _temperatureList[from].rate) * _temperatureList[to].rate;
+    var result = (amount / _digitalStorageList[from].rate) *
+        _digitalStorageList[to].rate;
     setState(() {
       if (_isFirstField) {
         _secondField = result.toStringAsFixed(2);

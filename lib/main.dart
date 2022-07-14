@@ -1,3 +1,5 @@
+import 'package:calculator/models/digital_storage.dart';
+import 'package:calculator/screens/digitalStorage_conversion_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,7 +12,6 @@ import 'screens/power_conversion_screen.dart';
 import 'screens/pressure_conversion_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/speed_conversion_screen.dart';
-import 'screens/temperature_conversion_screen.dart';
 import 'screens/unit_converter_screen.dart';
 import 'screens/volume_conversion_screen.dart';
 import 'screens/weigth_conversion_screen.dart';
@@ -46,8 +47,8 @@ class MyApp extends StatelessWidget {
             const SpeedConversionScreen(),
         WeightConversionScreen.routeName: (context) =>
             const WeightConversionScreen(),
-        TemperatureConversionScreen.routeName: (context) =>
-            const TemperatureConversionScreen(),
+        DigitalStorageConversionScreen.routeName: (context) =>
+            const DigitalStorageConversionScreen(),
         PowerConversionScreen.routeName: (context) =>
             const PowerConversionScreen(),
         PressureConversionScreen.routeName: (context) =>
