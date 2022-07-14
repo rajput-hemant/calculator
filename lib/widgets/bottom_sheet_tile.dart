@@ -19,6 +19,10 @@ class BottomSheetTile extends StatelessWidget {
         onTap: onSelecting,
         child: Text(list[index].name),
       ),
+      trailing: Text(
+        "(${list[index].id})",
+        style: const TextStyle(color: Colors.grey),
+      ),
     );
   }
 }

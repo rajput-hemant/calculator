@@ -26,8 +26,8 @@ const kConverterStyle = TextStyle(
 );
 
 const kUnitTextStyle = TextStyle(
-  fontSize: 14.5,
-  fontWeight: FontWeight.w500,
+  fontSize: 15,
+  fontWeight: FontWeight.w600,
   fontFamily: 'Roboto',
   color: kWhiteColorText,
 );
