@@ -1,22 +1,20 @@
-import 'package:calculator/models/digital_storage.dart';
 import 'package:flutter/material.dart';
 
+import '../models/data.dart';
 import '../widgets/bottom_sheet_tile.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad_builder.dart';
 
-class DigitalStorageConversionScreen extends StatefulWidget {
-  static const routeName = '/digitalStorage-conversion-screen';
-  const DigitalStorageConversionScreen({Key? key}) : super(key: key);
+class DataConversionScreen extends StatefulWidget {
+  static const routeName = '/data-conversion-screen';
+  const DataConversionScreen({Key? key}) : super(key: key);
 
   @override
-  State<DigitalStorageConversionScreen> createState() =>
-      _DigitalStorageConversionScreenState();
+  State<DataConversionScreen> createState() => _DataConversionScreenState();
 }
 
-class _DigitalStorageConversionScreenState
-    extends State<DigitalStorageConversionScreen> {
-  final _digitalStorageList = DigitalStorage.digitalStorage;
+class _DataConversionScreenState extends State<DataConversionScreen> {
+  final _dataList = Data.data;
   bool _isFirstField = true;
   int _firstFieldIndex = 1, _secondFieldIndex = 3;
   dynamic _firstField = '0', _secondField = '0';
@@ -26,7 +24,7 @@ class _DigitalStorageConversionScreenState
       backgroundColor: const Color(0xFF060606),
       appBar: AppBar(
         title: const Text(
-          'Speed Conversion',
+          'Data Conversion',
           style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
         ),
       ),
@@ -40,20 +38,21 @@ class _DigitalStorageConversionScreenState
                 children: [
                   FieldListTile(
                     field: _firstField,
-                    fieldTitle: _digitalStorageList[_firstFieldIndex].name,
+                    isSelectedField: _isFirstField,
+                    fieldTitle: _dataList[_firstFieldIndex].name,
                     index: _firstFieldIndex,
-                    list: _digitalStorageList,
+                    list: _dataList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
                       _isFirstField = true;
                       _secondField = '0';
                     },
                     child: ListView.builder(
-                      itemCount: _digitalStorageList.length,
+                      itemCount: _dataList.length,
                       itemBuilder: (context, i) {
                         return BottomSheetTile(
                           index: i,
-                          list: _digitalStorageList,
+                          list: _dataList,
                           onSelecting: () {
                             setState(() => _firstFieldIndex = i);
                             Navigator.pop(context);
@@ -68,20 +67,21 @@ class _DigitalStorageConversionScreenState
                   ),
                   FieldListTile(
                     field: _secondField,
-                    fieldTitle: _digitalStorageList[_secondFieldIndex].name,
+                    isSelectedField: !_isFirstField,
+                    fieldTitle: _dataList[_secondFieldIndex].name,
                     index: _secondFieldIndex,
-                    list: _digitalStorageList,
+                    list: _dataList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
                       _isFirstField = false;
                       _firstField = '0';
                     },
                     child: ListView.builder(
-                      itemCount: _digitalStorageList.length,
+                      itemCount: _dataList.length,
                       itemBuilder: (context, i) {
                         return BottomSheetTile(
                           index: i,
-                          list: _digitalStorageList,
+                          list: _dataList,
                           onSelecting: () {
                             setState(() => _secondFieldIndex = i);
                             Navigator.pop(context);
@@ -125,8 +125,7 @@ class _DigitalStorageConversionScreenState
     required int to,
     required double amount,
   }) {
-    var result = (amount / _digitalStorageList[from].rate) *
-        _digitalStorageList[to].rate;
+    var result = (amount / _dataList[from].rate) * _dataList[to].rate;
     setState(() {
       if (_isFirstField) {
         _secondField = result.toStringAsFixed(2);
