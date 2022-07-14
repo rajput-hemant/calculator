@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:calculator/models/volume.dart';
 import 'package:calculator/widgets/bottom_sheet_tile.dart';
 import 'package:calculator/widgets/field_list_tile.dart';
@@ -15,7 +17,7 @@ class VolumeConversionScreen extends StatefulWidget {
 class _ConversionScreenState extends State<VolumeConversionScreen> {
   final _volumeList = Volume.volume;
   bool _isFirstField = true;
-  int _firstFieldIndex = 0, _secondFieldIndex = 1;
+  int _firstFieldIndex = 1, _secondFieldIndex = 11;
   dynamic _firstField = '0', _secondField = '0';
 
   @override
@@ -52,6 +54,7 @@ class _ConversionScreenState extends State<VolumeConversionScreen> {
                           list: _volumeList,
                           onSelecting: () {
                             setState(() => _firstFieldIndex = i);
+                            log("Second Field Index: $_secondFieldIndex");
                             Navigator.pop(context);
                           },
                         );
@@ -78,6 +81,7 @@ class _ConversionScreenState extends State<VolumeConversionScreen> {
                           list: _volumeList,
                           onSelecting: () {
                             setState(() => _secondFieldIndex = i);
+                            log("Second Field Index: $_secondFieldIndex");
                             Navigator.pop(context);
                           },
                         );

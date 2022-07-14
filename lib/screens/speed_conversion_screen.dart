@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:calculator/models/speed.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +18,7 @@ class SpeedConversionScreen extends StatefulWidget {
 class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
   final _speedList = Speed.speed;
   bool _isFirstField = true;
-  int _firstFieldIndex = 1, _secondFieldIndex = 3;
+  int _firstFieldIndex = 0, _secondFieldIndex = 3;
   dynamic _firstField = '0', _secondField = '0';
   @override
   Widget build(BuildContext context) {
@@ -55,6 +57,7 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
                           list: _speedList,
                           onSelecting: () {
                             setState(() => _firstFieldIndex = i);
+                            log("First Field Index: $_firstFieldIndex");
                             Navigator.pop(context);
                           },
                         );
@@ -81,6 +84,7 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
                           list: _speedList,
                           onSelecting: () {
                             setState(() => _secondFieldIndex = i);
+                            log("Second Field Index: $_secondFieldIndex");
                             Navigator.pop(context);
                           },
                         );

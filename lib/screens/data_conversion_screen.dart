@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../models/data.dart';
@@ -16,7 +18,7 @@ class DataConversionScreen extends StatefulWidget {
 class _DataConversionScreenState extends State<DataConversionScreen> {
   final _dataList = Data.data;
   bool _isFirstField = true;
-  int _firstFieldIndex = 1, _secondFieldIndex = 3;
+  int _firstFieldIndex = 7, _secondFieldIndex = 3;
   dynamic _firstField = '0', _secondField = '0';
   @override
   Widget build(BuildContext context) {
@@ -55,6 +57,7 @@ class _DataConversionScreenState extends State<DataConversionScreen> {
                           list: _dataList,
                           onSelecting: () {
                             setState(() => _firstFieldIndex = i);
+                            log("First Field Index: $_firstFieldIndex");
                             Navigator.pop(context);
                           },
                         );
@@ -81,6 +84,7 @@ class _DataConversionScreenState extends State<DataConversionScreen> {
                           list: _dataList,
                           onSelecting: () {
                             setState(() => _secondFieldIndex = i);
+                            log("Second Field Index: $_secondFieldIndex");
                             Navigator.pop(context);
                           },
                         );

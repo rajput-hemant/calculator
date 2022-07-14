@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:calculator/models/length.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +18,7 @@ class LengthConversionScreen extends StatefulWidget {
 class _LengthConversionScreenState extends State<LengthConversionScreen> {
   final _lengthList = Length.length;
   bool _isFirstField = true;
-  int _firstFieldIndex = 1, _secondFieldIndex = 3;
+  int _firstFieldIndex = 5, _secondFieldIndex = 4;
   dynamic _firstField = '0', _secondField = '0';
 
   @override
@@ -56,6 +58,7 @@ class _LengthConversionScreenState extends State<LengthConversionScreen> {
                           list: _lengthList,
                           onSelecting: () {
                             setState(() => _firstFieldIndex = i);
+                            log("First Field Index: $_firstFieldIndex");
                             Navigator.pop(context);
                           },
                         );
@@ -82,6 +85,7 @@ class _LengthConversionScreenState extends State<LengthConversionScreen> {
                           list: _lengthList,
                           onSelecting: () {
                             setState(() => _secondFieldIndex = i);
+                            log("Second Field Index: $_secondFieldIndex");
                             Navigator.pop(context);
                           },
                         );

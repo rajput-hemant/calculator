@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:calculator/models/weight.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +18,7 @@ class WeightConversionScreen extends StatefulWidget {
 class _WeightConversionScreenState extends State<WeightConversionScreen> {
   final _weightList = Weight.weight;
   bool _isFirstField = true;
-  int _firstFieldIndex = 0, _secondFieldIndex = 1;
+  int _firstFieldIndex = 3, _secondFieldIndex = 2;
   dynamic _firstField = '0', _secondField = '0';
   @override
   Widget build(BuildContext context) {
@@ -55,6 +57,7 @@ class _WeightConversionScreenState extends State<WeightConversionScreen> {
                           list: _weightList,
                           onSelecting: () {
                             setState(() => _firstFieldIndex = i);
+                            log("First Field Index: $_firstFieldIndex");
                             Navigator.pop(context);
                           },
                         );
@@ -83,6 +86,7 @@ class _WeightConversionScreenState extends State<WeightConversionScreen> {
                           list: _weightList,
                           onSelecting: () {
                             setState(() => _secondFieldIndex = i);
+                            log("Second Field Index: $_secondFieldIndex");
                             Navigator.pop(context);
                           },
                         );
