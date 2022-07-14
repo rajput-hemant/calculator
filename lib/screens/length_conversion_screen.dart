@@ -123,9 +123,17 @@ class _LengthConversionScreenState extends State<LengthConversionScreen> {
     var result = (amount / _lengthList[from].rate) * _lengthList[to].rate;
     setState(() {
       if (_isFirstField) {
-        _secondField = result.toStringAsFixed(2);
+        if (result.toString().length > 8) {
+          _secondField = result.toStringAsFixed(6);
+        } else {
+          _secondField = result.toString();
+        }
       } else {
-        _firstField = result.toStringAsFixed(2);
+        if (result.toString().length > 8) {
+          _firstField = result.toStringAsFixed(6);
+        } else {
+          _firstField = result.toString();
+        }
       }
     });
   }

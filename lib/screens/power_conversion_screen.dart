@@ -123,9 +123,17 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
     var result = (amount / _powerList[from].rate) * _powerList[to].rate;
     setState(() {
       if (_isFirstField) {
-        _secondField = result.toStringAsFixed(2);
+        if (result.toString().length > 8) {
+          _secondField = result.toStringAsFixed(6);
+        } else {
+          _secondField = result.toString();
+        }
       } else {
-        _firstField = result.toStringAsFixed(2);
+        if (result.toString().length > 8) {
+          _firstField = result.toStringAsFixed(6);
+        } else {
+          _firstField = result.toString();
+        }
       }
     });
   }

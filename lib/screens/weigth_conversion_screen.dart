@@ -124,9 +124,17 @@ class _WeightConversionScreenState extends State<WeightConversionScreen> {
     var result = (amount / _weightList[from].rate) * _weightList[to].rate;
     setState(() {
       if (_isFirstField) {
-        _secondField = result.toStringAsFixed(2);
+        if (result.toString().length > 8) {
+          _secondField = result.toStringAsFixed(6);
+        } else {
+          _secondField = result.toString();
+        }
       } else {
-        _firstField = result.toStringAsFixed(2);
+        if (result.toString().length > 8) {
+          _firstField = result.toStringAsFixed(6);
+        } else {
+          _firstField = result.toString();
+        }
       }
     });
   }
