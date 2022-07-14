@@ -75,8 +75,7 @@ class UnitConverterScreen extends StatelessWidget {
                 ),
                 UnitBox(
                   icondata: const UnitIcon(
-                      iconName: FontAwesomeIcons.hardDrive,
-                      textData: 'Digital Storage'),
+                      iconName: FontAwesomeIcons.hardDrive, textData: 'Data'),
                   iconfunction: () => Navigator.pushNamed(
                       context, DataConversionScreen.routeName),
                 ),

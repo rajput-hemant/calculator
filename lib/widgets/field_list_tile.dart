@@ -29,10 +29,6 @@ class FieldListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: GestureDetector(
-        child: Text(
-          fieldTitle,
-          style: kUnitTextStyle,
-        ),
         onTap: () {
           showModalBottomSheet(
             context: context,
@@ -52,15 +48,24 @@ class FieldListTile extends StatelessWidget {
             },
           );
         },
+        child: Text(
+          fieldTitle,
+          maxLines: 1,
+          style: kUnitTextStyle,
+        ),
       ),
       subtitle: Text(list[index].id),
-      trailing: InkWell(
-        onTap: onTappingField,
-        child: Text(
-          field,
-          style: TextStyle(
-            fontSize: isSelectedField ? 32 : 24,
-            color: isSelectedField ? Colors.blue[300] : Colors.white,
+      trailing: Expanded(
+        flex: 5,
+        child: GestureDetector(
+          onTap: onTappingField,
+          child: Text(
+            field,
+            style: TextStyle(
+              fontSize: isSelectedField ? 32 : 24,
+              color: isSelectedField ? Colors.blue[300] : Colors.white,
+            ),
+            maxLines: 1,
           ),
         ),
       ),

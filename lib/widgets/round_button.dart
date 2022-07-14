@@ -7,16 +7,17 @@ class RoundButton extends StatefulWidget {
   final Color colorText, backgroundColor;
   final VoidCallback onPressed;
   final NeumorphicBoxShape buttonBoxShape;
-  final double buttonWidth;
+  final double buttonWidth, textWidth;
 
   const RoundButton({
     Key? key,
     required this.buttonText,
     required this.onPressed,
-    this.buttonWidth = 8,
+    this.buttonWidth = 10,
+    this.textWidth = 28,
     this.colorText = kWhiteColorText,
     this.buttonBoxShape = const NeumorphicBoxShape.circle(),
-    this.backgroundColor = const Color(0xFF060606),
+    this.backgroundColor = const Color(0xFF171717),
   }) : super(key: key);
 
   @override
@@ -42,9 +43,9 @@ class _RoundButtonState extends State<RoundButton> {
             widget.buttonText,
             style: TextStyle(
               color: widget.colorText,
-              fontSize: 28,
+              fontSize: widget.textWidth,
               fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
