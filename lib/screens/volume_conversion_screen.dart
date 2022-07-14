@@ -119,9 +119,17 @@ class _ConversionScreenState extends State<VolumeConversionScreen> {
     var result = (amount / _volumeList[from].rate) * _volumeList[to].rate;
     setState(() {
       if (_isFirstField) {
-        _secondField = result.toStringAsFixed(2);
+        if (result.toString().length > 8) {
+          _secondField = result.toStringAsFixed(6);
+        } else {
+          _secondField = result.toString();
+        }
       } else {
-        _firstField = result.toStringAsFixed(2);
+        if (result.toString().length > 8) {
+          _firstField = result.toStringAsFixed(6);
+        } else {
+          _firstField = result.toString();
+        }
       }
     });
   }
