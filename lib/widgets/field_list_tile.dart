@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../utils/constants.dart';
 import 'scrollable_sheet.dart';
 
 class FieldListTile extends StatelessWidget {
@@ -7,6 +8,7 @@ class FieldListTile extends StatelessWidget {
   final List list;
   final Widget child;
   final dynamic field;
+  final bool isSelectedField;
   final String fieldTitle;
   final String bottomSheetHeader;
   final VoidCallback onTappingField;
@@ -16,6 +18,7 @@ class FieldListTile extends StatelessWidget {
     required this.index,
     required this.field,
     required this.fieldTitle,
+    required this.isSelectedField,
     required this.onTappingField,
     required this.list,
     required this.child,
@@ -26,10 +29,14 @@ class FieldListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: GestureDetector(
-        child: Text(fieldTitle),
+        child: Text(
+          fieldTitle,
+          style: kUnitTextStyle,
+        ),
         onTap: () {
           showModalBottomSheet(
             context: context,
+            backgroundColor: const Color(0xFF171717),
             isScrollControlled: true,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -51,7 +58,10 @@ class FieldListTile extends StatelessWidget {
         onTap: onTappingField,
         child: Text(
           field,
-          style: const TextStyle(fontSize: 24),
+          style: TextStyle(
+            fontSize: isSelectedField ? 32 : 24,
+            color: isSelectedField ? Colors.blue[300] : Colors.white,
+          ),
         ),
       ),
     );
