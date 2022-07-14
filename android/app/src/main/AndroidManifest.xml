@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.calculator">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="calculator"
+        android:label="Calculator"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
