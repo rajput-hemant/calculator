@@ -199,39 +199,31 @@ class _ConversionScreenState extends State<VolumeConversionScreen> {
     return setState(
       () {
         if (_isFirstField) {
-          if (_firstField == '0.0') {
+          if (_firstField == '0.0' ||
+              _firstField == '00' ||
+              _firstField == '0') {
             _firstField = strToConcate!;
           } else {
             if (strToConcate == "00") {
-              _firstField = (int.parse(_firstField) * 100).toString();
+              _firstField += '00';
             } else if (strToConcate == '0') {
-              _firstField = (int.parse(_firstField) * 10).toString();
+              _firstField += '0';
             } else {
-              if (_firstField.toString().contains('.')) {
-                _firstField =
-                    (double.parse(_firstField + strToConcate!)).toString();
-              } else {
-                _firstField =
-                    (int.parse(_firstField + strToConcate!)).toString();
-              }
+              _firstField += strToConcate;
             }
           }
         } else {
-          if (_secondField == '0.0') {
+          if (_secondField == '0.0' ||
+              _secondField == '00' ||
+              _secondField == '0') {
             _secondField = strToConcate!;
           } else {
             if (strToConcate == "00") {
-              _secondField = (int.parse(_secondField) * 100).toString();
+              _secondField += '00';
             } else if (strToConcate == '0') {
-              _secondField = (int.parse(_secondField) * 10).toString();
+              _secondField += '0';
             } else {
-              if (_firstField.toString().contains('.')) {
-                _secondField =
-                    (double.parse(_secondField + strToConcate!)).toString();
-              } else {
-                _secondField =
-                    (int.parse(_secondField + strToConcate!)).toString();
-              }
+              _secondField += strToConcate;
             }
           }
         }
