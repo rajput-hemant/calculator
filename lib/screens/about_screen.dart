@@ -43,7 +43,10 @@ class AboutScreen extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.all(10),
               child: Text(
-                "A Simple but elegant Calculator app made with Flutter using\nGoogle's Material Design with\nCurrency (Exchange Rate)\nand Unit Converter.",
+                "A Simple but elegant Calculator app made with Flutter using\n"
+                "Google's Material Design with\n"
+                "Currency (Exchange Rate)\n"
+                "and Unit Converter.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 18,
@@ -51,7 +54,6 @@ class AboutScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            // const Spacer(),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
               child: Text(
@@ -118,9 +120,10 @@ class AboutScreen extends StatelessWidget {
                   isCloseButton: false,
                   backgroundColor: Color(0xFF171717),
                   titleStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 content: Column(
                   children: [
@@ -157,8 +160,6 @@ class AboutScreen extends StatelessWidget {
               ).show(),
             ),
             const Spacer(flex: 2),
-            // const Spacer(),
-            // const Spacer(),
             const Text(
               "Made with ❤️ using Flutter.",
               textAlign: TextAlign.center,
