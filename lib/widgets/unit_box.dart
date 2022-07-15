@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class UnitBox extends StatelessWidget {
-
   final Widget icondata;
   final VoidCallback iconfunction;
 
-  const UnitBox({Key? key, required this.icondata, required this.iconfunction}) : super(key: key);
+  const UnitBox({Key? key, required this.icondata, required this.iconfunction})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class UnitBox extends StatelessWidget {
           margin: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: const Color(0xFF060606),
+            color: Colors.black,
           ),
           child: icondata,
         ),
