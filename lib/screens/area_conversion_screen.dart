@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:calculator/models/area.dart';
 import 'package:flutter/material.dart';
 
+import '../models/area.dart';
 import '../widgets/bottom_sheet_tile.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad_builder.dart';
@@ -41,9 +41,9 @@ class _AreaConversionScreenState extends State<AreaConversionScreen> {
                   FieldListTile(
                     field: _firstField,
                     isSelectedField: _isFirstField,
-                    fieldTitle: _areaList[_firstFieldIndex].name,
+                    title: _areaList[_firstFieldIndex].name,
+                    subtitle: _areaList[_firstFieldIndex].id,
                     index: _firstFieldIndex,
-                    list: _areaList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
                       setState(() => _isFirstField = true);
@@ -68,9 +68,9 @@ class _AreaConversionScreenState extends State<AreaConversionScreen> {
                   FieldListTile(
                     field: _secondField,
                     isSelectedField: !_isFirstField,
-                    fieldTitle: _areaList[_secondFieldIndex].name,
+                    title: _areaList[_secondFieldIndex].name,
+                    subtitle: _areaList[_secondFieldIndex].id,
                     index: _secondFieldIndex,
-                    list: _areaList,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
                       setState(() => _isFirstField = false);
@@ -108,7 +108,7 @@ class _AreaConversionScreenState extends State<AreaConversionScreen> {
             onPressed8: () => onPressed(strToConcate: "8"),
             onPressed9: () => onPressed(strToConcate: "9"),
             onPressed00: () => onPressed(strToConcate: "00"),
-            onPressedDot: () => decimalButton(),
+            onPressedDot: decimalButton,
             onPressedDel: deleteButton,
             onPressedClear: clearButton,
             onPressedConvert: convertButton,

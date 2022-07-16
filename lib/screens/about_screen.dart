@@ -67,16 +67,15 @@ class AboutScreen extends StatelessWidget {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                fixedSize: const Size(140, 50),
+                fixedSize: const Size(150, 50),
                 padding: const EdgeInsets.all(10),
                 primary: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: Image.network(
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/GitHub_logo_2013.svg/600px-GitHub_logo_2013.svg.png',
-                // color: Colors.white,
+              child: Image.asset(
+                'assets/images/github.png',
                 height: 25,
               ),
               onPressed: () =>
@@ -98,7 +97,7 @@ class AboutScreen extends StatelessWidget {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
-                fixedSize: const Size(140, 50),
+                fixedSize: const Size(150, 50),
                 padding: const EdgeInsets.all(10),
                 shadowColor: Colors.grey.shade300,
                 shape: RoundedRectangleBorder(

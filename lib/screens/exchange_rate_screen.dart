@@ -62,10 +62,9 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                   FieldListTile(
                     field: _firstField,
                     isSelectedField: _isFirstField,
-                    fieldTitle:
-                        CurrenciesData.currenciesData[_firstFieldIndex].name,
                     index: _firstFieldIndex,
-                    list: _currencyList,
+                    title: _currencyList[_firstFieldIndex].name,
+                    subtitle: _currencyList[_firstFieldIndex].id,
                     bottomSheetHeader: "Select Currency",
                     onTappingField: () {
                       setState(() {
@@ -92,10 +91,9 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                   FieldListTile(
                     field: _secondField,
                     isSelectedField: !_isFirstField,
-                    fieldTitle:
-                        CurrenciesData.currenciesData[_secondFieldIndex].name,
                     index: _secondFieldIndex,
-                    list: _currencyList,
+                    title: _currencyList[_firstFieldIndex].name,
+                    subtitle: _currencyList[_firstFieldIndex].id,
                     bottomSheetHeader: "Select Currency",
                     onTappingField: () {
                       setState(() {
@@ -135,7 +133,7 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
             onPressed8: () => onPressed(strToConcate: "8"),
             onPressed9: () => onPressed(strToConcate: "9"),
             onPressed00: () => onPressed(strToConcate: "00"),
-            onPressedDot: () => decimalButton(),
+            onPressedDot: decimalButton,
             onPressedDel: deleteButton,
             onPressedClear: clearButton,
             onPressedConvert: convertButton,

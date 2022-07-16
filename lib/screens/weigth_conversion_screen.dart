@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:calculator/models/weight.dart';
 import 'package:flutter/material.dart';
 
+import '../models/weight.dart';
 import '../widgets/bottom_sheet_tile.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad_builder.dart';
@@ -41,9 +41,9 @@ class _WeightConversionScreenState extends State<WeightConversionScreen> {
                   FieldListTile(
                     field: _firstField,
                     isSelectedField: _isFirstField,
-                    fieldTitle: _weightList[_firstFieldIndex].name,
                     index: _firstFieldIndex,
-                    list: _weightList,
+                    title: _weightList[_firstFieldIndex].name,
+                    subtitle: _weightList[_firstFieldIndex].id,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
                       setState(() => _isFirstField = true);
@@ -68,9 +68,9 @@ class _WeightConversionScreenState extends State<WeightConversionScreen> {
                   FieldListTile(
                     field: _secondField,
                     isSelectedField: !_isFirstField,
-                    fieldTitle: _weightList[_secondFieldIndex].name,
                     index: _secondFieldIndex,
-                    list: _weightList,
+                    title: _weightList[_secondFieldIndex].name,
+                    subtitle: _weightList[_secondFieldIndex].id,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
                       setState(() {
@@ -110,7 +110,7 @@ class _WeightConversionScreenState extends State<WeightConversionScreen> {
             onPressed8: () => onPressed(strToConcate: "8"),
             onPressed9: () => onPressed(strToConcate: "9"),
             onPressed00: () => onPressed(strToConcate: "00"),
-            onPressedDot: () => decimalButton(),
+            onPressedDot: decimalButton,
             onPressedDel: deleteButton,
             onPressedClear: clearButton,
             onPressedConvert: convertButton,

@@ -1,10 +1,11 @@
 import 'dart:developer';
 
-import 'package:calculator/models/volume.dart';
-import 'package:calculator/widgets/bottom_sheet_tile.dart';
-import 'package:calculator/widgets/field_list_tile.dart';
-import 'package:calculator/widgets/keypad_builder.dart';
 import 'package:flutter/material.dart';
+
+import '../models/volume.dart';
+import '../widgets/bottom_sheet_tile.dart';
+import '../widgets/field_list_tile.dart';
+import '../widgets/keypad_builder.dart';
 
 class VolumeConversionScreen extends StatefulWidget {
   static const routeName = '/volume-conversion-screen';
@@ -38,9 +39,9 @@ class _ConversionScreenState extends State<VolumeConversionScreen> {
                   FieldListTile(
                     field: _firstField,
                     isSelectedField: _isFirstField,
-                    fieldTitle: _volumeList[_firstFieldIndex].name,
                     index: _firstFieldIndex,
-                    list: _volumeList,
+                    title: _volumeList[_firstFieldIndex].name,
+                    subtitle: _volumeList[_firstFieldIndex].id,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
                       setState(() => _isFirstField = true);
@@ -65,9 +66,9 @@ class _ConversionScreenState extends State<VolumeConversionScreen> {
                   FieldListTile(
                     field: _secondField,
                     isSelectedField: !_isFirstField,
-                    fieldTitle: _volumeList[_secondFieldIndex].name,
                     index: _secondFieldIndex,
-                    list: _volumeList,
+                    title: _volumeList[_secondFieldIndex].name,
+                    subtitle: _volumeList[_secondFieldIndex].id,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
                       setState(() => _isFirstField = false);
@@ -105,7 +106,7 @@ class _ConversionScreenState extends State<VolumeConversionScreen> {
             onPressed8: () => onPressed(strToConcate: "8"),
             onPressed9: () => onPressed(strToConcate: "9"),
             onPressed00: () => onPressed(strToConcate: "00"),
-            onPressedDot: () => decimalButton(),
+            onPressedDot: decimalButton,
             onPressedDel: deleteButton,
             onPressedClear: clearButton,
             onPressedConvert: convertButton,
