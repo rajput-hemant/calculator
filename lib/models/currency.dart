@@ -96,13 +96,13 @@ class CurrenciesData {
     CurrenciesData(
       name: "Indian Rupee",
       id: "INR",
-      flag: " 🇮🇳",
+      flag: "🇮🇳",
       symbol: "₹",
     ),
     CurrenciesData(
       name: "Indonesian Rupiah",
       id: "IDR",
-      flag: "🇮🇳",
+      flag: "🇮🇩",
       symbol: "Rp",
     ),
     CurrenciesData(
