@@ -63,8 +63,10 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                     field: _firstField,
                     isSelectedField: _isFirstField,
                     index: _firstFieldIndex,
-                    title: _currencyList[_firstFieldIndex].name,
-                    subtitle: _currencyList[_firstFieldIndex].id,
+                    title:
+                        "${_currencyList[_firstFieldIndex].flag} ${_currencyList[_firstFieldIndex].name}",
+                    subtitle:
+                        "${_currencyList[_firstFieldIndex].symbol} ${_currencyList[_firstFieldIndex].id}",
                     bottomSheetHeader: "Select Currency",
                     onTappingField: () {
                       setState(() {
@@ -92,8 +94,10 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                     field: _secondField,
                     isSelectedField: !_isFirstField,
                     index: _secondFieldIndex,
-                    title: _currencyList[_firstFieldIndex].name,
-                    subtitle: _currencyList[_firstFieldIndex].id,
+                    title:
+                        "${_currencyList[_secondFieldIndex].flag} ${_currencyList[_secondFieldIndex].name}",
+                    subtitle:
+                        "${_currencyList[_secondFieldIndex].symbol} ${_currencyList[_secondFieldIndex].id}",
                     bottomSheetHeader: "Select Currency",
                     onTappingField: () {
                       setState(() {
