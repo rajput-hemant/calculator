@@ -41,9 +41,9 @@ class _DataConversionScreenState extends State<DataConversionScreen> {
                   FieldListTile(
                     field: _firstField,
                     isSelectedField: _isFirstField,
-                    fieldTitle: _dataList[_firstFieldIndex].name,
                     index: _firstFieldIndex,
-                    list: _dataList,
+                    title: _dataList[_firstFieldIndex].name,
+                    subtitle: _dataList[_firstFieldIndex].id,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
                       _isFirstField = true;
@@ -68,9 +68,9 @@ class _DataConversionScreenState extends State<DataConversionScreen> {
                   FieldListTile(
                     field: _secondField,
                     isSelectedField: !_isFirstField,
-                    fieldTitle: _dataList[_secondFieldIndex].name,
                     index: _secondFieldIndex,
-                    list: _dataList,
+                    title: _dataList[_secondFieldIndex].name,
+                    subtitle: _dataList[_secondFieldIndex].id,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
                       _isFirstField = false;
@@ -108,7 +108,7 @@ class _DataConversionScreenState extends State<DataConversionScreen> {
             onPressed8: () => onPressed(strToConcate: "8"),
             onPressed9: () => onPressed(strToConcate: "9"),
             onPressed00: () => onPressed(strToConcate: "00"),
-            onPressedDot: () => decimalButton(),
+            onPressedDot: decimalButton,
             onPressedDel: deleteButton,
             onPressedClear: clearButton,
             onPressedConvert: convertButton,

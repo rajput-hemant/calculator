@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:calculator/models/speed.dart';
 import 'package:flutter/material.dart';
 
+import '../models/speed.dart';
 import '../widgets/bottom_sheet_tile.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad_builder.dart';
@@ -41,9 +41,9 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
                   FieldListTile(
                     field: _firstField,
                     isSelectedField: _isFirstField,
-                    fieldTitle: _speedList[_firstFieldIndex].name,
                     index: _firstFieldIndex,
-                    list: _speedList,
+                    title: _speedList[_firstFieldIndex].name,
+                    subtitle: _speedList[_firstFieldIndex].id,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
                       setState(() => _isFirstField = true);
@@ -68,9 +68,9 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
                   FieldListTile(
                     field: _secondField,
                     isSelectedField: !_isFirstField,
-                    fieldTitle: _speedList[_secondFieldIndex].name,
                     index: _secondFieldIndex,
-                    list: _speedList,
+                    title: _speedList[_secondFieldIndex].name,
+                    subtitle: _speedList[_secondFieldIndex].id,
                     bottomSheetHeader: "Select Unit",
                     onTappingField: () {
                       setState(() => _isFirstField = false);
@@ -108,7 +108,7 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
             onPressed8: () => onPressed(strToConcate: "8"),
             onPressed9: () => onPressed(strToConcate: "9"),
             onPressed00: () => onPressed(strToConcate: "00"),
-            onPressedDot: () => decimalButton(),
+            onPressedDot: decimalButton,
             onPressedDel: deleteButton,
             onPressedClear: clearButton,
             onPressedConvert: convertButton,

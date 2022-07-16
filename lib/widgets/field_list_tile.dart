@@ -5,23 +5,22 @@ import 'scrollable_sheet.dart';
 
 class FieldListTile extends StatelessWidget {
   final int index;
-  final List list;
   final Widget child;
   final dynamic field;
   final bool isSelectedField;
-  final String fieldTitle;
+  final String title, subtitle;
   final String bottomSheetHeader;
   final VoidCallback onTappingField;
 
   const FieldListTile({
     super.key,
     required this.index,
-    required this.field,
-    required this.fieldTitle,
-    required this.isSelectedField,
-    required this.onTappingField,
-    required this.list,
     required this.child,
+    required this.field,
+    required this.title,
+    required this.subtitle,
+    required this.onTappingField,
+    required this.isSelectedField,
     required this.bottomSheetHeader,
   });
 
@@ -49,12 +48,12 @@ class FieldListTile extends StatelessWidget {
           );
         },
         child: Text(
-          fieldTitle,
+          title,
           maxLines: 1,
           style: kUnitTextStyle,
         ),
       ),
-      subtitle: Text(list[index].id),
+      subtitle: Text(subtitle),
       trailing: GestureDetector(
         onTap: onTappingField,
         child: Text(
