@@ -12,11 +12,11 @@
 
 ---
 
-**[<kbd> <br> Universal Release <br> </kbd>][universal-release]** &nbsp;&nbsp;
-**[<kbd> <br> arm64 <br> </kbd>][arm64]**&nbsp;&nbsp;
-**[<kbd> <br> armabi <br> </kbd>][armabi]**&nbsp;&nbsp;
-**[<kbd> <br> Source Code (zip) <br> </kbd>][sc-zip]**&nbsp;&nbsp;
-**[<kbd> <br> Source Code (tar.gz) <br> </kbd>][sc-tar.gz]**
+**[<kbd> <br> **Universal Release** <br> </kbd>][universal-release]** &nbsp;&nbsp;
+**[<kbd> <br> **arm64** <br> </kbd>][arm64]**&nbsp;&nbsp;
+**[<kbd> <br> **armabi** <br> </kbd>][armabi]**&nbsp;&nbsp;
+**[<kbd> <br> **Source Code (zip)** <br> </kbd>][sc-zip]**&nbsp;&nbsp;
+**[<kbd> <br> **Source Code (tar.gz)** <br> </kbd>][sc-tar.gz]**
 
 ---
 
@@ -47,6 +47,18 @@
 - Make Application Standout.
 
 <div align=center>
+
+## Dependencies Used
+
+---
+
+**[<kbd> <br> **http**: ^0.13.4 <br> </kbd>][http]**&nbsp;&nbsp;
+**[<kbd> <br> **flutter_neumorphic**: ^3.2.0 <br> </kbd>][flutter_neumorphic]**&nbsp;&nbsp;
+**[<kbd> <br> **font_awesome_flutter**: ^10.1.0 <br> </kbd>][font_awesome_flutter]** <br><br>
+**[<kbd> <br> **rflutter_alert**: ^2.0.4 <br> </kbd>][rflutter_alert]**&nbsp;&nbsp;
+**[<kbd> <br> **url_launcher**: ^6.1.5 <br> </kbd>][url_launcher]**
+
+---
 
 ## 📱 App UI
 
@@ -188,3 +200,11 @@ rajput-hemant@arch:~$ flutter run
 
 [sc-zip]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.1.0.zip
 [sc-tar.gz]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.1.0.tar.gz
+
+<!-----------------------------{ dependencies used }---------------------------->
+
+[http]: https://pub.dev/packages/http
+[flutter_neumorphic]: https://pub.dev/packages/flutter_neumorphic
+[font_awesome_flutter]: https://pub.dev/packages/font_awesome_flutter
+[rflutter_alert]: https://pub.dev/packages/rflutter_alert
+[url_launcher]: https://pub.dev/packages/url_launcher
