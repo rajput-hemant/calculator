@@ -1,76 +1,87 @@
-class Data {
-  String id, name;
-  double rate;
-  Data({
+import 'models.dart';
+
+class Data implements Unit {
+  const Data({
     required this.id,
     required this.name,
     required this.rate,
   });
-  //Basic Unit Megabit
-  static var data = [
+
+  @override
+  @override
+  final String id, name;
+  @override
+  final double rate;
+  @override
+  String? get flag => null;
+  @override
+  String? get symbol => null;
+
+  // Base Unit Megabit
+  static const dataList = [
     Data(
-      name: 'Bit',
       id: 'b',
+      name: 'Bit',
       rate: 1048576,
     ),
     Data(
-      name: 'Byte',
       id: 'B',
+      name: 'Byte',
       rate: 131072,
     ),
     Data(
-      name: 'Gigabit',
       id: 'gb',
+      name: 'Gigabit',
       rate: 0.0009765625,
     ),
     Data(
-      name: 'GigaByte',
       id: 'GB',
+      name: 'GigaByte',
       rate: 0.0001220703125,
     ),
     Data(
-      name: 'Kilobit',
       id: 'kb',
+      name: 'Kilobit',
       rate: 1024,
     ),
     Data(
-      name: 'KiloByte',
       id: 'KB',
+      name: 'KiloByte',
       rate: 128,
     ),
     Data(
-      name: 'Megabit',
       id: 'mb',
+      name: 'Megabit',
       rate: 1,
     ),
     Data(
-      name: 'MegaByte',
       id: 'MB',
+      name: 'MegaByte',
       rate: 0.125,
     ),
     Data(
-      name: 'Nibble',
       id: 'nibble',
+      name: 'Nibble',
       rate: 262144,
     ),
     Data(
-      name: 'Petabit',
       id: 'pb',
+      name: 'Petabit',
       rate: 0.931322e-11,
     ),
     Data(
-      name: 'PetaByte',
       id: 'PB',
+      name: 'PetaByte',
       rate: 1.16415e-10,
     ),
     Data(
-      name: 'Terabit',
       id: 'tb',
+      name: 'Terabit',
       rate: 9.5367e-7,
     ),
     Data(
-      name: 'TeraByte',
       id: 'TB',
+      name: 'TeraByte',
       rate: 1.1920e-7,
     ),
   ];

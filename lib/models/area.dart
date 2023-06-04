@@ -1,72 +1,81 @@
-class Area {
-  String id, name;
-  double rate;
+import 'unit.dart';
 
-  Area({
+class Area implements Unit {
+  const Area({
     required this.id,
     required this.name,
     required this.rate,
   });
+
+  @override
+  final String id, name;
+  @override
+  final double rate;
+  @override
+  String? get flag => null;
+  @override
+  String? get symbol => null;
+
   // Base Unit Square metre
-  static var area = [
+  static const areaList = [
     Area(
-      name: 'Acre',
-      id: 'ac',
-      rate: 0.0002471,
-    ),
-    Area(
-      name: 'Are',
-      id: 'ar',
-      rate: 0.01,
-    ),
-    Area(
-      name: 'Hectares',
-      id: 'ha',
-      rate: 0.0001,
-    ),
-    Area(
-      name: 'Square Centimeter',
-      id: 'cm2',
-      rate: 10000.0,
-    ),
-    Area(
-      name: 'Square Decimeter',
-      id: 'dm2',
-      rate: 100.0,
-    ),
-    Area(
-      name: 'Square Foot',
-      id: 'ft2',
-      rate: 10.764,
-    ),
-    Area(
-      name: 'Square Inch',
-      id: 'in2',
-      rate: 1550.0031,
-    ),
-    Area(
-      name: 'Square kilometer',
-      id: 'km2',
-      rate: 1e-6,
-    ),
-    Area(
-      name: 'Square Metre',
-      id: 'm2',
+      id: 'm\u00B2',
+      name: 'Metre\u00B2',
       rate: 1,
     ),
     Area(
-      name: 'Square Mile',
-      id: 'mi2',
+      id: 'cm\u00B2',
+      name: 'Centimeter\u00B2',
+      rate: 10000.0,
+    ),
+    Area(
+      id: 'ha',
+      name: 'Hectares',
+      rate: 0.0001,
+    ),
+    Area(
+      id: 'ac',
+      name: 'Acre',
+      rate: 0.0002471,
+    ),
+    Area(
+      id: 'ar',
+      name: 'Are',
+      rate: 0.01,
+    ),
+    Area(
+      id: 'dm\u00B2',
+      name: 'Decimeter\u00B2',
+      rate: 100.0,
+    ),
+    Area(
+      id: 'ft\u00B2',
+      name: 'Foot\u00B2',
+      rate: 10.764,
+    ),
+    Area(
+      id: 'in\u00B2',
+      name: 'Inch\u00B2',
+      rate: 1550.0031,
+    ),
+    Area(
+      id: '\u00B2',
+      name: 'kilometer\u00B2',
+      rate: 1e-6,
+    ),
+    Area(
+      id: 'mi\u00B2',
+      name: 'Mile\u00B2',
       rate: 3.86e-7,
     ),
     Area(
-      name: 'Square Milimeter',
-      id: 'mm2',
+      id: 'mm\u00B2',
+      name: 'Milimeter\u00B2',
       rate: 1000000.0,
     ),
     Area(
-      name: 'Square Yard',
-      id: 'yd2',
+      id: 'yd\u00B2',
+      name: 'Yard\u00B2',
       rate: 1.19599,
     ),
   ];

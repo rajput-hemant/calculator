@@ -1,113 +1,86 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'area_conversion_screen.dart';
-import 'data_conversion_screen.dart';
-import 'exchange_rate_screen.dart';
-import 'length_conversion_screen.dart';
-import 'power_conversion_screen.dart';
-import 'pressure_conversion_screen.dart';
-import 'speed_conversion_screen.dart';
-import 'volume_conversion_screen.dart';
-import 'weigth_conversion_screen.dart';
-import '../widgets/unit_box.dart';
-import '../widgets/unit_icon.dart';
+import '../routes/routes.dart';
+import '../widgets/unit_item.dart';
 
 class UnitConverterScreen extends StatelessWidget {
-  static const routeName = '/unit-converter';
+  const UnitConverterScreen({super.key});
 
-  const UnitConverterScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text(
-          "Unit converter",
-          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+      // appBar: AppBar(
+      //   title: const Text("Unit Converter"),
+      // ),
+      body: GridView.count(crossAxisCount: 3, children: [
+        UnitItem(
+          icon: FontAwesomeIcons.globe,
+          label: "Currency",
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.exchangeRateScreen),
         ),
-      ),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 40,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                UnitBox(
-                  icondata: const UnitIcon(
-                      iconName: FontAwesomeIcons.globe, textData: 'Currency'),
-                  iconfunction: () => Navigator.pushNamed(
-                      context, ExchangeRateScreen.routeName),
-                ),
-                UnitBox(
-                  icondata: const UnitIcon(
-                      iconName: FontAwesomeIcons.ruler, textData: 'Length'),
-                  iconfunction: () => Navigator.pushNamed(
-                      context, LengthConversionScreen.routeName),
-                ),
-                UnitBox(
-                  icondata: const UnitIcon(
-                      iconName: FontAwesomeIcons.chartArea, textData: 'Area'),
-                  iconfunction: () => Navigator.pushNamed(
-                      context, AreaConversionScreen.routeName),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                UnitBox(
-                  icondata: const UnitIcon(
-                      iconName: FontAwesomeIcons.gaugeHigh, textData: 'Speed'),
-                  iconfunction: () => Navigator.pushNamed(
-                      context, SpeedConversionScreen.routeName),
-                ),
-                UnitBox(
-                  icondata: const UnitIcon(
-                      iconName: FontAwesomeIcons.weightHanging,
-                      textData: 'Weight'),
-                  iconfunction: () => Navigator.pushNamed(
-                      context, WeightConversionScreen.routeName),
-                ),
-                UnitBox(
-                  icondata: const UnitIcon(
-                      iconName: FontAwesomeIcons.hardDrive, textData: 'Data'),
-                  iconfunction: () => Navigator.pushNamed(
-                      context, DataConversionScreen.routeName),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                UnitBox(
-                  icondata: const UnitIcon(
-                      iconName: FontAwesomeIcons.bolt, textData: 'Power'),
-                  iconfunction: () => Navigator.pushNamed(
-                      context, PowerConversionScreen.routeName),
-                ),
-                UnitBox(
-                  icondata: const UnitIcon(
-                      iconName: FontAwesomeIcons.gaugeSimple,
-                      textData: 'Pressure'),
-                  iconfunction: () => Navigator.pushNamed(
-                      context, PressureConversionScreen.routeName),
-                ),
-                UnitBox(
-                  icondata: const UnitIcon(
-                      iconName: FontAwesomeIcons.cube, textData: 'Volume'),
-                  iconfunction: () => Navigator.pushNamed(
-                      context, VolumeConversionScreen.routeName),
-                ),
-              ],
-            ),
-          ],
+        UnitItem(
+          icon: FontAwesomeIcons.ruler,
+          label: "length",
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.lengthConversionScreen),
         ),
-      ),
+        UnitItem(
+          icon: FontAwesomeIcons.chartArea,
+          label: "Area",
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.areaConversionScreen),
+        ),
+        UnitItem(
+          icon: FontAwesomeIcons.gaugeHigh,
+          label: "Speed",
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.speedConversionScreen),
+        ),
+        UnitItem(
+          icon: FontAwesomeIcons.weightHanging,
+          label: "Weight",
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.weightConversionScreen),
+        ),
+        UnitItem(
+          icon: FontAwesomeIcons.hardDrive,
+          label: "Data",
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.dataConversionScreen),
+        ),
+        UnitItem(
+          icon: FontAwesomeIcons.bolt,
+          label: "Power",
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.powerConversionScreen),
+        ),
+        UnitItem(
+          icon: FontAwesomeIcons.gaugeSimple,
+          label: "Pressure",
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.pressureConversionScreen),
+        ),
+        UnitItem(
+          icon: FontAwesomeIcons.cube,
+          label: "Volume",
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.volumeConversionScreen),
+        ),
+        UnitItem(
+          icon: FontAwesomeIcons.temperatureHalf,
+          label: "Temperature",
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.temperatureConversionScreen),
+        ),
+        UnitItem(
+          icon: FontAwesomeIcons.clock,
+          label: "Time",
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.timeConversionScreen),
+        ),
+      ]),
     );
   }
 }

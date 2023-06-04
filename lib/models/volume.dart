@@ -1,77 +1,87 @@
-class Volume {
-  String id, name;
-  double rate;
+import 'models.dart';
 
-  Volume({
+class Volume implements Unit {
+  const Volume({
     required this.id,
     required this.name,
     required this.rate,
   });
+
+  @override
+  @override
+  final String id, name;
+  @override
+  final double rate;
+  @override
+  String? get flag => null;
+  @override
+  String? get symbol => null;
+
   //Basic Unit Cubic metre
-  static var volume = [
+  static const volumeList = [
     Volume(
-      name: 'Centilitre',
       id: 'cl',
+      name: 'Centilitre',
       rate: 100000.0,
     ),
     Volume(
-      name: 'Cubic centimetre',
       id: 'cm3',
+      name: 'Cubic centimetre',
       rate: 1000000.0,
     ),
     Volume(
-      name: 'Cubic decimeter',
       id: 'dm3',
+      name: 'Cubic decimeter',
       rate: 1000.0,
     ),
     Volume(
-      name: 'Cubic foot',
       id: 'ft3',
+      name: 'Cubic foot',
       rate: 35.3147248,
     ),
     Volume(
-      name: 'Cubic inch',
       id: 'in3',
+      name: 'Cubic inch',
       rate: 61023.8445022,
     ),
     Volume(
-      name: 'Cubic metre',
       id: 'm3',
+      name: 'Cubic metre',
       rate: 1.0,
     ),
     Volume(
-      name: 'Cubic millimetre',
       id: 'mm3',
+      name: 'Cubic millimetre',
       rate: 1000000000.0,
     ),
     Volume(
-      name: 'Cubic yard',
       id: 'yd3',
+      name: 'Cubic yard',
       rate: 1.3079528,
     ),
     Volume(
-      name: 'Decilitre',
       id: 'dl',
+      name: 'Decilitre',
       rate: 10000.0,
     ),
     Volume(
-      name: 'Gallon',
       id: 'gal',
+      name: 'Gallon',
       rate: 264.1720524,
     ),
     Volume(
-      name: 'Hectolitre',
       id: 'hl',
+      name: 'Hectolitre',
       rate: 10.0,
     ),
     Volume(
-      name: 'Litre',
       id: 'l',
+      name: 'Litre',
       rate: 1000.0,
     ),
     Volume(
-      name: 'Millilitre',
       id: 'ml',
+      name: 'Millilitre',
       rate: 1000000.0,
     ),
   ];

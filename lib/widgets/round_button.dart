@@ -1,53 +1,45 @@
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter/material.dart';
 
-import '../utils/constants.dart';
-
-class RoundButton extends StatefulWidget {
-  final String buttonText;
-  final Color colorText, backgroundColor;
-  final VoidCallback onPressed;
-  final NeumorphicBoxShape buttonBoxShape;
-  final double buttonWidth, textWidth;
-
+class RoundButton extends StatelessWidget {
   const RoundButton({
-    Key? key,
-    required this.buttonText,
-    required this.onPressed,
-    this.buttonWidth = 11,
-    this.textWidth = 24,
-    this.colorText = kWhiteColorText,
-    this.buttonBoxShape = const NeumorphicBoxShape.circle(),
-    this.backgroundColor = const Color(0xFF171717),
-  }) : super(key: key);
+    super.key,
+    this.icon,
+    this.text,
+    this.iconColor,
+    this.backgroundColor,
+    this.isScientic = false,
+    this.onPressed,
+  });
 
-  @override
-  State<RoundButton> createState() => _RoundButtonState();
-}
+  final IconData? icon;
+  final String? text;
+  final Color? iconColor;
+  final Color? backgroundColor;
+  final bool isScientic;
+  final VoidCallback? onPressed;
 
-class _RoundButtonState extends State<RoundButton> {
   @override
   Widget build(BuildContext context) {
-    return NeumorphicButton(
-      onPressed: widget.onPressed,
-      style: NeumorphicStyle(
-        depth: 0,
-        shape: NeumorphicShape.flat,
-        color: widget.backgroundColor,
-        boxShape: widget.buttonBoxShape,
+    return IconButton(
+      onPressed: onPressed,
+      style: IconButton.styleFrom(
+        shape: const CircleBorder(),
+        backgroundColor: backgroundColor ??
+            Theme.of(context).colorScheme.onInverseSurface.withOpacity(0.5),
       ),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height / 14,
-        width: MediaQuery.of(context).size.width / widget.buttonWidth,
+      icon: SizedBox(
+        height: MediaQuery.of(context).size.height / (isScientic ? 12 : 8),
+        width: MediaQuery.of(context).size.width / (isScientic ? 12 : 8),
         child: Center(
-          child: Text(
-            widget.buttonText,
-            style: TextStyle(
-              color: widget.colorText,
-              fontSize: widget.textWidth,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w400,
-            ),
-          ),
+          child: icon == null
+              ? Text(
+                  text ?? "",
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
+              : Icon(icon, color: iconColor),
         ),
       ),
     );

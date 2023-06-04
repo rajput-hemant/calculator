@@ -1,63 +1,76 @@
-class Length {
-  String id, name;
-  double rate;
+import 'models.dart';
 
-  Length({required this.id, required this.name, required this.rate});
+class Length implements Unit {
+  const Length({
+    required this.id,
+    required this.name,
+    required this.rate,
+  });
+
+  @override
+  @override
+  final String id, name;
+  @override
+  final double rate;
+  @override
+  String? get flag => null;
+  @override
+  String? get symbol => null;
   // Base Unit Metre
-  static var length = [
+  static const lengthList = [
     Length(
-      name: 'Centimetre',
       id: 'cm',
+      name: 'Centimetre',
       rate: 100.0,
     ),
     Length(
-      name: 'Decimetre',
       id: 'dm',
+      name: 'Decimetre',
       rate: 10.0,
     ),
     Length(
-      name: 'Foot',
       id: 'ft',
+      name: 'Foot',
       rate: 3.2808399,
     ),
     Length(
-      name: 'Inch',
       id: 'in',
+      name: 'Inch',
       rate: 39.3700787,
     ),
     Length(
-      name: 'Kilometre',
       id: 'km',
+      name: 'Kilometre',
       rate: 0.001,
     ),
     Length(
-      name: 'Metre',
       id: 'm',
+      name: 'Metre',
       rate: 1.0,
     ),
     Length(
-      name: 'Micrometre',
       id: 'μm',
+      name: 'Micrometre',
       rate: 1000000.0,
     ),
     Length(
-      name: 'Mile',
       id: 'mi',
+      name: 'Mile',
       rate: 0.0006214,
     ),
     Length(
-      name: 'Milimetre',
       id: 'mm',
+      name: 'Milimetre',
       rate: 1000.0,
     ),
     Length(
-      name: 'Nanometre',
       id: 'nm',
+      name: 'Nanometre',
       rate: 1000000000.0,
     ),
     Length(
-      name: 'Picometre',
       id: 'pm',
+      name: 'Picometre',
       rate: 1000000000000.0,
     ),
   ];

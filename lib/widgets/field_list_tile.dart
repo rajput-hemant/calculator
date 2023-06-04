@@ -1,68 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../utils/constants.dart';
-import 'scrollable_sheet.dart';
+import '../models/unit.dart';
 
 class FieldListTile extends StatelessWidget {
-  final int index;
-  final Widget child;
-  final dynamic field;
-  final bool isSelectedField;
-  final String title, subtitle;
-  final String bottomSheetHeader;
-  final VoidCallback onTappingField;
-
   const FieldListTile({
     super.key,
-    required this.index,
-    required this.child,
-    required this.field,
-    required this.title,
-    required this.subtitle,
-    required this.onTappingField,
-    required this.isSelectedField,
-    required this.bottomSheetHeader,
+    required this.controller,
+    required this.list,
+    required this.isSelected,
+    required this.fieldIndex,
+    required this.onSelect,
   });
+
+  final TextEditingController controller;
+  final List<Unit> list;
+  final bool isSelected;
+  final int fieldIndex;
+  final VoidCallback onSelect;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: GestureDetector(
-        onTap: () {
-          showModalBottomSheet(
-            context: context,
-            backgroundColor: const Color(0xFF171717),
-            isScrollControlled: true,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            builder: (_) {
-              return ScrollableSheet(
-                sheetHeader: bottomSheetHeader,
-                listViewBuilder: child,
-              );
-            },
-          );
-        },
-        child: Text(
-          title,
-          maxLines: 1,
-          style: kUnitTextStyle,
+      leading: Text(
+        "${list[fieldIndex].name} (${list[fieldIndex].id})",
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(
+          fontSize: 15,
         ),
       ),
-      subtitle: Text(subtitle),
-      trailing: GestureDetector(
-        onTap: onTappingField,
-        child: Text(
-          field,
-          style: TextStyle(
-            fontSize: isSelectedField ? 32 : 24,
-            color: isSelectedField ? Colors.blue[300] : Colors.white,
-          ),
-          maxLines: 1,
+      title: const Icon(
+        FontAwesomeIcons.chevronRight,
+        size: 15,
+        color: Colors.grey,
+      ),
+      trailing: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.35,
+        child: TextField(
+          controller: controller,
+          autofocus: isSelected,
+          onTap: () {
+            onSelect();
+            // this is to place the cursor at the end of the text
+            controller.selection = TextSelection.fromPosition(
+              TextPosition(offset: controller.text.length),
+            );
+          },
+          showCursor: false,
+          readOnly: true,
+          keyboardType: TextInputType.none,
+          textAlign: TextAlign.right,
+          style:
+              TextStyle(fontSize: 20, color: isSelected ? Colors.amber : null),
+          decoration: const InputDecoration(border: InputBorder.none),
         ),
       ),
     );

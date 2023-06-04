@@ -1,245 +1,258 @@
-class Currency {
-  String type;
-  double? amount = 1.0;
+import 'models.dart';
 
-  Currency(this.type, {this.amount});
+class Money {
+  const Money(
+    this.type, {
+    this.amount = 1.0,
+  });
+
+  final String type;
+  final double? amount;
 }
 
-class CurrenciesData {
-  String id, name, flag, symbol;
-  CurrenciesData({
+class Currency implements Unit {
+  const Currency({
     required this.id,
     required this.name,
     required this.flag,
     required this.symbol,
   });
 
-  static var currenciesData = [
-    CurrenciesData(
-      name: "Australian Dollar",
+  @override
+  @override
+  @override
+  @override
+  final String id, name, flag, symbol;
+
+  @override
+  double? get rate => null;
+
+  static const currenciesList = [
+    Currency(
       id: "AUD",
+      name: "Australian Dollar",
       flag: "🇦🇺",
       symbol: '\$',
     ),
-    CurrenciesData(
-      name: "Brazilian Real",
+    Currency(
       id: "BRL",
+      name: "Brazilian Real",
       flag: "🇧🇷",
       symbol: "R\$",
     ),
-    CurrenciesData(
-      name: "British Pound",
+    Currency(
       id: "GBP",
+      name: "British Pound",
       flag: "🇬🇧",
       symbol: "£",
     ),
-    CurrenciesData(
-      name: "Canadian Dollar",
+    Currency(
       id: "CAD",
+      name: "Canadian Dollar",
       flag: "🇨🇦",
       symbol: "\$",
     ),
-    CurrenciesData(
-      name: "Chilean Peso",
+    Currency(
       id: "CLP",
+      name: "Chilean Peso",
       flag: "🇨🇱",
       symbol: "\$",
     ),
-    CurrenciesData(
-      name: "Chinese Yuan",
+    Currency(
       id: "CNY",
+      name: "Chinese Yuan",
       flag: "🇨🇳",
       symbol: "¥",
     ),
-    CurrenciesData(
-      name: "Colombian Peso",
+    Currency(
       id: "COP",
+      name: "Colombian Peso",
       flag: "🇨🇴",
       symbol: "\$",
     ),
-    CurrenciesData(
-      name: "Czech Koruna",
+    Currency(
       id: "CZK",
+      name: "Czech Koruna",
       flag: "🇨🇿",
       symbol: "Kč",
     ),
-    CurrenciesData(
-      name: "Danish Krone",
+    Currency(
       id: "DKK",
+      name: "Danish Krone",
       flag: "🇩🇰",
       symbol: "kr",
     ),
-    CurrenciesData(
-      name: "Egyptian Pound",
+    Currency(
       id: "EGP",
+      name: "Egyptian Pound",
       flag: "🇪🇬",
       symbol: "£",
     ),
-    CurrenciesData(
-      name: "Euro",
+    Currency(
       id: "EUR",
+      name: "Euro",
       flag: "🇪🇺",
       symbol: "€",
     ),
-    CurrenciesData(
-      name: "HongKong Dollar",
+    Currency(
       id: "HKD",
+      name: "HongKong Dollar",
       flag: "🇭🇰",
       symbol: "\$",
     ),
-    CurrenciesData(
-      name: "Hungarian Forint",
+    Currency(
       id: "HUF",
+      name: "Hungarian Forint",
       flag: "🇭🇺",
       symbol: "Ft",
     ),
-    CurrenciesData(
-      name: "Indian Rupee",
+    Currency(
       id: "INR",
+      name: "Indian Rupee",
       flag: "🇮🇳",
       symbol: "₹",
     ),
-    CurrenciesData(
-      name: "Indonesian Rupiah",
+    Currency(
       id: "IDR",
+      name: "Indonesian Rupiah",
       flag: "🇮🇩",
       symbol: "Rp",
     ),
-    CurrenciesData(
-      name: "Israeli New Sheqel",
+    Currency(
       id: "ILS",
+      name: "Israeli New Sheqel",
       flag: "🇮🇱",
       symbol: "₪",
     ),
-    CurrenciesData(
-      name: "Japanese Yen",
+    Currency(
       id: "JPY",
+      name: "Japanese Yen",
       flag: "🇯🇵",
       symbol: "¥",
     ),
-    CurrenciesData(
-      name: "Kuwaiti Dinar",
+    Currency(
       id: "KWD",
+      name: "Kuwaiti Dinar",
       flag: "🇰🇼",
       symbol: "د.ك",
     ),
-    CurrenciesData(
-      name: "Malaysian Ringgit",
+    Currency(
       id: "MYR",
+      name: "Malaysian Ringgit",
       flag: "🇲🇾",
       symbol: "RM",
     ),
-    CurrenciesData(
-      name: "Mexican Peso",
+    Currency(
       id: "MXN",
+      name: "Mexican Peso",
       flag: "🇲🇽",
       symbol: "\$",
     ),
-    CurrenciesData(
-      name: "New Taiwan Dollar",
+    Currency(
       id: "TWD",
+      name: "New Taiwan Dollar",
       flag: "🇹🇼",
       symbol: "NT\$",
     ),
-    CurrenciesData(
-      name: "New Zealand Dollar",
+    Currency(
       id: "NZD",
+      name: "New Zealand Dollar",
       flag: "🇳🇿",
       symbol: "\$",
     ),
-    CurrenciesData(
-      name: "Norwegian Krone",
+    Currency(
       id: "NOK",
+      name: "Norwegian Krone",
       flag: "🇳🇴",
       symbol: "kr",
     ),
-    CurrenciesData(
-      name: "Philippine Peso",
+    Currency(
       id: "PHP",
+      name: "Philippine Peso",
       flag: "🇵🇭",
       symbol: "₱",
     ),
-    CurrenciesData(
-      name: "Polish Zloty",
+    Currency(
       id: "PLN",
+      name: "Polish Zloty",
       flag: "🇵🇱",
       symbol: "zł",
     ),
-    CurrenciesData(
-      name: "Romanian Leu",
+    Currency(
       id: "RON",
+      name: "Romanian Leu",
       flag: "🇷🇴",
       symbol: "lei",
     ),
-    CurrenciesData(
-      name: "Russian Ruble",
+    Currency(
       id: "RUB",
+      name: "Russian Ruble",
       flag: "🇷🇺",
       symbol: "₽",
     ),
-    CurrenciesData(
-      name: "Saudi Riyal",
+    Currency(
       id: "SAR",
+      name: "Saudi Riyal",
       flag: "🇸🇦",
       symbol: "﷼",
     ),
-    CurrenciesData(
-      name: "Singapore Dollar",
+    Currency(
       id: "SGD",
+      name: "Singapore Dollar",
       flag: "🇸🇬",
       symbol: "\$",
     ),
-    CurrenciesData(
-      name: "South African Rand",
+    Currency(
       id: "ZAR",
+      name: "South African Rand",
       flag: "🇿🇦",
       symbol: "R",
     ),
-    CurrenciesData(
-      name: "South Korean Won",
+    Currency(
       id: "KRW",
+      name: "South Korean Won",
       flag: "🇰🇷",
       symbol: "₩",
     ),
-    CurrenciesData(
-      name: "Sri Lankan Rupee",
+    Currency(
       id: "LKR",
+      name: "Sri Lankan Rupee",
       flag: "🇱🇰",
       symbol: "₨",
     ),
-    CurrenciesData(
-      name: "Swedish Krona",
+    Currency(
       id: "SEK",
+      name: "Swedish Krona",
       flag: "🇸🇪",
       symbol: "kr",
     ),
-    CurrenciesData(
-      name: "Swiss Franc",
+    Currency(
       id: "CHF",
+      name: "Swiss Franc",
       flag: "🇨🇭",
       symbol: "CHF",
     ),
-    CurrenciesData(
-      name: "Thai Baht",
+    Currency(
       id: "THB",
+      name: "Thai Baht",
       flag: "🇹🇭",
       symbol: "฿",
     ),
-    CurrenciesData(
-      name: "Turkish New Lira",
+    Currency(
       id: "TRY",
+      name: "Turkish New Lira",
       flag: "🇹🇷",
       symbol: "₺",
     ),
-    CurrenciesData(
-      name: "UAE Dirham",
+    Currency(
       id: "AED",
+      name: "UAE Dirham",
       flag: "🇦🇪",
       symbol: "د.إ",
     ),
-    CurrenciesData(
-      name: "US Dollar",
+    Currency(
       id: "USD",
+      name: "US Dollar",
       flag: "🇺🇸",
       symbol: "\$",
     ),
