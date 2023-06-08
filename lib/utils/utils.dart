@@ -15,13 +15,13 @@ void convertUnit(
   try {
     if (isFirstFieldSelected) {
       secondFieldController.text = (double.parse(firstFieldController.text) *
-              list[firstFieldIndex].rate! /
-              list[secondFieldIndex].rate!)
+              list[secondFieldIndex].rate! /
+              list[firstFieldIndex].rate!)
           .toString();
     } else {
       firstFieldController.text = (double.parse(secondFieldController.text) *
-              list[secondFieldIndex].rate! /
-              list[firstFieldIndex].rate!)
+              list[firstFieldIndex].rate! /
+              list[secondFieldIndex].rate!)
           .toString();
     }
   } catch (e) {

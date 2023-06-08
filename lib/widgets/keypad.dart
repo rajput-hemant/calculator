@@ -10,14 +10,12 @@ class Keypad extends StatefulWidget {
     required this.onChanged,
     this.onPressed,
     this.isCalculator = false,
-    this.isCurrency = false,
   });
 
   final TextEditingController controller;
   final VoidCallback onChanged;
   final VoidCallback? onPressed;
   final bool isCalculator;
-  final bool isCurrency;
 
   @override
   State<Keypad> createState() => _KeypadState();
@@ -27,17 +25,48 @@ class _KeypadState extends State<Keypad> {
   final IconData period = const IconDataSolid(0x2e);
 
   bool showScientific = false;
+  bool enableInput = true;
 
+  /// Insert the given text into the controller at the current cursor position
+  /// and update the cursor position after the inserted text.
   void insertText(String text) {
+    showSnackbar();
+    if (!enableInput) {
+      return;
+    }
+    // get the current cursor position
     final cursorPosition = widget.controller.selection.start;
+    // update the text in the controller with the given text at the current cursor position
     final updatedText =
         '${widget.controller.text.substring(0, cursorPosition)}$text${widget.controller.text.substring(cursorPosition)}';
 
+    // set the updated text in the controller
+    // and update the cursor position after the inserted text
     widget.controller.value = TextEditingValue(
       text: updatedText,
       selection: TextSelection.collapsed(offset: cursorPosition + text.length),
     );
   }
+  // void insertText(String text) {
+  //   final cursorPosition = widget.controller.selection.start;
+  //   final updatedText =
+  //       '${widget.controller.text.substring(0, cursorPosition)}$text${widget.controller.text.substring(cursorPosition)}';
+
+  //   final numberFormat = NumberFormat('#,##0');
+  //   final formattedText =
+  //       numberFormat.format(int.parse(updatedText.replaceAll(',', '')));
+
+  //   final selectionStart = cursorPosition + text.length;
+  //   final selectionEnd = selectionStart;
+
+  //   widget.controller.value = TextEditingValue(
+  //     text: formattedText,
+  //     selection: TextSelection(
+  //       baseOffset: selectionStart,
+  //       extentOffset: selectionEnd,
+  //     ),
+  //   );
+  // }
 
   void removeLastCharacter() {
     // Get the current cursor position
@@ -58,6 +87,22 @@ class _KeypadState extends State<Keypad> {
     final updatedCursorPosition = cursorPosition > 0 ? cursorPosition - 1 : 0;
     widget.controller.selection =
         TextSelection.collapsed(offset: updatedCursorPosition);
+  }
+
+  // show toast notification and disable input if length of text is > 15
+  void showSnackbar() {
+    if (widget.controller.text.length >= 15) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Maximum digits(15) reached."),
+          duration: Duration(milliseconds: 500),
+        ),
+      );
+      setState(() => enableInput = false);
+    } else {
+      setState(() => enableInput = true);
+    }
   }
 
   @override
@@ -330,18 +375,7 @@ class _KeypadState extends State<Keypad> {
                       widget.onChanged();
                     },
                   ),
-                if (widget.isCurrency)
-                  RoundButton(
-                    isScientic: showScientific,
-                    icon: FontAwesomeIcons.deleteLeft,
-                    iconColor: Colors.red,
-                    onPressed: () {
-                      removeLastCharacter();
-                      widget.onChanged();
-                    },
-                  ),
-                if (!widget.isCurrency && !widget.isCalculator)
-                  const RoundButton()
+                if (!widget.isCalculator) const RoundButton()
               ],
             ),
           ),
@@ -446,15 +480,15 @@ class _KeypadState extends State<Keypad> {
                     if (!widget.controller.text.contains(".")) insertText(".");
                   },
                 ),
-                if (widget.isCurrency)
+                if (widget.isCalculator)
                   RoundButton(
-                    isScientic: showScientific,
+                    // isScientic: showScientific,
                     icon: FontAwesomeIcons.equals,
                     iconColor: Theme.of(context).colorScheme.surface,
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     onPressed: widget.onPressed,
                   ),
-                if (!widget.isCurrency)
+                if (!widget.isCalculator)
                   RoundButton(
                     isScientic: showScientific,
                     icon: FontAwesomeIcons.deleteLeft,

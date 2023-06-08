@@ -9,3 +9,4 @@ export 'power.dart';
 export 'data.dart';
 export 'pressure.dart';
 export 'speed.dart';
+export 'time.dart';

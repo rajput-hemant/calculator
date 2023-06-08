@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'routes/routes.dart';
 import 'screens/screens.dart';
 import 'theme/theme.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load();
+
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -44,16 +47,20 @@ class Calculator extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.grid_4x4),
+                icon: Image.asset(
+                  "assets/images/grid-light.png",
+                  width: 24,
+                  height: 24,
+                ),
               ),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.more_vert),
+                icon: const Icon(Icons.more_vert, color: Colors.white),
               ),
             ],
             bottom: const TabBar(
+              labelPadding: EdgeInsets.symmetric(horizontal: 8),
               labelStyle: TextStyle(
-                fontSize: 16,
                 fontWeight: FontWeight.w700,
               ),
               dividerColor: Colors.transparent,
@@ -122,7 +129,7 @@ class Calculator extends StatelessWidget {
             const VolumeConversionScreen(),
         // Routes.temperatureConversionScreen: (context) =>
         // const TemperatureConversionScreen(),
-        // Routes.timeConversionScreen: (context) => const TimeConversionScreen(),
+        Routes.timeConversionScreen: (context) => const TimeConversionScreen(),
         Routes.speedConversionScreen: (context) =>
             const SpeedConversionScreen(),
         Routes.dataConversionScreen: (context) => const DataConversionScreen(),

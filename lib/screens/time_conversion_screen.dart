@@ -5,14 +5,14 @@ import '../utils/utils.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad.dart';
 
-class PowerConversionScreen extends StatefulWidget {
-  const PowerConversionScreen({super.key});
+class TimeConversionScreen extends StatefulWidget {
+  const TimeConversionScreen({super.key});
 
   @override
-  State<PowerConversionScreen> createState() => _PowerConversionScreenState();
+  State<TimeConversionScreen> createState() => _TimeConversionScreenState();
 }
 
-class _PowerConversionScreenState extends State<PowerConversionScreen> {
+class _TimeConversionScreenState extends State<TimeConversionScreen> {
   final TextEditingController _firstFieldController =
       TextEditingController(text: "1");
   final TextEditingController _secondFieldController =
@@ -30,14 +30,14 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
       _secondFieldController,
       firstFieldIndex,
       secondFieldIndex,
-      Power.powerList,
+      Time.timeList,
       isFirstFieldSelected,
     );
   }
 
   void changeSelectedIndex(int index) {
     setState(() {
-      if (isFirstFieldSelected) {
+      if (isFirstLabelSelected) {
         firstFieldIndex = index;
       } else {
         secondFieldIndex = index;
@@ -55,7 +55,7 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Power Conversion')),
+      appBar: AppBar(title: const Text('Time Conversion')),
       body: Column(
         children: [
           Expanded(
@@ -65,7 +65,7 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
               child: Column(
                 children: [
                   FieldListTile(
-                    list: Power.powerList,
+                    list: Time.timeList,
                     controller: _firstFieldController,
                     isFieldSelected: isFirstFieldSelected,
                     isLabelSelected: isFirstLabelSelected,
@@ -88,7 +88,7 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
                     child: Divider(),
                   ),
                   FieldListTile(
-                    list: Power.powerList,
+                    list: Time.timeList,
                     controller: _secondFieldController,
                     isFieldSelected: !isFirstFieldSelected,
                     isLabelSelected: !isFirstLabelSelected,

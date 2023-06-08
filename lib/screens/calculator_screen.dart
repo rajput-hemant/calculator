@@ -91,10 +91,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   TextField(
-                    controller: _expressionController,
                     autofocus: true,
+                    controller: _expressionController,
+                    enableInteractiveSelection: false,
                     keyboardType: TextInputType.none,
-                    textDirection: TextDirection.rtl,
+                    textAlign: TextAlign.right,
                     style: const TextStyle(fontSize: 48),
                     decoration: const InputDecoration(
                       border: InputBorder.none,

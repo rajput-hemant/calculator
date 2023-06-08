@@ -2,58 +2,96 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../models/unit.dart';
+import '../screens/select_unit_screen.dart';
 
 class FieldListTile extends StatelessWidget {
   const FieldListTile({
     super.key,
     required this.controller,
     required this.list,
-    required this.isSelected,
+    required this.isFieldSelected,
+    required this.isLabelSelected,
+    required this.onFieldSelect,
+    required this.onLabelSelect,
     required this.fieldIndex,
-    required this.onSelect,
+    required this.changeSelectedIndex,
   });
 
   final TextEditingController controller;
   final List<Unit> list;
-  final bool isSelected;
+  final bool isFieldSelected;
+  final bool isLabelSelected;
+  final VoidCallback onFieldSelect;
+  final VoidCallback onLabelSelect;
   final int fieldIndex;
-  final VoidCallback onSelect;
+  final Function changeSelectedIndex;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Text(
-        "${list[fieldIndex].name} (${list[fieldIndex].id})",
-        overflow: TextOverflow.ellipsis,
-        style: const TextStyle(
-          fontSize: 15,
-        ),
-      ),
-      title: const Icon(
-        FontAwesomeIcons.chevronRight,
-        size: 15,
-        color: Colors.grey,
-      ),
-      trailing: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.35,
-        child: TextField(
-          controller: controller,
-          autofocus: isSelected,
-          onTap: () {
-            onSelect();
-            // this is to place the cursor at the end of the text
-            controller.selection = TextSelection.fromPosition(
-              TextPosition(offset: controller.text.length),
-            );
-          },
-          showCursor: false,
-          readOnly: true,
-          keyboardType: TextInputType.none,
-          textAlign: TextAlign.right,
-          style:
-              TextStyle(fontSize: 20, color: isSelected ? Colors.amber : null),
-          decoration: const InputDecoration(border: InputBorder.none),
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: () async {
+              onLabelSelect();
+              final selectedIndex = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SelectUnitScreen(
+                    list: list,
+                    selectedUnitIndex: fieldIndex,
+                  ),
+                ),
+              );
+
+              if (selectedIndex != null) {
+                changeSelectedIndex(selectedIndex);
+              }
+            },
+            child: Row(
+              children: [
+                Text(
+                  "${list[fieldIndex].name} (${list[fieldIndex].id})",
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(width: 18),
+                const Icon(
+                  FontAwesomeIcons.chevronRight,
+                  size: 15,
+                  color: Colors.grey,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: TextField(
+              controller: controller,
+              autofocus: isFieldSelected,
+              onTap: () {
+                onFieldSelect();
+                // this is to place the cursor at the end of the text
+                controller.selection = TextSelection.fromPosition(
+                  TextPosition(offset: controller.text.length),
+                );
+              },
+              showCursor: false,
+              readOnly: true,
+              keyboardType: TextInputType.none,
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                  fontSize: 20, color: isFieldSelected ? Colors.amber : null),
+              decoration: const InputDecoration(border: InputBorder.none),
+            ),
+          ),
+        ],
       ),
     );
   }

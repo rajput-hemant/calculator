@@ -14,19 +14,19 @@ class UnitItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: IconButton(
-        iconSize: 30,
-        onPressed: onPressed,
-        icon: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon),
-            const SizedBox(height: 8),
-            Text(label),
-          ],
-        ),
+    return IconButton(
+      iconSize: 30,
+      onPressed: onPressed,
+      icon: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: const TextStyle(),
+          ),
+        ],
       ),
     );
   }

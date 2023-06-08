@@ -19,6 +19,7 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
       TextEditingController(text: "0.0001");
 
   bool isFirstFieldSelected = true;
+  bool isFirstLabelSelected = true;
 
   int firstFieldIndex = 0;
   int secondFieldIndex = 1;
@@ -32,6 +33,16 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
       Speed.speedList,
       isFirstFieldSelected,
     );
+  }
+
+  void changeSelectedIndex(int index) {
+    setState(() {
+      if (isFirstFieldSelected) {
+        firstFieldIndex = index;
+      } else {
+        secondFieldIndex = index;
+      }
+    });
   }
 
   @override
@@ -56,13 +67,21 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
                   FieldListTile(
                     list: Speed.speedList,
                     controller: _firstFieldController,
-                    isSelected: isFirstFieldSelected,
+                    isFieldSelected: isFirstFieldSelected,
+                    isLabelSelected: isFirstLabelSelected,
                     fieldIndex: firstFieldIndex,
-                    onSelect: () {
+                    onFieldSelect: () {
                       setState(() {
                         isFirstFieldSelected = true;
                       });
                     },
+                    onLabelSelect: () {
+                      setState(() {
+                        isFirstLabelSelected = true;
+                      });
+                      convert();
+                    },
+                    changeSelectedIndex: changeSelectedIndex,
                   ),
                   const Padding(
                     padding: EdgeInsets.all(8),
@@ -71,13 +90,21 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
                   FieldListTile(
                     list: Speed.speedList,
                     controller: _secondFieldController,
-                    isSelected: !isFirstFieldSelected,
+                    isFieldSelected: !isFirstFieldSelected,
+                    isLabelSelected: !isFirstLabelSelected,
                     fieldIndex: secondFieldIndex,
-                    onSelect: () {
+                    onFieldSelect: () {
                       setState(() {
                         isFirstFieldSelected = false;
                       });
                     },
+                    onLabelSelect: () {
+                      setState(() {
+                        isFirstLabelSelected = false;
+                      });
+                      convert();
+                    },
+                    changeSelectedIndex: changeSelectedIndex,
                   ),
                   const Padding(
                     padding: EdgeInsets.all(8),

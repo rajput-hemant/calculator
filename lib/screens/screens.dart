@@ -10,3 +10,4 @@ export 'speed_conversion_screen.dart';
 export 'unit_converter_screen.dart';
 export 'volume_conversion_screen.dart';
 export 'weight_conversion_screen.dart';
+export 'time_conversion_screen.dart';
