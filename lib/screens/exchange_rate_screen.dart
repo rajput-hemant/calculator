@@ -17,7 +17,7 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
   final TextEditingController _firstFieldController =
       TextEditingController(text: "1");
   final TextEditingController _secondFieldController =
-      TextEditingController(text: "0.0001");
+      TextEditingController(text: "0.0a001");
 
   bool isFirstFieldSelected = true;
   bool isFirstLabelSelected = true;
@@ -29,12 +29,25 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
     String from = Currency.currenciesList[firstFieldIndex].id;
     String to = Currency.currenciesList[secondFieldIndex].id;
 
-    double amount = double.parse(_firstFieldController.text);
-    double rate = _rates["data"][to] / _rates["data"][from];
+    try {
+      double amount = double.parse(isFirstFieldSelected
+          ? _firstFieldController.text
+          : _secondFieldController.text);
+      double rate = _rates["data"][to] / _rates["data"][from];
 
-    setState(() {
-      _secondFieldController.text = (amount * rate).toStringAsFixed(2);
-    });
+      setState(() {
+        if (isFirstFieldSelected) {
+          _secondFieldController.text = (amount * rate).toStringAsFixed(2);
+        } else {
+          _firstFieldController.text = (amount * rate).toStringAsFixed(2);
+        }
+      });
+    } catch (e) {
+      // clear the text fields on invalid double error,
+      // which is thrown when any one of the text fields is empty/cleared
+      _firstFieldController.clear();
+      _secondFieldController.clear();
+    }
   }
 
   void changeSelectedIndex(int index) {
@@ -134,7 +147,6 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                   ? _firstFieldController
                   : _secondFieldController,
               onChanged: convert,
-              onPressed: convert,
             ),
           ),
         ],

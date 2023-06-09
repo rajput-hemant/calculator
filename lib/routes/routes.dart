@@ -14,4 +14,6 @@ class Routes {
   static const String volumeConversionScreen = '/volume-conversion-screen';
   static const String weightConversionScreen = '/weight-conversion-screen';
   static const String selectUnitScreen = '/select-unit-screen';
+  static const String settingsScreen = '/settings-screen';
+  static const String aboutScreen = '/about-screen';
 }

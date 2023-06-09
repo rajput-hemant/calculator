@@ -1,15 +1,5 @@
 import 'models.dart';
 
-// class Money {
-//   Money(
-//     this.type, {
-//     this.amount = 1.0,
-//   });
-
-//   final String type;
-//   double? amount;
-// }
-
 class Currency implements Unit {
   const Currency({
     required this.id,
@@ -23,6 +13,7 @@ class Currency implements Unit {
 
   @override
   double? get rate => null;
+
   static const List<Currency> currenciesList = [
     Currency(
       id: "AUD",

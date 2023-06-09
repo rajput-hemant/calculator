@@ -482,7 +482,7 @@ class _KeypadState extends State<Keypad> {
                 ),
                 if (widget.isCalculator)
                   RoundButton(
-                    // isScientic: showScientific,
+                    isScientic: showScientific,
                     icon: FontAwesomeIcons.equals,
                     iconColor: Theme.of(context).colorScheme.surface,
                     backgroundColor: Theme.of(context).colorScheme.primary,

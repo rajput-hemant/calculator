@@ -21,6 +21,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
       _output = "";
     });
+
+    // set cursor to the end of the expression
+    _expressionController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _expressionController.text.length),
+    );
   }
 
   void parseExpressionOnChange(String expression) {
@@ -115,9 +120,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             child: Keypad(
               controller: _expressionController,
               isCalculator: true,
-              onChanged: () =>
-                  parseExpressionOnChange(_expressionController.text),
-              onPressed: () => parseExpression(_expressionController.text),
+              onChanged: () {
+                parseExpressionOnChange(_expressionController.text);
+              },
+              onPressed: () {
+                parseExpression(_expressionController.text);
+              },
             ),
           ),
         ],
