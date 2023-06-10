@@ -61,11 +61,25 @@ class FieldListTile extends StatelessWidget {
                     style: const TextStyle(fontSize: 20),
                   ),
                 Text(
-                  "${list[fieldIndex].name} (${isCurrency == true ? list[fieldIndex].symbol : list[fieldIndex].id})",
+                  list[fieldIndex].name,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 15),
                 ),
                 const SizedBox(width: 18),
+                Text(
+                  isCurrency == true
+                      ? "(${list[fieldIndex].symbol})"
+                      : "(${list[fieldIndex].id})",
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(0.75),
+                  ),
+                ),
+                const SizedBox(width: 4),
                 Icon(
                   FontAwesomeIcons.chevronRight,
                   size: 15,

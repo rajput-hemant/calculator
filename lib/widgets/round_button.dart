@@ -5,6 +5,7 @@ class RoundButton extends StatelessWidget {
     super.key,
     this.icon,
     this.text,
+    this.textStyle,
     this.iconColor,
     this.backgroundColor,
     this.isScientic = false,
@@ -13,6 +14,7 @@ class RoundButton extends StatelessWidget {
 
   final IconData? icon;
   final String? text;
+  final TextStyle? textStyle;
   final Color? iconColor;
   final Color? backgroundColor;
   final bool isScientic;
@@ -34,10 +36,11 @@ class RoundButton extends StatelessWidget {
           child: icon == null
               ? Text(
                   text ?? "",
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: textStyle ??
+                      const TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w600,
+                      ),
                 )
               : Icon(icon, color: iconColor),
         ),

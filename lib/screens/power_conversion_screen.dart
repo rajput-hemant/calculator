@@ -16,13 +16,13 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
   final TextEditingController _firstFieldController =
       TextEditingController(text: "1");
   final TextEditingController _secondFieldController =
-      TextEditingController(text: "0.0001");
+      TextEditingController(text: "735.56214");
 
   bool isFirstFieldSelected = true;
   bool isFirstLabelSelected = true;
 
-  int firstFieldIndex = 0;
-  int secondFieldIndex = 1;
+  int firstFieldIndex = 9;
+  int secondFieldIndex = 6;
 
   void convert() {
     convertUnit(
@@ -37,12 +37,14 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
 
   void changeSelectedIndex(int index) {
     setState(() {
-      if (isFirstFieldSelected) {
+      if (isFirstLabelSelected) {
         firstFieldIndex = index;
       } else {
         secondFieldIndex = index;
       }
     });
+
+    convert();
   }
 
   @override

@@ -23,13 +23,13 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
   final TextEditingController _firstFieldController =
       TextEditingController(text: "1");
   final TextEditingController _secondFieldController =
-      TextEditingController(text: "0.0001");
+      TextEditingController(text: "0.01");
 
   bool isFirstFieldSelected = true;
   bool isFirstLabelSelected = true;
 
-  int firstFieldIndex = 2;
-  int secondFieldIndex = 1;
+  int firstFieldIndex = 14;
+  int secondFieldIndex = 30;
 
   void convert() async {
     String from = Currency.currenciesList[firstFieldIndex].id;
@@ -67,6 +67,8 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
         secondFieldIndex = index;
       }
     });
+
+    convert();
   }
 
   @override

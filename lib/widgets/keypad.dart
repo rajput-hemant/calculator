@@ -22,10 +22,9 @@ class Keypad extends StatefulWidget {
 }
 
 class _KeypadState extends State<Keypad> {
-  final IconData period = const IconDataSolid(0x2e);
-
-  bool showScientific = false;
-  bool enableInput = true;
+  bool _showScientific = false;
+  bool _enableInput = true;
+  bool _showInverse = false;
 
   /// Insert the given text into the controller at the current cursor position
   /// and update the cursor position after the inserted text.
@@ -34,7 +33,7 @@ class _KeypadState extends State<Keypad> {
       showSnackbar();
     }
 
-    if (!enableInput) {
+    if (!_enableInput) {
       return;
     }
     // get the current cursor position
@@ -77,14 +76,18 @@ class _KeypadState extends State<Keypad> {
     if (widget.controller.text.length >= 15) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Maximum digits(15) reached."),
-          duration: Duration(milliseconds: 500),
+        SnackBar(
+          content: const Text(
+            "Maximum digits (15) reached.",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          duration: const Duration(milliseconds: 500),
+          backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
-      setState(() => enableInput = false);
+      setState(() => _enableInput = false);
     } else {
-      setState(() => enableInput = true);
+      setState(() => _enableInput = true);
     }
   }
 
@@ -97,88 +100,85 @@ class _KeypadState extends State<Keypad> {
       ),
       child: Column(
         children: [
-          if (showScientific)
+          if (_showScientific)
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   RoundButton(
-                    isScientic: showScientific,
-                    text: "rad",
-                    onPressed: () {
-                      insertText("");
-                      widget.onChanged();
-                    },
-                  ),
-                  RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     text: "deg",
+                    textStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    onPressed: () {},
+                  ),
+                  RoundButton(
+                    isScientic: _showScientific,
+                    text: _showInverse ? "REG" : "INV",
                     onPressed: () {
-                      insertText("");
+                      setState(() => _showInverse = !_showInverse);
+                    },
+                  ),
+                  RoundButton(
+                    isScientic: _showScientific,
+                    text: _showInverse ? "sin\u207B\u00B9" : "sin",
+                    onPressed: () {
+                      insertText("sin${_showInverse ? "\u207B\u00B9" : ""}(");
                       widget.onChanged();
                     },
                   ),
                   RoundButton(
-                    isScientic: showScientific,
-                    text: "sin",
-                    // text: "sin\u207B\u00B9",
+                    isScientic: _showScientific,
+                    text: _showInverse ? "cos\u207B\u00B9" : "cos",
                     onPressed: () {
-                      insertText("sin(");
+                      insertText("cos${_showInverse ? "\u207B\u00B9" : ""}(");
                       widget.onChanged();
                     },
                   ),
                   RoundButton(
-                    isScientic: showScientific,
-                    text: "cos",
-                    // text: "cos\u207B\u00B9",
+                    isScientic: _showScientific,
+                    text: _showInverse ? "tan\u207B\u00B9" : "tan",
                     onPressed: () {
-                      insertText("cos(");
-                      widget.onChanged();
-                    },
-                  ),
-                  RoundButton(
-                    isScientic: showScientific,
-                    text: "tan",
-                    // text: "tan\u207B\u00B9",
-                    onPressed: () {
-                      insertText("tan(");
+                      insertText("tan${_showInverse ? "\u207B\u00B9" : ""}(");
                       widget.onChanged();
                     },
                   ),
                 ],
               ),
             ),
-          if (showScientific)
+          if (_showScientific)
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   RoundButton(
-                    isScientic: showScientific,
-                    text: "x\u207F",
+                    isScientic: _showScientific,
+                    text: _showInverse ? "x\u00B2" : "\u221Ax",
                     onPressed: () {
-                      widget.controller.clear();
+                      insertText(_showInverse ? "\u00B2" : "sqrt(");
                       widget.onChanged();
                     },
                   ),
                   RoundButton(
-                    isScientic: showScientific,
-                    text: "lg",
+                    isScientic: _showScientific,
+                    text: _showInverse ? "10\u0302" : "lg",
                     onPressed: () {
-                      insertText("log(");
+                      insertText(_showInverse ? "10^" : "log(");
                       widget.onChanged();
                     },
                   ),
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     text: "ln",
                     onPressed: () {
-                      insertText("%");
+                      insertText("ln(");
                       widget.onChanged();
                     },
                   ),
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     text: "(",
                     onPressed: () {
                       insertText("(");
@@ -186,7 +186,7 @@ class _KeypadState extends State<Keypad> {
                     },
                   ),
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     text: ")",
                     onPressed: () {
                       insertText(")");
@@ -201,17 +201,17 @@ class _KeypadState extends State<Keypad> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  if (showScientific)
+                  if (_showScientific)
                     RoundButton(
-                      isScientic: showScientific,
-                      text: "\u221Ax",
+                      isScientic: _showScientific,
+                      text: "x\u207F",
                       onPressed: () {
-                        insertText("sqrt(");
+                        insertText("^");
                         widget.onChanged();
                       },
                     ),
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     icon: FontAwesomeIcons.c,
                     iconColor: Theme.of(context).colorScheme.errorContainer,
                     backgroundColor: Theme.of(context).colorScheme.error,
@@ -221,7 +221,7 @@ class _KeypadState extends State<Keypad> {
                     },
                   ),
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     icon: FontAwesomeIcons.percent,
                     iconColor: Theme.of(context).colorScheme.primary,
                     onPressed: () {
@@ -230,7 +230,7 @@ class _KeypadState extends State<Keypad> {
                     },
                   ),
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     icon: FontAwesomeIcons.deleteLeft,
                     iconColor: Theme.of(context).colorScheme.error,
                     onPressed: () {
@@ -239,7 +239,7 @@ class _KeypadState extends State<Keypad> {
                     },
                   ),
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     icon: FontAwesomeIcons.divide,
                     iconColor: Theme.of(context).colorScheme.primary,
                     onPressed: () {
@@ -254,17 +254,17 @@ class _KeypadState extends State<Keypad> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                if (showScientific)
+                if (_showScientific)
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     text: "x!",
                     onPressed: () {
-                      insertText("factorial(");
+                      insertText("!");
                       widget.onChanged();
                     },
                   ),
                 RoundButton(
-                  isScientic: showScientific,
+                  isScientic: _showScientific,
                   icon: FontAwesomeIcons.seven,
                   onPressed: () {
                     insertText("7");
@@ -272,7 +272,7 @@ class _KeypadState extends State<Keypad> {
                   },
                 ),
                 RoundButton(
-                  isScientic: showScientific,
+                  isScientic: _showScientific,
                   icon: FontAwesomeIcons.eight,
                   onPressed: () {
                     insertText("8");
@@ -280,7 +280,7 @@ class _KeypadState extends State<Keypad> {
                   },
                 ),
                 RoundButton(
-                  isScientic: showScientific,
+                  isScientic: _showScientific,
                   icon: FontAwesomeIcons.nine,
                   onPressed: () {
                     insertText("9");
@@ -289,7 +289,7 @@ class _KeypadState extends State<Keypad> {
                 ),
                 if (widget.isCalculator)
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     icon: FontAwesomeIcons.xmark,
                     iconColor: Theme.of(context).colorScheme.primary,
                     onPressed: () {
@@ -299,7 +299,7 @@ class _KeypadState extends State<Keypad> {
                   ),
                 if (!widget.isCalculator)
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     icon: FontAwesomeIcons.c,
                     iconColor: Theme.of(context).colorScheme.errorContainer,
                     backgroundColor: Theme.of(context).colorScheme.error,
@@ -315,17 +315,17 @@ class _KeypadState extends State<Keypad> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                if (showScientific)
+                if (_showScientific)
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     text: "1/x",
                     onPressed: () {
-                      widget.controller.clear();
+                      insertText("1/");
                       widget.onChanged();
                     },
                   ),
                 RoundButton(
-                  isScientic: showScientific,
+                  isScientic: _showScientific,
                   icon: FontAwesomeIcons.four,
                   onPressed: () {
                     insertText("4");
@@ -333,7 +333,7 @@ class _KeypadState extends State<Keypad> {
                   },
                 ),
                 RoundButton(
-                  isScientic: showScientific,
+                  isScientic: _showScientific,
                   icon: FontAwesomeIcons.five,
                   onPressed: () {
                     insertText("5");
@@ -341,7 +341,7 @@ class _KeypadState extends State<Keypad> {
                   },
                 ),
                 RoundButton(
-                  isScientic: showScientific,
+                  isScientic: _showScientific,
                   icon: FontAwesomeIcons.six,
                   onPressed: () {
                     insertText("6");
@@ -350,7 +350,7 @@ class _KeypadState extends State<Keypad> {
                 ),
                 if (widget.isCalculator)
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     icon: FontAwesomeIcons.minus,
                     iconColor: Theme.of(context).colorScheme.primary,
                     onPressed: () {
@@ -366,17 +366,17 @@ class _KeypadState extends State<Keypad> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                if (showScientific)
+                if (_showScientific)
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     text: "\u03C0",
                     onPressed: () {
-                      insertText("pi");
+                      insertText("\u03C0");
                       widget.onChanged();
                     },
                   ),
                 RoundButton(
-                  isScientic: showScientific,
+                  isScientic: _showScientific,
                   icon: FontAwesomeIcons.three,
                   onPressed: () {
                     insertText("3");
@@ -384,7 +384,7 @@ class _KeypadState extends State<Keypad> {
                   },
                 ),
                 RoundButton(
-                  isScientic: showScientific,
+                  isScientic: _showScientific,
                   icon: FontAwesomeIcons.two,
                   onPressed: () {
                     insertText("2");
@@ -392,7 +392,7 @@ class _KeypadState extends State<Keypad> {
                   },
                 ),
                 RoundButton(
-                  isScientic: showScientific,
+                  isScientic: _showScientific,
                   icon: FontAwesomeIcons.one,
                   onPressed: () {
                     insertText("1");
@@ -401,7 +401,7 @@ class _KeypadState extends State<Keypad> {
                 ),
                 if (widget.isCalculator)
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     icon: FontAwesomeIcons.plus,
                     iconColor: Theme.of(context).colorScheme.primary,
                     onPressed: () {
@@ -419,37 +419,38 @@ class _KeypadState extends State<Keypad> {
               children: [
                 if (widget.isCalculator)
                   RoundButton(
-                    isScientic: showScientific,
-                    icon: showScientific
+                    isScientic: _showScientific,
+                    icon: _showScientific
                         ? FontAwesomeIcons.downLeftAndUpRightToCenter
                         : FontAwesomeIcons.upRightAndDownLeftFromCenter,
                     iconColor: Theme.of(context).colorScheme.primary,
                     onPressed: () {
                       setState(() {
-                        showScientific = !showScientific;
+                        _showScientific = !_showScientific;
                       });
                     },
                   ),
                 if (!widget.isCalculator)
                   RoundButton(
-                    isScientic: showScientific,
-                    icon: FontAwesomeIcons.zero,
+                    isScientic: _showScientific,
+                    text: "00",
+                    textStyle: const TextStyle(fontSize: 30),
                     onPressed: () {
                       insertText("00");
                       widget.onChanged();
                     },
                   ),
-                if (showScientific)
+                if (_showScientific)
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     text: "e",
                     onPressed: () {
-                      widget.controller.clear();
+                      insertText("e");
                       widget.onChanged();
                     },
                   ),
                 RoundButton(
-                  isScientic: showScientific,
+                  isScientic: _showScientific,
                   icon: FontAwesomeIcons.zero,
                   onPressed: () {
                     insertText("0");
@@ -457,15 +458,16 @@ class _KeypadState extends State<Keypad> {
                   },
                 ),
                 RoundButton(
-                  isScientic: showScientific,
-                  icon: period,
+                  isScientic: _showScientific,
+                  text: ".",
+                  textStyle: TextStyle(fontSize: _showScientific ? 20 : 40),
                   onPressed: () {
                     if (!widget.controller.text.contains(".")) insertText(".");
                   },
                 ),
                 if (widget.isCalculator)
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     icon: FontAwesomeIcons.equals,
                     iconColor: Theme.of(context).colorScheme.surface,
                     backgroundColor: Theme.of(context).colorScheme.primary,
@@ -473,7 +475,7 @@ class _KeypadState extends State<Keypad> {
                   ),
                 if (!widget.isCalculator)
                   RoundButton(
-                    isScientic: showScientific,
+                    isScientic: _showScientific,
                     icon: FontAwesomeIcons.deleteLeft,
                     iconColor: Theme.of(context).colorScheme.error,
                     onPressed: () {

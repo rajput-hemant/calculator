@@ -111,6 +111,8 @@ class _TemperatureConversionScreenState
         secondFieldIndex = index;
       }
     });
+
+    convert();
   }
 
   @override

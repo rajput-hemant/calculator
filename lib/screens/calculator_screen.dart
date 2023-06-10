@@ -36,6 +36,21 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     if (expression.isEmpty) {
       setState(() => _output = "");
     }
+    // replace sin-1, cos-1, tan-1 with arcsin, arccos, arctan
+    expression = expression.replaceAll("sin\u207B\u00B9", "arcsin");
+    expression = expression.replaceAll("cos\u207B\u00B9", "arccos");
+    expression = expression.replaceAll("tan\u207B\u00B9", "arctan");
+
+    // replace x² with x^2
+    expression = expression.replaceAll("\u00B2", "^2");
+
+    // replace π with *3.141592653589793
+    expression = expression.replaceAll("π", "*3.141592653589793");
+
+    // update the expression to always use base 10 log
+    expression = expression.replaceAllMapped(
+        RegExp(r'log\s*\(\s*([^,]+)\s*\)?'),
+        (match) => 'log(${match.group(1)}, 10)');
 
     String result = MathParser.parseExpression(expression);
 

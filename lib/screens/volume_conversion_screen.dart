@@ -16,12 +16,12 @@ class _VolumeConversionScreenState extends State<VolumeConversionScreen> {
   final TextEditingController _firstFieldController =
       TextEditingController(text: "1");
   final TextEditingController _secondFieldController =
-      TextEditingController(text: "0.0001");
+      TextEditingController(text: "1000000");
 
   bool isFirstFieldSelected = true;
   bool isFirstLabelSelected = true;
 
-  int firstFieldIndex = 0;
+  int firstFieldIndex = 9;
   int secondFieldIndex = 1;
 
   void convert() {
@@ -37,12 +37,14 @@ class _VolumeConversionScreenState extends State<VolumeConversionScreen> {
 
   void changeSelectedIndex(int index) {
     setState(() {
-      if (isFirstFieldSelected) {
+      if (isFirstLabelSelected) {
         firstFieldIndex = index;
       } else {
         secondFieldIndex = index;
       }
     });
+
+    convert();
   }
 
   @override

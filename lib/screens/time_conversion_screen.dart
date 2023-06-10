@@ -16,13 +16,13 @@ class _TimeConversionScreenState extends State<TimeConversionScreen> {
   final TextEditingController _firstFieldController =
       TextEditingController(text: "1");
   final TextEditingController _secondFieldController =
-      TextEditingController(text: "0.0001");
+      TextEditingController(text: "1000");
 
   bool isFirstFieldSelected = true;
   bool isFirstLabelSelected = true;
 
-  int firstFieldIndex = 0;
-  int secondFieldIndex = 1;
+  int firstFieldIndex = 8;
+  int secondFieldIndex = 7;
 
   void convert() {
     convertUnit(
@@ -43,6 +43,8 @@ class _TimeConversionScreenState extends State<TimeConversionScreen> {
         secondFieldIndex = index;
       }
     });
+
+    convert();
   }
 
   @override
