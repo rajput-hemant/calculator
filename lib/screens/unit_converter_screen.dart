@@ -29,7 +29,7 @@ class UnitConverterScreen extends ConsumerWidget {
           ),
         UnitItem(
           icon: FontAwesomeIcons.ruler,
-          label: "length",
+          label: "Length",
           onPressed: () =>
               Navigator.pushNamed(context, Routes.lengthConversionScreen),
         ),

@@ -63,13 +63,14 @@ class FieldListTile extends StatelessWidget {
                 Text(
                   "${list[fieldIndex].name} (${isCurrency == true ? list[fieldIndex].symbol : list[fieldIndex].id})",
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 15, fontFamily: ""),
+                  style: const TextStyle(fontSize: 15),
                 ),
                 const SizedBox(width: 18),
-                const Icon(
+                Icon(
                   FontAwesomeIcons.chevronRight,
                   size: 15,
-                  color: Colors.grey,
+                  color:
+                      Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                 ),
               ],
             ),
@@ -93,7 +94,10 @@ class FieldListTile extends StatelessWidget {
               keyboardType: TextInputType.none,
               textAlign: TextAlign.right,
               style: TextStyle(
-                  fontSize: 20, color: isFieldSelected ? Colors.amber : null),
+                  fontSize: 20,
+                  color: isFieldSelected
+                      ? Theme.of(context).colorScheme.primary
+                      : null),
               decoration: const InputDecoration(border: InputBorder.none),
             ),
           ),

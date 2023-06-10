@@ -30,11 +30,13 @@ class SettingsScreen extends ConsumerWidget {
             },
             title: const Text("Tab View"),
           ),
-          const ListTile(
-            title: Text("Version"),
+          ListTile(
+            title: const Text("Version"),
             subtitle: Text(
               "0.2.0",
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              ),
             ),
           )
         ],

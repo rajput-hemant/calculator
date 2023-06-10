@@ -139,7 +139,7 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
                   ),
                   const Padding(
                     padding: EdgeInsets.all(8),
-                    child: Divider(),
+                    child: Divider(thickness: 0.5),
                   ),
                   FieldListTile(
                     list: Currency.currenciesList,
@@ -163,17 +163,20 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
                   ),
                   const Padding(
                     padding: EdgeInsets.all(8),
-                    child: Divider(),
+                    child: Divider(thickness: 0.5),
                   ),
                 ],
               ),
             ),
           ),
-          Text(
-            "Last Upadated: $_lastUpdated",
-            style: const TextStyle(
-              fontSize: 10,
-              color: Colors.grey,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(
+              "Last Upadated: $_lastUpdated",
+              style: TextStyle(
+                fontSize: 10,
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              ),
             ),
           ),
           Expanded(

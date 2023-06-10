@@ -12,7 +12,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isTabView = ref.watch(prefrencesProvider).tabView;
+    final prefs = ref.watch(prefrencesProvider);
 
     return AppBar(
       leading: Padding(
@@ -27,7 +27,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
         ),
       ),
       actions: [
-        if (!isTabView)
+        if (!prefs.tabView)
           IconButton(
             onPressed: () {
               Navigator.pushNamed(context, Routes.unitConverterScreen);
@@ -39,6 +39,9 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
             ),
           ),
         PopupMenuButton(
+          surfaceTintColor: prefs.darkMode
+              ? Theme.of(context).colorScheme.onSurface
+              : Theme.of(context).colorScheme.surface,
           onSelected: (String? item) {
             Navigator.pushNamed(context, "/${item!.toLowerCase()}-screen");
           },
@@ -50,7 +53,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
               );
             }).toList();
           },
-          elevation: 30,
+          elevation: 15,
           offset: Offset(0.0, AppBar().preferredSize.height),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
@@ -59,7 +62,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ),
         )
       ],
-      bottom: isTabView
+      bottom: prefs.tabView
           ? const TabBar(
               labelPadding: EdgeInsets.symmetric(horizontal: 8),
               labelStyle: TextStyle(

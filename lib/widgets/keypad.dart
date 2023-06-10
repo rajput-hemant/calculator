@@ -93,7 +93,7 @@ class _KeypadState extends State<Keypad> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Theme.of(context).colorScheme.secondary,
       ),
       child: Column(
         children: [
@@ -213,8 +213,8 @@ class _KeypadState extends State<Keypad> {
                   RoundButton(
                     isScientic: showScientific,
                     icon: FontAwesomeIcons.c,
-                    iconColor: Theme.of(context).colorScheme.error,
-                    backgroundColor: Colors.red,
+                    iconColor: Theme.of(context).colorScheme.errorContainer,
+                    backgroundColor: Theme.of(context).colorScheme.error,
                     onPressed: () {
                       widget.controller.clear();
                       widget.onChanged();
@@ -232,7 +232,7 @@ class _KeypadState extends State<Keypad> {
                   RoundButton(
                     isScientic: showScientific,
                     icon: FontAwesomeIcons.deleteLeft,
-                    iconColor: Colors.red,
+                    iconColor: Theme.of(context).colorScheme.error,
                     onPressed: () {
                       removeLastCharacter();
                       widget.onChanged();
@@ -301,8 +301,8 @@ class _KeypadState extends State<Keypad> {
                   RoundButton(
                     isScientic: showScientific,
                     icon: FontAwesomeIcons.c,
-                    iconColor: Theme.of(context).colorScheme.error,
-                    backgroundColor: Colors.red,
+                    iconColor: Theme.of(context).colorScheme.errorContainer,
+                    backgroundColor: Theme.of(context).colorScheme.error,
                     onPressed: () {
                       widget.controller.clear();
                       widget.onChanged();
@@ -475,7 +475,7 @@ class _KeypadState extends State<Keypad> {
                   RoundButton(
                     isScientic: showScientific,
                     icon: FontAwesomeIcons.deleteLeft,
-                    iconColor: Colors.red,
+                    iconColor: Theme.of(context).colorScheme.error,
                     onPressed: () {
                       removeLastCharacter();
                       widget.onChanged();
