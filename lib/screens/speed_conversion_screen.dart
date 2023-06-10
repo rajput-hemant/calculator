@@ -55,7 +55,12 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Speed Conversion')),
+      appBar: AppBar(
+        title: const Text(
+          'Speed Conversion',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

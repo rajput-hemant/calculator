@@ -125,7 +125,12 @@ class _TemperatureConversionScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Area Conversion')),
+      appBar: AppBar(
+        title: const Text(
+          'Area Conversion',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

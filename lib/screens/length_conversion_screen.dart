@@ -57,7 +57,12 @@ class _LengthConversionScreenState extends State<LengthConversionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Length Conversion')),
+      appBar: AppBar(
+        title: const Text(
+          'Length Conversion',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

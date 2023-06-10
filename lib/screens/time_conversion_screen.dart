@@ -57,7 +57,12 @@ class _TimeConversionScreenState extends State<TimeConversionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Time Conversion')),
+      appBar: AppBar(
+        title: const Text(
+          'Time Conversion',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

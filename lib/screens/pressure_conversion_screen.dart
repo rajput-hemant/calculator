@@ -58,7 +58,12 @@ class _PressureConversionScreenState extends State<PressureConversionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Pressure Conversion')),
+      appBar: AppBar(
+        title: const Text(
+          'Pressure Conversion',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

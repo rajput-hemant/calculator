@@ -57,7 +57,12 @@ class _WeightConversionScreenState extends State<WeightConversionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Weight Conversion')),
+      appBar: AppBar(
+        title: const Text(
+          'Weight Conversion',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

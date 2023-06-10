@@ -57,7 +57,12 @@ class _VolumeConversionScreenState extends State<VolumeConversionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Volume Conversion')),
+      appBar: AppBar(
+        title: const Text(
+          'Volume Conversion',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

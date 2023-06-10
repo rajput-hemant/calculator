@@ -57,7 +57,12 @@ class _PowerConversionScreenState extends State<PowerConversionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Power Conversion')),
+      appBar: AppBar(
+        title: const Text(
+          'Power Conversion',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

@@ -109,7 +109,10 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
       appBar: isTabView
           ? null
           : AppBar(
-              title: const Text('Currency Conversion'),
+              title: const Text(
+                'Currency Conversion',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
       body: Column(
         children: [

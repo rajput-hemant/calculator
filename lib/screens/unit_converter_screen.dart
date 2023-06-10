@@ -17,7 +17,10 @@ class UnitConverterScreen extends ConsumerWidget {
       appBar: isTabView
           ? null
           : AppBar(
-              title: const Text("Unit Converter"),
+              title: const Text(
+                "Unit Converter",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
       body: GridView.count(
           crossAxisCount: 3,

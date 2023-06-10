@@ -57,7 +57,12 @@ class _DataConversionScreenState extends State<DataConversionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Data Conversion')),
+      appBar: AppBar(
+        title: const Text(
+          'Data Conversion',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

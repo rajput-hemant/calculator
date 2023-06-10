@@ -18,7 +18,10 @@ class SelectUnitScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Select ${isCurrency == true ? "Currency" : "Unit"}"),
+        title: Text(
+          "Select ${isCurrency == true ? "Currency" : "Unit"}",
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: ListView(
         children: [
