@@ -19,21 +19,6 @@ class Area implements Unit {
   // Base Unit Square metre
   static const areaList = [
     Area(
-      id: 'm\u00B2',
-      name: 'Metre\u00B2',
-      rate: 1,
-    ),
-    Area(
-      id: 'cm\u00B2',
-      name: 'Centimeter\u00B2',
-      rate: 10000.0,
-    ),
-    Area(
-      id: 'ha',
-      name: 'Hectares',
-      rate: 0.0001,
-    ),
-    Area(
       id: 'ac',
       name: 'Acre',
       rate: 0.0002471,
@@ -44,38 +29,53 @@ class Area implements Unit {
       rate: 0.01,
     ),
     Area(
-      id: 'dm\u00B2',
-      name: 'Decimeter\u00B2',
+      id: 'cm²',
+      name: 'Centimeter²',
+      rate: 10000.0,
+    ),
+    Area(
+      id: 'dm²',
+      name: 'Decimeter²',
       rate: 100.0,
     ),
     Area(
-      id: 'ft\u00B2',
-      name: 'Foot\u00B2',
+      id: 'ft²',
+      name: 'Foot²',
       rate: 10.764,
     ),
     Area(
-      id: 'in\u00B2',
-      name: 'Inch\u00B2',
+      id: 'ha',
+      name: 'Hectares',
+      rate: 0.0001,
+    ),
+    Area(
+      id: 'in²',
+      name: 'Inch²',
       rate: 1550.0031,
     ),
     Area(
-      id: 'km\u00B2',
-      name: 'kilometer\u00B2',
+      id: 'km²',
+      name: 'kilometer²',
       rate: 1e-6,
     ),
     Area(
-      id: 'mi\u00B2',
-      name: 'Mile\u00B2',
+      id: 'm²',
+      name: 'Metre²',
+      rate: 1,
+    ),
+    Area(
+      id: 'mi²',
+      name: 'Mile²',
       rate: 3.86e-7,
     ),
     Area(
-      id: 'mm\u00B2',
-      name: 'Milimeter\u00B2',
+      id: 'mm²',
+      name: 'Milimeter²',
       rate: 1000000.0,
     ),
     Area(
-      id: 'yd\u00B2',
-      name: 'Yard\u00B2',
+      id: 'yd²',
+      name: 'Yard²',
       rate: 1.19599,
     ),
   ];

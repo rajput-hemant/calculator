@@ -35,34 +35,14 @@ class Volume implements Unit {
       rate: 1000.0,
     ),
     Volume(
-      id: 'ft3',
-      name: 'Cubic foot',
-      rate: 35.3147248,
-    ),
-    Volume(
-      id: 'in3',
-      name: 'Cubic inch',
-      rate: 61023.8445022,
-    ),
-    Volume(
-      id: 'm3',
-      name: 'Cubic metre',
-      rate: 1.0,
-    ),
-    Volume(
-      id: 'mm3',
-      name: 'Cubic millimetre',
-      rate: 1000000000.0,
-    ),
-    Volume(
-      id: 'yd3',
-      name: 'Cubic yard',
-      rate: 1.3079528,
-    ),
-    Volume(
       id: 'dl',
       name: 'Decilitre',
       rate: 10000.0,
+    ),
+    Volume(
+      id: 'ft3',
+      name: 'Cubic foot',
+      rate: 35.3147248,
     ),
     Volume(
       id: 'gal',
@@ -75,14 +55,34 @@ class Volume implements Unit {
       rate: 10.0,
     ),
     Volume(
+      id: 'in3',
+      name: 'Cubic inch',
+      rate: 61023.8445022,
+    ),
+    Volume(
       id: 'l',
       name: 'Litre',
       rate: 1000.0,
     ),
     Volume(
+      id: 'm3',
+      name: 'Cubic metre',
+      rate: 1.0,
+    ),
+    Volume(
       id: 'ml',
       name: 'Millilitre',
       rate: 1000000.0,
+    ),
+    Volume(
+      id: 'mm3',
+      name: 'Cubic millimetre',
+      rate: 1000000000.0,
+    ),
+    Volume(
+      id: 'yd3',
+      name: 'Cubic yard',
+      rate: 1.3079528,
     ),
   ];
 }
