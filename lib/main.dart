@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'provider/preferences_provider.dart';
 import 'routes/routes.dart';
 import 'screens/screens.dart';
 import 'screens/settings_screen.dart';
@@ -16,20 +18,26 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
   ]);
 
-  runApp(const Calculator());
+  runApp(
+    const ProviderScope(
+      child: Calculator(),
+    ),
+  );
 }
 
-class Calculator extends StatelessWidget {
+class Calculator extends ConsumerWidget {
   const Calculator({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkMode = ref.watch(prefrencesProvider).darkMode;
+
     return MaterialApp(
       title: 'Calculator',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-      themeMode: ThemeMode.dark,
+      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
       home: const TabViewController(),
       routes: {
         Routes.calculatorScreen: (context) => const CalculatorScreen(),

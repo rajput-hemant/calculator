@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../provider/preferences_provider.dart';
 import '../routes/routes.dart';
 
-class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
+class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const MainAppBar({Key? key}) : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(100);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isTabView = ref.watch(prefrencesProvider).tabView;
+
     return AppBar(
       leading: Padding(
         padding: const EdgeInsets.only(top: 8, left: 8, bottom: 8),
@@ -23,16 +27,17 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       actions: [
-        IconButton(
-          onPressed: () {
-            Navigator.pushNamed(context, Routes.unitConverterScreen);
-          },
-          icon: Image.asset(
-            "assets/images/grid-light.png",
-            width: 24,
-            height: 24,
+        if (!isTabView)
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.unitConverterScreen);
+            },
+            icon: Image.asset(
+              "assets/images/grid-light.png",
+              width: 24,
+              height: 24,
+            ),
           ),
-        ),
         PopupMenuButton(
           onSelected: (String? item) {
             Navigator.pushNamed(context, "/${item!.toLowerCase()}-screen");
@@ -54,24 +59,26 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         )
       ],
-      bottom: const TabBar(
-        labelPadding: EdgeInsets.symmetric(horizontal: 8),
-        labelStyle: TextStyle(
-          fontWeight: FontWeight.w700,
-        ),
-        dividerColor: Colors.transparent,
-        tabs: [
-          Tab(
-            text: "Calculator",
-          ),
-          Tab(
-            text: "Exchange Rate",
-          ),
-          Tab(
-            text: "Unit Converter",
-          ),
-        ],
-      ),
+      bottom: isTabView
+          ? const TabBar(
+              labelPadding: EdgeInsets.symmetric(horizontal: 8),
+              labelStyle: TextStyle(
+                fontWeight: FontWeight.w700,
+              ),
+              dividerColor: Colors.transparent,
+              tabs: [
+                Tab(
+                  text: "Calculator",
+                ),
+                Tab(
+                  text: "Exchange Rate",
+                ),
+                Tab(
+                  text: "Unit Converter",
+                ),
+              ],
+            )
+          : null,
     );
   }
 }

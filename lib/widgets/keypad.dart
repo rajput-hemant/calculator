@@ -30,7 +30,10 @@ class _KeypadState extends State<Keypad> {
   /// Insert the given text into the controller at the current cursor position
   /// and update the cursor position after the inserted text.
   void insertText(String text) {
-    showSnackbar();
+    if (!widget.isCalculator) {
+      showSnackbar();
+    }
+
     if (!enableInput) {
       return;
     }
@@ -47,26 +50,6 @@ class _KeypadState extends State<Keypad> {
       selection: TextSelection.collapsed(offset: cursorPosition + text.length),
     );
   }
-  // void insertText(String text) {
-  //   final cursorPosition = widget.controller.selection.start;
-  //   final updatedText =
-  //       '${widget.controller.text.substring(0, cursorPosition)}$text${widget.controller.text.substring(cursorPosition)}';
-
-  //   final numberFormat = NumberFormat('#,##0');
-  //   final formattedText =
-  //       numberFormat.format(int.parse(updatedText.replaceAll(',', '')));
-
-  //   final selectionStart = cursorPosition + text.length;
-  //   final selectionEnd = selectionStart;
-
-  //   widget.controller.value = TextEditingValue(
-  //     text: formattedText,
-  //     selection: TextSelection(
-  //       baseOffset: selectionStart,
-  //       extentOffset: selectionEnd,
-  //     ),
-  //   );
-  // }
 
   void removeLastCharacter() {
     // Get the current cursor position

@@ -7,16 +7,18 @@ class SelectUnitScreen extends StatelessWidget {
     super.key,
     required this.list,
     required this.selectedUnitIndex,
+    this.isCurrency,
   });
 
   final List<Unit> list;
   final int selectedUnitIndex;
+  final bool? isCurrency;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Select Unit"),
+        title: Text("Select ${isCurrency == true ? "Currency" : "Unit"}"),
       ),
       body: ListView(
         children: [
@@ -27,7 +29,9 @@ class SelectUnitScreen extends StatelessWidget {
               onChanged: (value) {
                 Navigator.pop(context, value);
               },
-              title: Text(list[index].name),
+              title: Text(
+                "${isCurrency == true ? "${list[index].flag} " : ""}${list[index].name} (${list[index].id})",
+              ),
               controlAffinity: ListTileControlAffinity.trailing,
             ),
         ],

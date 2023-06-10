@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../provider/preferences_provider.dart';
 import '../utils/utils.dart';
 import '../widgets/keypad.dart';
+import '../widgets/main_appbar.dart';
 
-class CalculatorScreen extends StatefulWidget {
+class CalculatorScreen extends ConsumerStatefulWidget {
   const CalculatorScreen({super.key});
 
   @override
-  State<CalculatorScreen> createState() => _CalculatorScreenState();
+  ConsumerState<CalculatorScreen> createState() => _CalculatorScreenState();
 }
 
-class _CalculatorScreenState extends State<CalculatorScreen> {
+class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
   final _expressionController = TextEditingController();
 
   String _output = "";
+  double _fontSize = 48;
 
   void parseExpression(String expression) {
     setState(() {
@@ -53,6 +57,18 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     setState(() => _output = result);
   }
 
+  void setFontSize() {
+    setState(() {
+      if (_expressionController.text.length > 18) {
+        _fontSize = 32;
+      } else if (_expressionController.text.length > 12) {
+        _fontSize = 36;
+      } else {
+        _fontSize = 48;
+      }
+    });
+  }
+
   @override
   void dispose() {
     _expressionController.dispose();
@@ -61,30 +77,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isTabView = ref.watch(prefrencesProvider).tabView;
+
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: Padding(
-      //     padding: const EdgeInsets.only(top: 8, left: 8, bottom: 8),
-      //     child: Image.asset("assets/images/app_icon.png"),
-      //   ),
-      //   title: const Text(
-      //     'Calculator',
-      //     style: TextStyle(
-      //       fontSize: 24,
-      //       fontWeight: FontWeight.w600,
-      //     ),
-      //   ),
-      //   actions: [
-      //     IconButton(
-      //       onPressed: () {},
-      //       icon: const Icon(Icons.grid_4x4),
-      //     ),
-      //     IconButton(
-      //       onPressed: () {},
-      //       icon: const Icon(Icons.more_vert),
-      //     ),
-      //   ],
-      // ),
+      appBar: isTabView ? null : const MainAppBar(),
       body: Column(
         children: [
           Expanded(
@@ -101,10 +97,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     enableInteractiveSelection: false,
                     keyboardType: TextInputType.none,
                     textAlign: TextAlign.right,
-                    style: const TextStyle(fontSize: 48),
+                    style: TextStyle(fontSize: _fontSize),
                     decoration: const InputDecoration(
                       border: InputBorder.none,
-                      labelStyle: TextStyle(fontSize: 48),
                     ),
                   ),
                   Text(
@@ -122,6 +117,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               isCalculator: true,
               onChanged: () {
                 parseExpressionOnChange(_expressionController.text);
+                setFontSize();
               },
               onPressed: () {
                 parseExpression(_expressionController.text);

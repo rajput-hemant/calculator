@@ -9,6 +9,7 @@ class FieldListTile extends StatelessWidget {
     super.key,
     required this.controller,
     required this.list,
+    this.isCurrency,
     required this.isFieldSelected,
     required this.isLabelSelected,
     required this.onFieldSelect,
@@ -19,6 +20,7 @@ class FieldListTile extends StatelessWidget {
 
   final TextEditingController controller;
   final List<Unit> list;
+  final bool? isCurrency;
   final bool isFieldSelected;
   final bool isLabelSelected;
   final VoidCallback onFieldSelect;
@@ -41,6 +43,7 @@ class FieldListTile extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => SelectUnitScreen(
                     list: list,
+                    isCurrency: isCurrency,
                     selectedUnitIndex: fieldIndex,
                   ),
                 ),
@@ -52,12 +55,15 @@ class FieldListTile extends StatelessWidget {
             },
             child: Row(
               children: [
-                Text(
-                  "${list[fieldIndex].name} (${list[fieldIndex].id})",
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 15,
+                if (isCurrency == true)
+                  Text(
+                    "${list[fieldIndex].flag!} ",
+                    style: const TextStyle(fontSize: 20),
                   ),
+                Text(
+                  "${list[fieldIndex].name} (${isCurrency == true ? list[fieldIndex].symbol : list[fieldIndex].id})",
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 15, fontFamily: ""),
                 ),
                 const SizedBox(width: 18),
                 const Icon(

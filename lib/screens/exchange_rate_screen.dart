@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/models.dart';
+import '../provider/preferences_provider.dart';
 import '../utils/money_coverter.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad.dart';
 
-class ExchangeRateScreen extends StatefulWidget {
+class ExchangeRateScreen extends ConsumerStatefulWidget {
   const ExchangeRateScreen({super.key});
 
   @override
-  State<ExchangeRateScreen> createState() => _ExchangeRateScreenState();
+  ConsumerState<ExchangeRateScreen> createState() => _ExchangeRateScreenState();
 }
 
-class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
+class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
   late Map<String, dynamic> _rates;
+  String _lastUpdated = "-";
+
   final TextEditingController _firstFieldController =
       TextEditingController(text: "1");
   final TextEditingController _secondFieldController =
-      TextEditingController(text: "0.0a001");
+      TextEditingController(text: "0.0001");
 
   bool isFirstFieldSelected = true;
   bool isFirstLabelSelected = true;
@@ -33,7 +39,10 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
       double amount = double.parse(isFirstFieldSelected
           ? _firstFieldController.text
           : _secondFieldController.text);
-      double rate = _rates["data"][to] / _rates["data"][from];
+
+      double rate = isFirstFieldSelected
+          ? _rates["data"][to] / _rates["data"][from]
+          : _rates["data"][from] / _rates["data"][to];
 
       setState(() {
         if (isFirstFieldSelected) {
@@ -68,6 +77,18 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
       });
     });
 
+    SharedPreferences.getInstance().then((prefs) {
+      final lastUpdated = prefs.getInt("lastUpdated");
+      if (lastUpdated != null) {
+        setState(() {
+          String formattedDateTime = DateFormat('MMMM d, y, h:mm a')
+              .format(DateTime.fromMillisecondsSinceEpoch(lastUpdated));
+
+          _lastUpdated = formattedDateTime;
+        });
+      }
+    });
+
     super.initState();
   }
 
@@ -80,8 +101,14 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isTabView = ref.watch(prefrencesProvider).tabView;
+
     return Scaffold(
-      // appBar: AppBar(title: const Text('Currency Conversion')),
+      appBar: isTabView
+          ? null
+          : AppBar(
+              title: const Text('Currency Conversion'),
+            ),
       body: Column(
         children: [
           Expanded(
@@ -92,6 +119,7 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                 children: [
                   FieldListTile(
                     list: Currency.currenciesList,
+                    isCurrency: true,
                     controller: _firstFieldController,
                     isFieldSelected: isFirstFieldSelected,
                     isLabelSelected: isFirstLabelSelected,
@@ -115,6 +143,7 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                   ),
                   FieldListTile(
                     list: Currency.currenciesList,
+                    isCurrency: true,
                     controller: _secondFieldController,
                     isFieldSelected: !isFirstFieldSelected,
                     isLabelSelected: !isFirstLabelSelected,
@@ -138,6 +167,13 @@ class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
                   ),
                 ],
               ),
+            ),
+          ),
+          Text(
+            "Last Upadated: $_lastUpdated",
+            style: const TextStyle(
+              fontSize: 10,
+              color: Colors.grey,
             ),
           ),
           Expanded(

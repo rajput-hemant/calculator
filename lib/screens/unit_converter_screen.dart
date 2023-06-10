@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../provider/preferences_provider.dart';
 import '../routes/routes.dart';
 import '../widgets/unit_item.dart';
 
-class UnitConverterScreen extends StatelessWidget {
+class UnitConverterScreen extends ConsumerWidget {
   const UnitConverterScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isTabView = ref.watch(prefrencesProvider).tabView;
+
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Unit Converter"),
-      // ),
+      appBar: isTabView
+          ? null
+          : AppBar(
+              title: const Text("Unit Converter"),
+            ),
       body: GridView.count(crossAxisCount: 3, children: [
-        UnitItem(
-          icon: FontAwesomeIcons.globe,
-          label: "Currency",
-          onPressed: () =>
-              Navigator.pushNamed(context, Routes.exchangeRateScreen),
-        ),
+        if (!isTabView)
+          UnitItem(
+            icon: FontAwesomeIcons.globe,
+            label: "Currency",
+            onPressed: () =>
+                Navigator.pushNamed(context, Routes.exchangeRateScreen),
+          ),
         UnitItem(
           icon: FontAwesomeIcons.ruler,
           label: "length",
