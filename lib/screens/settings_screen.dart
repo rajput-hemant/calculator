@@ -1,28 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SettingsScreen extends StatelessWidget {
-  static const routeName = 'Settings';
-  const SettingsScreen({Key? key}) : super(key: key);
+import '../provider/preferences_provider.dart';
+
+class SettingsScreen extends ConsumerWidget {
+  const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final preferences = ref.watch(prefrencesProvider);
+
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text(
-          'Settings',
-          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+          "Settings",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(8),
-        child: ListTile(
-          title: Text(
-            'Version',
-            style: TextStyle(fontSize: 18),
+      body: Column(
+        children: [
+          SwitchListTile(
+            value: preferences.darkMode,
+            onChanged: (_) {
+              ref.read(prefrencesProvider.notifier).toggleDarkMode();
+            },
+            title: const Text("Dark Mode"),
           ),
-          subtitle: Text('0.1.0'),
-        ),
+          SwitchListTile(
+            value: preferences.tabView,
+            onChanged: (_) {
+              ref.read(prefrencesProvider.notifier).toggleTabView();
+            },
+            title: const Text("Tab View"),
+          ),
+          ListTile(
+            title: const Text("Version"),
+            subtitle: Text(
+              "0.2.0",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

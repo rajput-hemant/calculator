@@ -1,73 +1,87 @@
-class Pressure {
-  String id, name;
-  double rate;
+import 'models.dart';
 
-  Pressure({required this.id, required this.name, required this.rate});
+class Pressure implements Unit {
+  const Pressure({
+    required this.id,
+    required this.name,
+    required this.rate,
+  });
+
+  @override
+  @override
+  final String id, name;
+  @override
+  final double rate;
+  @override
+  String? get flag => null;
+  @override
+  String? get symbol => null;
+
   //Basic Unit Hectopascal
-  static var pressure = [
+  static const pressureList = [
     Pressure(
-      name: "Bar",
       id: "bar",
+      name: "Bar",
       rate: 0.001,
     ),
     Pressure(
-      name: "Hectopascal",
       id: "hPa",
+      name: "Hectopascal",
       rate: 1.0,
     ),
     Pressure(
-      name: "Inch of mercury",
       id: "inHg",
+      name: "Inch of mercury",
       rate: 0.02953,
     ),
     Pressure(
-      name: "Kilogram-force/square centimetre",
       id: "kg.f/cm2",
+      name: "Kilogram-force/square centimetre",
       rate: 0.0010197,
     ),
     Pressure(
-      name: "Kilogram-force/square metre",
       id: "kg.f/m2",
+      name: "Kilogram-force/square metre",
       rate: 10.1971621,
     ),
     Pressure(
-      name: "Kilopascal",
       id: "kPa",
+      name: "Kilopascal",
       rate: 0.1,
     ),
     Pressure(
-      name: "Megapascal",
       id: "MPa",
+      name: "Megapascal",
       rate: 1e-4,
     ),
     Pressure(
-      name: "Millibar",
       id: "mbar",
+      name: "Millibar",
       rate: 1.0,
     ),
     Pressure(
-      name: "Millimeter of Water",
       id: "mmH2O",
+      name: "Millimeter of Water",
       rate: 10.19716,
     ),
     Pressure(
-      name: "Millimetre of mercury",
       id: "mmHg",
+      name: "Millimetre of mercury",
       rate: 0.7500617,
     ),
     Pressure(
-      name: "Pounds/square foot",
       id: "psf",
+      name: "Pounds/square foot",
       rate: 2.088543512,
     ),
     Pressure(
-      name: "Pounds/square inch",
       id: "psi",
+      name: "Pounds/square inch",
       rate: 0.014503774,
     ),
     Pressure(
-      name: "Standard atmosphere",
       id: "atm",
+      name: "Standard atmosphere",
       rate: 9.86923e-4,
     ),
   ];

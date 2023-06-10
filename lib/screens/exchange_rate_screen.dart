@@ -1,242 +1,200 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/currency.dart';
-import '../utils/money_converter.dart';
-import '../widgets/bottom_sheet_tile.dart';
+import '../models/models.dart';
+import '../provider/preferences_provider.dart';
+import '../utils/money_coverter.dart';
 import '../widgets/field_list_tile.dart';
-import '../widgets/keypad_builder.dart';
+import '../widgets/keypad.dart';
 
-class ExchangeRateScreen extends StatefulWidget {
-  static const routeName = '/exchange-rate';
-  const ExchangeRateScreen({Key? key}) : super(key: key);
+class ExchangeRateScreen extends ConsumerStatefulWidget {
+  const ExchangeRateScreen({super.key});
 
   @override
-  State<ExchangeRateScreen> createState() => _ExchangeRateScreenState();
+  ConsumerState<ExchangeRateScreen> createState() => _ExchangeRateScreenState();
 }
 
-class _ExchangeRateScreenState extends State<ExchangeRateScreen> {
-  final _currencyList = CurrenciesData.currenciesData;
-  bool _isFirstField = true;
-  int _firstFieldIndex = 13, _secondFieldIndex = 37;
-  dynamic _firstField = '0', _secondField = '0';
+class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
+  late Map<String, dynamic> _rates;
+  String _lastUpdated = "-";
 
-  void convert({
-    required String from,
-    required String to,
-    required double amount,
-  }) async {
-    var result = await MoneyConverter.convert(
-        Currency(from, amount: amount), Currency(to));
+  final TextEditingController _firstFieldController =
+      TextEditingController(text: "1");
+  final TextEditingController _secondFieldController =
+      TextEditingController(text: "0.01");
+
+  bool isFirstFieldSelected = true;
+  bool isFirstLabelSelected = true;
+
+  int firstFieldIndex = 14;
+  int secondFieldIndex = 30;
+
+  void convert() async {
+    String from = Currency.currenciesList[firstFieldIndex].id;
+    String to = Currency.currenciesList[secondFieldIndex].id;
+
+    try {
+      double amount = double.parse(isFirstFieldSelected
+          ? _firstFieldController.text
+          : _secondFieldController.text);
+
+      double rate = isFirstFieldSelected
+          ? _rates["data"][to] / _rates["data"][from]
+          : _rates["data"][from] / _rates["data"][to];
+
+      setState(() {
+        if (isFirstFieldSelected) {
+          _secondFieldController.text = (amount * rate).toStringAsFixed(2);
+        } else {
+          _firstFieldController.text = (amount * rate).toStringAsFixed(2);
+        }
+      });
+    } catch (e) {
+      // clear the text fields on invalid double error,
+      // which is thrown when any one of the text fields is empty/cleared
+      _firstFieldController.clear();
+      _secondFieldController.clear();
+    }
+  }
+
+  void changeSelectedIndex(int index) {
     setState(() {
-      if (_isFirstField) {
-        _secondField = result.toStringAsFixed(2);
+      if (isFirstLabelSelected) {
+        firstFieldIndex = index;
       } else {
-        _firstField = result.toStringAsFixed(2);
+        secondFieldIndex = index;
       }
     });
+
+    convert();
+  }
+
+  @override
+  void initState() {
+    MoneyConverter.fetchRates().then((rates) {
+      setState(() {
+        _rates = rates;
+      });
+    });
+
+    SharedPreferences.getInstance().then((prefs) {
+      final lastUpdated = prefs.getInt("lastUpdated");
+      if (lastUpdated != null) {
+        setState(() {
+          String formattedDateTime = DateFormat('MMMM d, y, h:mm a')
+              .format(DateTime.fromMillisecondsSinceEpoch(lastUpdated));
+
+          _lastUpdated = formattedDateTime;
+        });
+      }
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _firstFieldController.dispose();
+    _secondFieldController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final isTabView = ref.watch(prefrencesProvider).tabView;
+
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text(
-          'Currency',
-          style: TextStyle(
-            fontSize: 26,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      appBar: isTabView
+          ? null
+          : AppBar(
+              title: const Text(
+                'Currency Conversion',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
       body: Column(
         children: [
           Expanded(
             flex: 2,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
                   FieldListTile(
-                    field: _firstField,
-                    isSelectedField: _isFirstField,
-                    index: _firstFieldIndex,
-                    title:
-                        "${_currencyList[_firstFieldIndex].flag} ${_currencyList[_firstFieldIndex].name}",
-                    subtitle:
-                        "${_currencyList[_firstFieldIndex].symbol} ${_currencyList[_firstFieldIndex].id}",
-                    bottomSheetHeader: "Select Currency",
-                    onTappingField: () {
+                    list: Currency.currenciesList,
+                    isCurrency: true,
+                    controller: _firstFieldController,
+                    isFieldSelected: isFirstFieldSelected,
+                    isLabelSelected: isFirstLabelSelected,
+                    fieldIndex: firstFieldIndex,
+                    onFieldSelect: () {
                       setState(() {
-                        setState(() => _isFirstField = true);
-                        clearButton();
+                        isFirstFieldSelected = true;
                       });
                     },
-                    child: ListView.builder(
-                      itemCount: _currencyList.length,
-                      itemBuilder: (context, i) {
-                        return BottomSheetTile(
-                          index: i,
-                          list: _currencyList,
-                          onSelecting: () {
-                            setState(() => _firstFieldIndex = i);
-                            log("First Field Index: $_firstFieldIndex");
-                            Navigator.pop(context);
-                          },
-                        );
-                      },
-                    ),
+                    onLabelSelect: () {
+                      setState(() {
+                        isFirstLabelSelected = true;
+                      });
+                      convert();
+                    },
+                    changeSelectedIndex: changeSelectedIndex,
                   ),
-                  const Divider(),
+                  const Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Divider(thickness: 0.5),
+                  ),
                   FieldListTile(
-                    field: _secondField,
-                    isSelectedField: !_isFirstField,
-                    index: _secondFieldIndex,
-                    title:
-                        "${_currencyList[_secondFieldIndex].flag} ${_currencyList[_secondFieldIndex].name}",
-                    subtitle:
-                        "${_currencyList[_secondFieldIndex].symbol} ${_currencyList[_secondFieldIndex].id}",
-                    bottomSheetHeader: "Select Currency",
-                    onTappingField: () {
+                    list: Currency.currenciesList,
+                    isCurrency: true,
+                    controller: _secondFieldController,
+                    isFieldSelected: !isFirstFieldSelected,
+                    isLabelSelected: !isFirstLabelSelected,
+                    fieldIndex: secondFieldIndex,
+                    onFieldSelect: () {
                       setState(() {
-                        setState(() => _isFirstField = false);
-                        clearButton();
+                        isFirstFieldSelected = false;
                       });
                     },
-                    child: ListView.builder(
-                      itemCount: _currencyList.length,
-                      itemBuilder: (context, i) {
-                        return BottomSheetTile(
-                          index: i,
-                          list: _currencyList,
-                          onSelecting: () {
-                            setState(() => _secondFieldIndex = i);
-                            log("Second Field Index: $_secondFieldIndex");
-                            Navigator.pop(context);
-                          },
-                        );
-                      },
-                    ),
+                    onLabelSelect: () {
+                      setState(() {
+                        isFirstLabelSelected = false;
+                      });
+                      convert();
+                    },
+                    changeSelectedIndex: changeSelectedIndex,
                   ),
-                  const Divider(),
+                  const Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Divider(thickness: 0.5),
+                  ),
                 ],
               ),
             ),
           ),
-          KeyPad(
-            onPressed0: () => onPressed(strToConcate: "0"),
-            onPressed1: () => onPressed(strToConcate: "1"),
-            onPressed2: () => onPressed(strToConcate: "2"),
-            onPressed3: () => onPressed(strToConcate: "3"),
-            onPressed4: () => onPressed(strToConcate: "4"),
-            onPressed5: () => onPressed(strToConcate: "5"),
-            onPressed6: () => onPressed(strToConcate: "6"),
-            onPressed7: () => onPressed(strToConcate: "7"),
-            onPressed8: () => onPressed(strToConcate: "8"),
-            onPressed9: () => onPressed(strToConcate: "9"),
-            onPressed00: () => onPressed(strToConcate: "00"),
-            onPressedDot: decimalButton,
-            onPressedDel: deleteButton,
-            onPressedClear: clearButton,
-            onPressedConvert: convertButton,
-          )
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(
+              "Last Upadated: $_lastUpdated",
+              style: TextStyle(
+                fontSize: 10,
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Keypad(
+              controller: isFirstFieldSelected
+                  ? _firstFieldController
+                  : _secondFieldController,
+              onChanged: convert,
+            ),
+          ),
         ],
       ),
-    );
-  }
-
-  void convertButton() {
-    return setState(() {
-      if (_isFirstField) {
-        convert(
-          from: _currencyList[_firstFieldIndex].id,
-          to: _currencyList[_secondFieldIndex].id,
-          amount: double.parse(_firstField),
-        );
-      } else {
-        convert(
-          from: _currencyList[_secondFieldIndex].id,
-          to: _currencyList[_firstFieldIndex].id,
-          amount: double.parse(_secondField),
-        );
-      }
-    });
-  }
-
-  void decimalButton() {
-    return setState(() {
-      if (_isFirstField && !_firstField.toString().contains(".")) {
-        _firstField += '.';
-      } else if (!_isFirstField && !_secondField.toString().contains(".")) {
-        _secondField += '.';
-      }
-    });
-  }
-
-  void clearButton() {
-    return setState(
-      () {
-        _firstField = '0';
-        _secondField = '0';
-      },
-    );
-  }
-
-  void deleteButton() {
-    return setState(() {
-      if (_isFirstField) {
-        if (_firstField.length == 1) {
-          _firstField = '0';
-          _secondField = '0';
-        } else {
-          _firstField = _firstField.substring(0, _firstField.length - 1);
-        }
-      } else {
-        if (_secondField.length == 1) {
-          _firstField = '0';
-          _secondField = '0';
-        } else {
-          _secondField = _secondField.substring(0, _secondField.length - 1);
-        }
-      }
-    });
-  }
-
-  void onPressed({String? strToConcate}) {
-    return setState(
-      () {
-        if (_isFirstField) {
-          if (_firstField == '0.0' ||
-              _firstField == '00' ||
-              _firstField == '0') {
-            _firstField = strToConcate!;
-          } else {
-            if (strToConcate == "00") {
-              _firstField += '00';
-            } else if (strToConcate == '0') {
-              _firstField += '0';
-            } else {
-              _firstField += strToConcate;
-            }
-          }
-        } else {
-          if (_secondField == '0.0' ||
-              _secondField == '00' ||
-              _secondField == '0') {
-            _secondField = strToConcate!;
-          } else {
-            if (strToConcate == "00") {
-              _secondField += '00';
-            } else if (strToConcate == '0') {
-              _secondField += '0';
-            } else {
-              _secondField += strToConcate;
-            }
-          }
-        }
-      },
     );
   }
 }

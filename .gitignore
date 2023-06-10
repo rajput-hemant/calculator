@@ -9,7 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
-linux/
+.env
 
 # IntelliJ related
 *.iml
@@ -32,9 +32,7 @@ linux/
 .pub-cache/
 .pub/
 /build/
-
-# Web related
-lib/generated_plugin_registrant.dart
+/linux/
 
 # Symbolication related
 app.*.symbols

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+import '../provider/preferences_provider.dart';
 import '../widgets/url_launcher.dart';
 
-class AboutScreen extends StatelessWidget {
-  static const routeName = 'About';
+class AboutScreen extends ConsumerWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkMode = ref.watch(prefrencesProvider).darkMode;
+
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text(
           'About',
-          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       body: Padding(
@@ -26,56 +28,50 @@ class AboutScreen extends StatelessWidget {
               'assets/images/app_icon.png',
               height: 120,
             ),
-            const SizedBox(
-              height: 12,
-            ),
             const ListTile(
               title: Center(
                 child: Text(
                   'Calculator',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
               ),
               subtitle: Center(
-                child: Text('v0.1.0'),
+                child: Text('v0.2.0'),
               ),
             ),
             const Padding(
               padding: EdgeInsets.all(10),
               child: Text(
-                "A Simple but elegant Calculator app made with Flutter using\n"
-                "Google's Material Design with\n"
-                "Currency (Exchange Rate)\n"
-                "and Unit Converter.",
+                "A Simple but elegant Calculator app made with Flutter using Google's Material Design with Currency (Exchange Rate) and Unit Converter.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'PTSans',
-                    fontWeight: FontWeight.bold),
+                  fontSize: 16,
+                  fontFamily: 'PTSans',
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
               child: Text(
-                'This is an Open-Source project and can be found on',
+                'This is an Open-Source project \nand can be found on',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Montserrat',
-                ),
+                style: TextStyle(fontSize: 16),
               ),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                fixedSize: const Size(150, 50),
-                padding: const EdgeInsets.all(10),
-                primary: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                backgroundColor: Theme.of(context).colorScheme.onBackground,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
               child: Image.asset(
-                'assets/images/github.png',
+                'assets/images/github-${isDarkMode ? "dark" : "light"}.png',
                 height: 25,
               ),
               onPressed: () =>
@@ -87,27 +83,25 @@ class AboutScreen extends StatelessWidget {
                 'If you liked our work\n'
                 'show some ❤️ and ⭐ the Repository.',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Montserrat',
-                ),
+                style: TextStyle(fontSize: 16),
               ),
             ),
             const Spacer(),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                fixedSize: const Size(150, 50),
-                padding: const EdgeInsets.all(10),
-                shadowColor: Colors.grey.shade300,
+                backgroundColor: Theme.of(context).colorScheme.onBackground,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 'Our Team',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Theme.of(context).colorScheme.background,
                   fontSize: 25,
                   fontWeight: FontWeight.w800,
                 ),
@@ -117,9 +111,7 @@ class AboutScreen extends StatelessWidget {
                 title: "Contact Us",
                 style: const AlertStyle(
                   isCloseButton: false,
-                  backgroundColor: Color(0xFF171717),
                   titleStyle: TextStyle(
-                    color: Colors.white,
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),
@@ -139,18 +131,18 @@ class AboutScreen extends StatelessWidget {
                     teamTile(
                         'Sakshi Chaudhary', 'https://github.com/Sakshi-Chy27'),
                     teamTile('Kuhoo Saxena', 'https://github.com/SaxenaKuhoo'),
-                    teamTile('Shruti', 'https://github.com/shru-ty'),
+                    teamTile('Shruti Tripathi', 'https://github.com/shru-ty'),
                   ],
                 ),
                 buttons: [
                   DialogButton(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onBackground,
                     onPressed: () => Navigator.pop(context),
-                    child: const Text(
+                    child: Text(
                       'Back',
                       style: TextStyle(
                         fontSize: 25,
-                        color: Colors.black,
+                        color: Theme.of(context).colorScheme.background,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -162,11 +154,10 @@ class AboutScreen extends StatelessWidget {
             const Text(
               "Made with ❤️ using Flutter.",
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: 'Montserrat',
-              ),
-            )
+            ),
+            const SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),
@@ -179,7 +170,6 @@ class AboutScreen extends StatelessWidget {
         name,
         style: const TextStyle(
           fontSize: 15,
-          fontFamily: 'Montserrat',
         ),
       ),
       trailing: IconButton(

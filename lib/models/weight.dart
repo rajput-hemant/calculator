@@ -1,10 +1,24 @@
-class Weight {
-  String id, name;
-  double rate;
+import 'models.dart';
 
-  Weight({required this.id, required this.name, required this.rate});
+class Weight implements Unit {
+  const Weight({
+    required this.id,
+    required this.name,
+    required this.rate,
+  });
+
+  @override
+  @override
+  final String id, name;
+  @override
+  final double rate;
+  @override
+  String? get flag => null;
+  @override
+  String? get symbol => null;
+
   //Base Unit Kilogram
-  static var weight = [
+  static const weightList = [
     Weight(
       name: 'Carat',
       id: 'ct',

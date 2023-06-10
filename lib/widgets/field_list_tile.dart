@@ -1,69 +1,121 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../utils/constants.dart';
-import 'scrollable_sheet.dart';
+import '../models/unit.dart';
+import '../screens/select_unit_screen.dart';
 
 class FieldListTile extends StatelessWidget {
-  final int index;
-  final Widget child;
-  final dynamic field;
-  final bool isSelectedField;
-  final String title, subtitle;
-  final String bottomSheetHeader;
-  final VoidCallback onTappingField;
-
   const FieldListTile({
     super.key,
-    required this.index,
-    required this.child,
-    required this.field,
-    required this.title,
-    required this.subtitle,
-    required this.onTappingField,
-    required this.isSelectedField,
-    required this.bottomSheetHeader,
+    required this.controller,
+    required this.list,
+    this.isCurrency,
+    required this.isFieldSelected,
+    required this.isLabelSelected,
+    required this.onFieldSelect,
+    required this.onLabelSelect,
+    required this.fieldIndex,
+    required this.changeSelectedIndex,
   });
+
+  final TextEditingController controller;
+  final List<Unit> list;
+  final bool? isCurrency;
+  final bool isFieldSelected;
+  final bool isLabelSelected;
+  final VoidCallback onFieldSelect;
+  final VoidCallback onLabelSelect;
+  final int fieldIndex;
+  final Function changeSelectedIndex;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: GestureDetector(
-        onTap: () {
-          showModalBottomSheet(
-            context: context,
-            backgroundColor: const Color(0xFF171717),
-            isScrollControlled: true,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            builder: (_) {
-              return ScrollableSheet(
-                sheetHeader: bottomSheetHeader,
-                listViewBuilder: child,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: () async {
+              onLabelSelect();
+              final selectedIndex = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SelectUnitScreen(
+                    list: list,
+                    isCurrency: isCurrency,
+                    selectedUnitIndex: fieldIndex,
+                  ),
+                ),
               );
+
+              if (selectedIndex != null) {
+                changeSelectedIndex(selectedIndex);
+              }
             },
-          );
-        },
-        child: Text(
-          title,
-          maxLines: 1,
-          style: kUnitTextStyle,
-        ),
-      ),
-      subtitle: Text(subtitle),
-      trailing: GestureDetector(
-        onTap: onTappingField,
-        child: Text(
-          field,
-          style: TextStyle(
-            fontSize: isSelectedField ? 32 : 24,
-            color: isSelectedField ? Colors.blue[300] : Colors.white,
+            child: Row(
+              children: [
+                if (isCurrency == true)
+                  Text(
+                    "${list[fieldIndex].flag!} ",
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                Text(
+                  list[fieldIndex].name,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 15),
+                ),
+                const SizedBox(width: 18),
+                Text(
+                  isCurrency == true
+                      ? "(${list[fieldIndex].symbol})"
+                      : "(${list[fieldIndex].id})",
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(0.75),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Icon(
+                  FontAwesomeIcons.chevronRight,
+                  size: 15,
+                  color:
+                      Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                ),
+              ],
+            ),
           ),
-          maxLines: 1,
-        ),
+          const SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: TextField(
+              controller: controller,
+              autofocus: isFieldSelected,
+              onTap: () {
+                onFieldSelect();
+                // this is to place the cursor at the end of the text
+                controller.selection = TextSelection.fromPosition(
+                  TextPosition(offset: controller.text.length),
+                );
+              },
+              showCursor: false,
+              readOnly: true,
+              keyboardType: TextInputType.none,
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                  fontSize: 20,
+                  color: isFieldSelected
+                      ? Theme.of(context).colorScheme.primary
+                      : null),
+              decoration: const InputDecoration(border: InputBorder.none),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,7 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.calculator">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" >
     <uses-permission android:name="android.permission.INTERNET" />
-   <application
+    <application
         android:label="Calculator"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -32,19 +31,4 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
-    <queries>
-     <intent>
-    <action android:name="android.intent.action.VIEW" />
-    <data android:scheme="https" />
-  </intent>
-   <intent>
-    <action android:name="android.intent.action.VIEW" />
-    <data android:scheme="http" />
-  </intent>
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="https" />
-    </intent>
-    </queries>
 </manifest>

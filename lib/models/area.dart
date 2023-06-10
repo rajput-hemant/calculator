@@ -1,72 +1,81 @@
-class Area {
-  String id, name;
-  double rate;
+import 'unit.dart';
 
-  Area({
+class Area implements Unit {
+  const Area({
     required this.id,
     required this.name,
     required this.rate,
   });
+
+  @override
+  final String id, name;
+  @override
+  final double rate;
+  @override
+  String? get flag => null;
+  @override
+  String? get symbol => null;
+
   // Base Unit Square metre
-  static var area = [
+  static const areaList = [
     Area(
-      name: 'Acre',
       id: 'ac',
+      name: 'Acre',
       rate: 0.0002471,
     ),
     Area(
-      name: 'Are',
       id: 'ar',
+      name: 'Are',
       rate: 0.01,
     ),
     Area(
-      name: 'Hectares',
-      id: 'ha',
-      rate: 0.0001,
-    ),
-    Area(
-      name: 'Square Centimeter',
-      id: 'cm2',
+      id: 'cm²',
+      name: 'Centimeter²',
       rate: 10000.0,
     ),
     Area(
-      name: 'Square Decimeter',
-      id: 'dm2',
+      id: 'dm²',
+      name: 'Decimeter²',
       rate: 100.0,
     ),
     Area(
-      name: 'Square Foot',
-      id: 'ft2',
+      id: 'ft²',
+      name: 'Foot²',
       rate: 10.764,
     ),
     Area(
-      name: 'Square Inch',
-      id: 'in2',
+      id: 'ha',
+      name: 'Hectares',
+      rate: 0.0001,
+    ),
+    Area(
+      id: 'in²',
+      name: 'Inch²',
       rate: 1550.0031,
     ),
     Area(
-      name: 'Square kilometer',
-      id: 'km2',
+      id: 'km²',
+      name: 'kilometer²',
       rate: 1e-6,
     ),
     Area(
-      name: 'Square Metre',
-      id: 'm2',
+      id: 'm²',
+      name: 'Metre²',
       rate: 1,
     ),
     Area(
-      name: 'Square Mile',
-      id: 'mi2',
+      id: 'mi²',
+      name: 'Mile²',
       rate: 3.86e-7,
     ),
     Area(
-      name: 'Square Milimeter',
-      id: 'mm2',
+      id: 'mm²',
+      name: 'Milimeter²',
       rate: 1000000.0,
     ),
     Area(
-      name: 'Square Yard',
-      id: 'yd2',
+      id: 'yd²',
+      name: 'Yard²',
       rate: 1.19599,
     ),
   ];

@@ -1,62 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'screens/about_screen.dart';
-import 'screens/area_conversion_screen.dart';
-import 'screens/calculator_screen.dart';
-import 'screens/data_conversion_screen.dart';
-import 'screens/exchange_rate_screen.dart';
-import 'screens/length_conversion_screen.dart';
-import 'screens/power_conversion_screen.dart';
-import 'screens/pressure_conversion_screen.dart';
+import 'provider/preferences_provider.dart';
+import 'routes/routes.dart';
+import 'screens/screens.dart';
 import 'screens/settings_screen.dart';
-import 'screens/speed_conversion_screen.dart';
-import 'screens/unit_converter_screen.dart';
-import 'screens/volume_conversion_screen.dart';
-import 'screens/weigth_conversion_screen.dart';
+import 'theme/theme.dart';
+import 'widgets/tab_controller.dart';
 
-void main() {
-  WidgetsFlutterBinding();
+Future<void> main() async {
+  await dotenv.load();
+
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-  runApp(const MyApp());
+
+  runApp(
+    const ProviderScope(
+      child: Calculator(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Calculator extends ConsumerWidget {
+  const Calculator({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkMode = ref.watch(prefrencesProvider).darkMode;
+
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Calculator',
-      theme: ThemeData.dark().copyWith(
-        appBarTheme: const AppBarTheme(color: Colors.black),
-        primaryColor: Colors.black,
-      ),
-      home: const CalculatorScreen(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+      darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      home: const TabViewController(),
       routes: {
-        ExchangeRateScreen.routeName: (context) => const ExchangeRateScreen(),
-        LengthConversionScreen.routeName: (context) =>
+        Routes.calculatorScreen: (context) => const CalculatorScreen(),
+        Routes.unitConverterScreen: (context) => const UnitConverterScreen(),
+        Routes.exchangeRateScreen: (context) => const ExchangeRateScreen(),
+        Routes.areaConversionScreen: (context) => const AreaConversionScreen(),
+        Routes.lengthConversionScreen: (context) =>
             const LengthConversionScreen(),
-        AreaConversionScreen.routeName: (context) =>
-            const AreaConversionScreen(),
-        SpeedConversionScreen.routeName: (context) =>
-            const SpeedConversionScreen(),
-        WeightConversionScreen.routeName: (context) =>
+        Routes.weightConversionScreen: (context) =>
             const WeightConversionScreen(),
-        DataConversionScreen.routeName: (context) =>
-            const DataConversionScreen(),
-        PowerConversionScreen.routeName: (context) =>
-            const PowerConversionScreen(),
-        PressureConversionScreen.routeName: (context) =>
-            const PressureConversionScreen(),
-        VolumeConversionScreen.routeName: (context) =>
+        Routes.volumeConversionScreen: (context) =>
             const VolumeConversionScreen(),
-        UnitConverterScreen.routeName: (context) => const UnitConverterScreen(),
-        SettingsScreen.routeName: (context) => const SettingsScreen(),
-        AboutScreen.routeName: ((context) => const AboutScreen()),
+        Routes.temperatureConversionScreen: (context) =>
+            const TemperatureConversionScreen(),
+        Routes.timeConversionScreen: (context) => const TimeConversionScreen(),
+        Routes.speedConversionScreen: (context) =>
+            const SpeedConversionScreen(),
+        Routes.dataConversionScreen: (context) => const DataConversionScreen(),
+        Routes.pressureConversionScreen: (context) =>
+            const PressureConversionScreen(),
+        Routes.powerConversionScreen: (context) =>
+            const PowerConversionScreen(),
+        Routes.settingsScreen: (context) => const SettingsScreen(),
+        Routes.aboutScreen: (context) => const AboutScreen(),
       },
     );
   }
