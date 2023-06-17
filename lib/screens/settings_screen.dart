@@ -36,7 +36,7 @@ class SettingsScreen extends ConsumerWidget {
           ListTile(
             title: const Text("Version"),
             subtitle: Text(
-              "0.2.0",
+              "0.2.1",
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
               ),

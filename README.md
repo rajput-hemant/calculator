@@ -6,6 +6,8 @@
 
 # Calculator
 
+**v0.2.1**
+
 ### A Simple but elegant Calculator app made with Flutter using Google's Material Design with Currency (Exchange Rate) and Unit Converter.
 
 ## ![][android] Download APK
@@ -32,7 +34,7 @@
 
 </details>
 
-## Building from Source
+## 🔨 Building from Source
 
 </div>
 
@@ -60,7 +62,11 @@ flutter run
 
 <div align = center>
 
-## Contributors:
+## 📜 License
+
+This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details.
+
+## 🦾 Contributors:
 
 <a href="https://github.com/rajput-hemant/calculator/graphs/contributors" target="blank"> <img src="https://contrib.rocks/image?repo=rajput-hemant/calculator&max=500" />
 
@@ -81,15 +87,15 @@ flutter run
 
 <!------------------------------------{ apk }----------------------------------->
 
-[universal-release]: https://github.com/rajput-hemant/calculator/releases/download/v0.2.0/Calculator-v0.2.0-universal-release.apk
-[arm64]: https://github.com/rajput-hemant/calculator/releases/download/v0.2.0/Calculator-v0.2.0-arm64-v8a-release.apk
-[armabi]: https://github.com/rajput-hemant/calculator/releases/download/v0.2.0/Calculator-v0.2.0-armeabi-v7a-release.apk
-[x86]: https://github.com/rajput-hemant/calculator/releases/download/v0.2.0/Calculator-v0.2.0-x86_64-release.apk
+[universal-release]: https://github.com/rajput-hemant/calculator/releases/download/v0.2.1/Calculator-v0.2.1-universal-release.apk
+[arm64]: https://github.com/rajput-hemant/calculator/releases/download/v0.2.1/Calculator-v0.2.1-arm64-v8a-release.apk
+[armabi]: https://github.com/rajput-hemant/calculator/releases/download/v0.2.1/Calculator-v0.2.1-armeabi-v7a-release.apk
+[x86]: https://github.com/rajput-hemant/calculator/releases/download/v0.2.1/Calculator-v0.2.1-x86_64-release.apk
 
 <!--------------------------------{ source code }------------------------------->
 
-[sc-zip]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.2.0.zip
-[sc-tar.gz]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.2.0.tar.gz
+[sc-zip]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.2.1.zip
+[sc-tar.gz]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.2.1.tar.gz
 
 <!----------------------------------{ Labels }--------------------------------->
 

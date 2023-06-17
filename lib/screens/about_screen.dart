@@ -36,7 +36,7 @@ class AboutScreen extends ConsumerWidget {
                 ),
               ),
               subtitle: Center(
-                child: Text('v0.2.0'),
+                child: Text('v0.2.1'),
               ),
             ),
             const Padding(
