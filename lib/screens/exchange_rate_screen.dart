@@ -28,8 +28,8 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
   bool isFirstFieldSelected = true;
   bool isFirstLabelSelected = true;
 
-  int firstFieldIndex = 14;
-  int secondFieldIndex = 30;
+  int firstFieldIndex = 15;
+  int secondFieldIndex = 31;
 
   void convert() async {
     String from = Currency.currenciesList[firstFieldIndex].id;

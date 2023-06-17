@@ -64,6 +64,12 @@ class Currency implements Unit {
       symbol: 'kr',
     ),
     Currency(
+      id: "EUR",
+      name: "Euro",
+      flag: "🇪🇺",
+      symbol: '€',
+    ),
+    Currency(
       id: "GBP",
       name: "British Pound Sterling",
       flag: "🇬🇧",
