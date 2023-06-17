@@ -157,7 +157,7 @@ class _KeypadState extends State<Keypad> {
                     isScientic: _showScientific,
                     text: _showInverse ? "x\u00B2" : "\u221Ax",
                     onPressed: () {
-                      insertText(_showInverse ? "\u00B2" : "sqrt(");
+                      insertText(_showInverse ? "\u00B2" : "\u221A");
                       widget.onChanged();
                     },
                   ),
@@ -293,7 +293,7 @@ class _KeypadState extends State<Keypad> {
                     icon: FontAwesomeIcons.xmark,
                     iconColor: Theme.of(context).colorScheme.primary,
                     onPressed: () {
-                      insertText("*");
+                      insertText("x");
                       widget.onChanged();
                     },
                   ),

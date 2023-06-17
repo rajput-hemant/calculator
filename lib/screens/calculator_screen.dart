@@ -47,6 +47,12 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     // replace π with *3.141592653589793
     expression = expression.replaceAll("π", "*3.141592653589793");
 
+    // replace x with *
+    expression = expression.replaceAll("x", "*");
+
+    // replace √ with sqrt
+    expression = expression.replaceAll("√", "sqrt(");
+
     // update the expression to always use base 10 log
     expression = expression.replaceAllMapped(
         RegExp(r'log\s*\(\s*([^,]+)\s*\)?'),
@@ -119,7 +125,13 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                   ),
                   Text(
                     _output,
-                    style: const TextStyle(),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.5),
+                    ),
                   ),
                 ],
               ),
