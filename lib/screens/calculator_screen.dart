@@ -115,7 +115,6 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                   TextField(
                     autofocus: true,
                     controller: _expressionController,
-                    enableInteractiveSelection: false,
                     keyboardType: TextInputType.none,
                     textAlign: TextAlign.right,
                     style: TextStyle(fontSize: _fontSize),
