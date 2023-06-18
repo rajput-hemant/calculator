@@ -74,8 +74,8 @@ class AboutScreen extends ConsumerWidget {
                 'assets/images/github-${isDarkMode ? "dark" : "light"}.png',
                 height: 25,
               ),
-              onPressed: () =>
-                  UrlLauncher('https://github.com/Khushal-ag/calculator/tree/khushal'),
+              onPressed: () => UrlLauncher(
+                  'https://github.com/Khushal-ag/calculator/tree/khushal'),
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -122,7 +122,10 @@ class AboutScreen extends ConsumerWidget {
                         'Khushal Agarwal', 'https://github.com/Khushal-ag'),
                     teamTile(
                         'Hemant Rajput', 'https://github.com/rajput-hemant'),
-                    teamTile('Ritik Kuntal', 'https://github.com/b49-Ritik'),
+                    teamTile(
+                        'Ritik Kuntal', 'https://github.com/kuntal-hrithik'),
+                    teamTile(
+                        'Vikas Singh', 'https://github.com/Vikas-Singh-10'),
                     teamTile('Kalyani Agarwal', 'https://github.com/kalyaniag'),
                     teamTile('Shruti Tripathi', 'https://github.com/shru-ty'),
                   ],

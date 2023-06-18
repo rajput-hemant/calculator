@@ -42,6 +42,10 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     "assets/images/grid-dark.png",
                     width: 24,
                     height: 24,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(0.75),
                   ),
           ),
         PopupMenuButton(
