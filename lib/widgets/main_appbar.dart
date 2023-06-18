@@ -32,11 +32,17 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
             onPressed: () {
               Navigator.pushNamed(context, Routes.unitConverterScreen);
             },
-            icon: Image.asset(
-              "assets/images/grid-light.png",
-              width: 24,
-              height: 24,
-            ),
+            icon: prefs.darkMode
+                ? Image.asset(
+                    "assets/images/grid-light.png",
+                    width: 24,
+                    height: 24,
+                  )
+                : Image.asset(
+                    "assets/images/grid-dark.png",
+                    width: 24,
+                    height: 24,
+                  ),
           ),
         PopupMenuButton(
           surfaceTintColor: prefs.darkMode

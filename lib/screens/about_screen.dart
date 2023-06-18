@@ -75,7 +75,7 @@ class AboutScreen extends ConsumerWidget {
                 height: 25,
               ),
               onPressed: () =>
-                  UrlLauncher('https://github.com/rajput-hemant/calculator'),
+                  UrlLauncher('https://github.com/Khushal-ag/calculator/tree/khushal'),
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -123,14 +123,7 @@ class AboutScreen extends ConsumerWidget {
                     teamTile(
                         'Hemant Rajput', 'https://github.com/rajput-hemant'),
                     teamTile('Ritik Kuntal', 'https://github.com/b49-Ritik'),
-                    teamTile('Vikas Singh', 'https://github.com/B-63Vikas'),
-                    teamTile(
-                        'Ayush Sharma', 'https://github.com/AyushSharma3566'),
-                    teamTile(
-                        'Suhani Pachouri', 'https://github.com/Suhanipachouri'),
-                    teamTile(
-                        'Sakshi Chaudhary', 'https://github.com/Sakshi-Chy27'),
-                    teamTile('Kuhoo Saxena', 'https://github.com/SaxenaKuhoo'),
+                    teamTile('Kalyani Agarwal', 'https://github.com/kalyaniag'),
                     teamTile('Shruti Tripathi', 'https://github.com/shru-ty'),
                   ],
                 ),
