@@ -65,7 +65,7 @@ class Energy implements Unit {
     ),
     const Energy(
       id: 'therm',
-      name: 'Therm',
+      name: 'US Therm',
       rate: 9.480434e-9,
     ),
     const Energy(
