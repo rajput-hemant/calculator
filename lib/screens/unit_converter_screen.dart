@@ -70,6 +70,12 @@ class UnitConverterScreen extends ConsumerWidget {
                   Navigator.pushNamed(context, Routes.powerConversionScreen),
             ),
             UnitItem(
+              icon: FontAwesomeIcons.fire,
+              label: "Energy",
+              onPressed: () =>
+                  Navigator.pushNamed(context, Routes.energyConversionScreen),
+            ),
+            UnitItem(
               icon: FontAwesomeIcons.gaugeSimple,
               label: "Pressure",
               onPressed: () =>

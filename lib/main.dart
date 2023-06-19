@@ -60,6 +60,8 @@ class Calculator extends ConsumerWidget {
             const PressureConversionScreen(),
         Routes.powerConversionScreen: (context) =>
             const PowerConversionScreen(),
+        Routes.energyConversionScreen: (context) =>
+            const EnergyConversionScreen(),
         Routes.settingsScreen: (context) => const SettingsScreen(),
         Routes.aboutScreen: (context) => const AboutScreen(),
       },
