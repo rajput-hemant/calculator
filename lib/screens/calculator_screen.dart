@@ -105,7 +105,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
       body: Column(
         children: [
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
@@ -137,7 +137,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 2,
             child: Keypad(
               controller: _expressionController,
               isCalculator: true,

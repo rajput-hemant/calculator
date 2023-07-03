@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'provider/preferences_provider.dart';
 import 'routes/routes.dart';
 import 'screens/screens.dart';
-import 'screens/settings_screen.dart';
 import 'theme/theme.dart';
 import 'widgets/tab_controller.dart';
 
