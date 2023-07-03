@@ -19,15 +19,14 @@ class SelectUnitScreen extends StatefulWidget {
 }
 
 class _SelectUnitScreenState extends State<SelectUnitScreen> {
-  late List<Unit> _filteredList;
-  late TextEditingController _searchController;
+  final TextEditingController _searchController = TextEditingController();
+  late List<Unit> _filteredList = widget.list;
   bool _isSearching = false;
 
   @override
   void initState() {
     super.initState();
     _filteredList = widget.list;
-    _searchController = TextEditingController();
   }
 
   @override
