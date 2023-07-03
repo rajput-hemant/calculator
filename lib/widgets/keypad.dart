@@ -462,7 +462,16 @@ class _KeypadState extends State<Keypad> {
                   text: ".",
                   textStyle: TextStyle(fontSize: _showScientific ? 20 : 40),
                   onPressed: () {
-                    if (!widget.controller.text.contains(".")) insertText(".");
+                    // check if the number till the last operator has a dot
+                    final String text = widget.controller.text;
+
+                    final int lastOperatorIndex =
+                        text.lastIndexOf(RegExp(r"[+\-x/%]"));
+                    final int lastDotIndex = text.lastIndexOf(".");
+                    if (lastDotIndex > lastOperatorIndex) return;
+
+                    insertText(".");
+                    widget.onChanged();
                   },
                 ),
                 if (widget.isCalculator)
