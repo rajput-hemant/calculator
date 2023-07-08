@@ -246,7 +246,7 @@ class _KeypadState extends State<Keypad> {
                       insertText("/");
                       widget.onChanged();
                     },
-                  ),
+                  ),https://github.com/rajput-hemant/calculator
                 ],
               ),
             ),
@@ -377,9 +377,9 @@ class _KeypadState extends State<Keypad> {
                   ),
                 RoundButton(
                   isScientic: _showScientific,
-                  icon: FontAwesomeIcons.three,
+                  icon: FontAwesomeIcons.one,
                   onPressed: () {
-                    insertText("3");
+                    insertText("1");
                     widget.onChanged();
                   },
                 ),
@@ -393,9 +393,9 @@ class _KeypadState extends State<Keypad> {
                 ),
                 RoundButton(
                   isScientic: _showScientific,
-                  icon: FontAwesomeIcons.one,
+                  icon: FontAwesomeIcons.three,
                   onPressed: () {
-                    insertText("1");
+                    insertText("3");
                     widget.onChanged();
                   },
                 ),
