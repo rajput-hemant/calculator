@@ -246,7 +246,7 @@ class _KeypadState extends State<Keypad> {
                       insertText("/");
                       widget.onChanged();
                     },
-                  ),https://github.com/rajput-hemant/calculator
+                  ),
                 ],
               ),
             ),
