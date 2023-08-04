@@ -5,6 +5,8 @@ class Routes {
   static const String dataConversionScreen = '/data-conversion-screen';
   static const String energyConversionScreen = '/energy-conversion-screen';
   static const String exchangeRateScreen = '/exchange-rate-screen';
+  static const String frequencyConversionScreen =
+      '/frequency-conversion-screen';
   static const String lengthConversionScreen = '/length-conversion-screen';
   static const String powerConversionScreen = '/power-conversion-screen';
   static const String pressureConversionScreen = '/pressure-conversion-screen';

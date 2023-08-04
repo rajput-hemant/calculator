@@ -99,6 +99,12 @@ class UnitConverterScreen extends ConsumerWidget {
               onPressed: () =>
                   Navigator.pushNamed(context, Routes.timeConversionScreen),
             ),
+            UnitItem(
+              icon: FontAwesomeIcons.chartSimple,
+              label: "Frequency",
+              onPressed: () => Navigator.pushNamed(
+                  context, Routes.frequencyConversionScreen),
+            ),
           ]),
     );
   }
