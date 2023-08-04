@@ -10,6 +10,8 @@ class Routes {
   static const String fuelEconomyConversionScreen =
       '/fuel-economy-conversion-screen';
   static const String lengthConversionScreen = '/length-conversion-screen';
+  static const String planeAngleConversionScreen =
+      '/plane-angle-conversion-screen';
   static const String powerConversionScreen = '/power-conversion-screen';
   static const String pressureConversionScreen = '/pressure-conversion-screen';
   static const String selectUnitScreen = '/select-unit-screen';

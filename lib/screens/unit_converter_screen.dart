@@ -100,6 +100,12 @@ class UnitConverterScreen extends ConsumerWidget {
                   Navigator.pushNamed(context, Routes.timeConversionScreen),
             ),
             UnitItem(
+              icon: FontAwesomeIcons.circleNodes,
+              label: "Plane Angle",
+              onPressed: () => Navigator.pushNamed(
+                  context, Routes.planeAngleConversionScreen),
+            ),
+            UnitItem(
               icon: FontAwesomeIcons.chartSimple,
               label: "Frequency",
               onPressed: () => Navigator.pushNamed(
