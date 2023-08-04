@@ -105,6 +105,12 @@ class UnitConverterScreen extends ConsumerWidget {
               onPressed: () => Navigator.pushNamed(
                   context, Routes.frequencyConversionScreen),
             ),
+            UnitItem(
+              icon: FontAwesomeIcons.gasPump,
+              label: "Fuel Economy",
+              onPressed: () => Navigator.pushNamed(
+                  context, Routes.fuelEconomyConversionScreen),
+            ),
           ]),
     );
   }

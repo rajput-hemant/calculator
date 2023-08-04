@@ -14,4 +14,6 @@ export 'volume_conversion_screen.dart';
 export 'weight_conversion_screen.dart';
 export 'time_conversion_screen.dart';
 export 'temeprature_conversion_screen.dart';
+export 'frequency_conversion_screen.dart';
+export 'fuel_economy_conversion_screen.dart';
 export 'settings_screen.dart';
