@@ -1,13 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../provider/preferences_provider.dart';
 
-class SettingsScreen extends ConsumerWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  late String _appVersion = "0.2.0";
+
+  @override
+  void initState() {
+    PackageInfo.fromPlatform().then((pkg) {
+      setState(() {
+        _appVersion = pkg.version;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final preferences = ref.watch(prefrencesProvider);
 
     return Scaffold(
@@ -36,7 +54,7 @@ class SettingsScreen extends ConsumerWidget {
           ListTile(
             title: const Text("Version"),
             subtitle: Text(
-              "0.2.1",
+              _appVersion,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
               ),

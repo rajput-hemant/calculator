@@ -1,34 +1,13 @@
-import 'provider/preferences_provider.dart';
-import 'routes/routes.dart';
-import 'screens/about_screen.dart';
-import 'screens/area_conversion_screen.dart';
-import 'screens/calculator_screen.dart';
-import 'screens/data_conversion_screen.dart';
-import 'screens/energy_conversion_screen.dart';
-import 'screens/exchange_rate_screen.dart';
-import 'screens/fuel_economy_conversion_screen.dart';
-import 'screens/length_conversion_screen.dart';
-import 'screens/plane_angle_conversion_screen.dart';
-import 'screens/power_conversion_screen.dart';
-import 'screens/pressure_conversion_screen.dart';
-import 'screens/settings_screen.dart';
-import 'screens/speed_conversion_screen.dart';
-import 'screens/temeprature_conversion_screen.dart';
-import 'screens/time_conversion_screen.dart';
-import 'screens/unit_converter_screen.dart';
-import 'screens/weight_conversion_screen.dart';
-import 'theme/dark.dart';
-import 'theme/light.dart';
-import 'widgets/tab_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'screens/frequency_conversion_screen.dart';
-import 'screens/volume_conversion_screen.dart';
-
-
+import 'provider/preferences_provider.dart';
+import 'routes/routes.dart';
+import 'screens/screens.dart';
+import 'theme/theme.dart';
+import 'widgets/tab_controller.dart';
 
 Future<void> main() async {
   await dotenv.load();
@@ -52,7 +31,6 @@ class Calculator extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDarkMode = ref.watch(prefrencesProvider).darkMode;
 
-    var planeAngleConversionScreen;
     return MaterialApp(
       title: 'Calculator',
       debugShowCheckedModeBanner: false,

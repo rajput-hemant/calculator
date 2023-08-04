@@ -1,16 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../provider/preferences_provider.dart';
 import '../widgets/url_launcher.dart';
 
-class AboutScreen extends ConsumerWidget {
+class AboutScreen extends ConsumerStatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AboutScreen> createState() => _AboutScreenState();
+}
+
+class _AboutScreenState extends ConsumerState<AboutScreen> {
+  late String _appVersion = "0.2.0";
+
+  @override
+  void initState() {
+    PackageInfo.fromPlatform().then((pkg) {
+      setState(() {
+        _appVersion = pkg.version;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final isDarkMode = ref.watch(prefrencesProvider).darkMode;
 
     return Scaffold(
@@ -28,15 +46,15 @@ class AboutScreen extends ConsumerWidget {
               'assets/images/app_icon.png',
               height: 120,
             ),
-            const ListTile(
-              title: Center(
+            ListTile(
+              title: const Center(
                 child: Text(
                   'Calculator',
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
               ),
               subtitle: Center(
-                child: Text('v0.2.2'),
+                child: Text(_appVersion),
               ),
             ),
             const Padding(
