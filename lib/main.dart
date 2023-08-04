@@ -8,7 +8,6 @@ import '../routes/routes.dart';
 import '../screens/screens.dart';
 import '../theme/theme.dart';
 import '../widgets/tab_controller.dart';
-import 'screens/frequency_conversion_screen.dart';
 
 Future<void> main() async {
   await dotenv.load();
@@ -57,6 +56,8 @@ class Calculator extends ConsumerWidget {
             const SpeedConversionScreen(),
         Routes.frequencyConversionScreen: (context) =>
             const FrequencyConversionScreen(),
+        Routes.fuelEconomyConversionScreen: (context) =>
+            const FuelEconomyConversionScreen(),
         Routes.dataConversionScreen: (context) => const DataConversionScreen(),
         Routes.pressureConversionScreen: (context) =>
             const PressureConversionScreen(),

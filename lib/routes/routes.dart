@@ -7,6 +7,8 @@ class Routes {
   static const String exchangeRateScreen = '/exchange-rate-screen';
   static const String frequencyConversionScreen =
       '/frequency-conversion-screen';
+  static const String fuelEconomyConversionScreen =
+      '/fuel-economy-conversion-screen';
   static const String lengthConversionScreen = '/length-conversion-screen';
   static const String powerConversionScreen = '/power-conversion-screen';
   static const String pressureConversionScreen = '/pressure-conversion-screen';
