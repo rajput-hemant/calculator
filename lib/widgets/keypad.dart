@@ -25,6 +25,8 @@ class _KeypadState extends State<Keypad> {
   bool _showScientific = false;
   bool _enableInput = true;
   bool _showInverse = false;
+  
+  get https => null;
 
   /// Insert the given text into the controller at the current cursor position
   /// and update the cursor position after the inserted text.
@@ -246,7 +248,7 @@ class _KeypadState extends State<Keypad> {
                       insertText("/");
                       widget.onChanged();
                     },
-                  ),https://github.com/rajput-hemant/calculator
+                  ),
                 ],
               ),
             ),
