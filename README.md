@@ -21,6 +21,8 @@
 **[<kbd> <br> **Source Code (zip)** <br> </kbd>][sc-zip]**&nbsp;&nbsp;
 **[<kbd> <br> **Source Code (tar.gz)** <br> </kbd>][sc-tar.gz]**
 
+[<img src="./assets/images/izzy-on-droid.png" alt="Get it on IzzyDroid" height="75">](https://android.izzysoft.de/repo/apk/com.capybara.calculator)
+
 ---
 
 ## 📱 App UI
