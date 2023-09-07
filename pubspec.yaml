@@ -2,7 +2,7 @@ name: calculator
 description: A Simple but elegant Calculator app made with Flutter with Currency (Exchange Rate) & Unit Converter.
 publish_to: "none" # to prevent accidental publication of package to pub.dev
 
-version: 0.2.3+5
+version: 0.2.4+6
 
 environment:
   sdk: ">=3.0.2 <4.0.0"
