@@ -18,29 +18,29 @@ class _WeightConversionScreenState extends State<WeightConversionScreen> {
   final TextEditingController _secondFieldController =
       TextEditingController(text: "1000");
 
-  bool isFirstFieldSelected = true;
-  bool isFirstLabelSelected = true;
+  bool _isFirstFieldSelected = true;
+  bool _isFirstLabelSelected = true;
 
-  int firstFieldIndex = 3;
-  int secondFieldIndex = 2;
+  int _firstFieldIndex = 3;
+  int _secondFieldIndex = 2;
 
   void convert() {
     convertUnit(
       _firstFieldController,
       _secondFieldController,
-      firstFieldIndex,
-      secondFieldIndex,
+      _firstFieldIndex,
+      _secondFieldIndex,
       Weight.weightList,
-      isFirstFieldSelected,
+      _isFirstFieldSelected,
     );
   }
 
   void changeSelectedIndex(int index) {
     setState(() {
-      if (isFirstLabelSelected) {
-        firstFieldIndex = index;
+      if (_isFirstLabelSelected) {
+        _firstFieldIndex = index;
       } else {
-        secondFieldIndex = index;
+        _secondFieldIndex = index;
       }
     });
 
@@ -74,48 +74,41 @@ class _WeightConversionScreenState extends State<WeightConversionScreen> {
                   FieldListTile(
                     list: Weight.weightList,
                     controller: _firstFieldController,
-                    isFieldSelected: isFirstFieldSelected,
-                    isLabelSelected: isFirstLabelSelected,
-                    fieldIndex: firstFieldIndex,
+                    isFieldSelected: _isFirstFieldSelected,
+                    isLabelSelected: _isFirstLabelSelected,
+                    fieldIndex: _firstFieldIndex,
                     onFieldSelect: () {
                       setState(() {
-                        isFirstFieldSelected = true;
+                        _isFirstFieldSelected = true;
                       });
                     },
                     onLabelSelect: () {
                       setState(() {
-                        isFirstLabelSelected = true;
+                        _isFirstLabelSelected = true;
                       });
                       convert();
                     },
                     changeSelectedIndex: changeSelectedIndex,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Divider(),
-                  ),
+                  const SizedBox(height: 16),
                   FieldListTile(
                     list: Weight.weightList,
                     controller: _secondFieldController,
-                    isFieldSelected: !isFirstFieldSelected,
-                    isLabelSelected: !isFirstLabelSelected,
-                    fieldIndex: secondFieldIndex,
+                    isFieldSelected: !_isFirstFieldSelected,
+                    isLabelSelected: !_isFirstLabelSelected,
+                    fieldIndex: _secondFieldIndex,
                     onFieldSelect: () {
                       setState(() {
-                        isFirstFieldSelected = false;
+                        _isFirstFieldSelected = false;
                       });
                     },
                     onLabelSelect: () {
                       setState(() {
-                        isFirstLabelSelected = false;
+                        _isFirstLabelSelected = false;
                       });
                       convert();
                     },
                     changeSelectedIndex: changeSelectedIndex,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Divider(),
                   ),
                 ],
               ),
@@ -124,7 +117,7 @@ class _WeightConversionScreenState extends State<WeightConversionScreen> {
           Expanded(
             flex: 3,
             child: Keypad(
-              controller: isFirstFieldSelected
+              controller: _isFirstFieldSelected
                   ? _firstFieldController
                   : _secondFieldController,
               onChanged: convert,

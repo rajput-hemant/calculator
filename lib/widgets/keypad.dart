@@ -73,12 +73,12 @@ class _KeypadState extends State<Keypad> {
 
   // show toast notification and disable input if length of text is > 15
   void showSnackbar() {
-    if (widget.controller.text.length >= 15) {
+    if (widget.controller.text.length >= 20) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
-            "Maximum digits (15) reached.",
+            "Maximum digits (20) reached.",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           duration: const Duration(milliseconds: 500),
@@ -96,6 +96,10 @@ class _KeypadState extends State<Keypad> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20),
       decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
         color: Theme.of(context).colorScheme.secondary,
       ),
       child: Column(
@@ -305,6 +309,7 @@ class _KeypadState extends State<Keypad> {
                     backgroundColor: Theme.of(context).colorScheme.error,
                     onPressed: () {
                       widget.controller.clear();
+                      insertText("0");
                       widget.onChanged();
                     },
                   ),

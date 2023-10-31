@@ -8,7 +8,7 @@ import '../provider/preferences_provider.dart';
 import '../widgets/url_launcher.dart';
 
 class AboutScreen extends ConsumerStatefulWidget {
-  const AboutScreen({Key? key}) : super(key: key);
+  const AboutScreen({super.key});
 
   @override
   ConsumerState<AboutScreen> createState() => _AboutScreenState();

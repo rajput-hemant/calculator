@@ -55,7 +55,7 @@ class Area implements Unit {
     ),
     Area(
       id: 'km²',
-      name: 'kilometer²',
+      name: 'Kilometer²',
       rate: 1e-6,
     ),
     Area(

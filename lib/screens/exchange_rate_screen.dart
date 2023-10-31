@@ -25,27 +25,27 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
   final TextEditingController _secondFieldController =
       TextEditingController(text: "0.01");
 
-  bool isFirstFieldSelected = true;
-  bool isFirstLabelSelected = true;
+  bool _isFirstFieldSelected = true;
+  bool _isFirstLabelSelected = true;
 
-  int firstFieldIndex = 15;
-  int secondFieldIndex = 31;
+  int _firstFieldIndex = 15;
+  int _secondFieldIndex = 31;
 
   void convert() async {
-    String from = Currency.currenciesList[firstFieldIndex].id;
-    String to = Currency.currenciesList[secondFieldIndex].id;
+    String from = Currency.currenciesList[_firstFieldIndex].id;
+    String to = Currency.currenciesList[_secondFieldIndex].id;
 
     try {
-      double amount = double.parse(isFirstFieldSelected
+      double amount = double.parse(_isFirstFieldSelected
           ? _firstFieldController.text
           : _secondFieldController.text);
 
-      double rate = isFirstFieldSelected
+      double rate = _isFirstFieldSelected
           ? _rates["data"][to] / _rates["data"][from]
           : _rates["data"][from] / _rates["data"][to];
 
       setState(() {
-        if (isFirstFieldSelected) {
+        if (_isFirstFieldSelected) {
           _secondFieldController.text = (amount * rate).toStringAsFixed(2);
         } else {
           _firstFieldController.text = (amount * rate).toStringAsFixed(2);
@@ -61,10 +61,10 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
 
   void changeSelectedIndex(int index) {
     setState(() {
-      if (isFirstLabelSelected) {
-        firstFieldIndex = index;
+      if (_isFirstLabelSelected) {
+        _firstFieldIndex = index;
       } else {
-        secondFieldIndex = index;
+        _secondFieldIndex = index;
       }
     });
 
@@ -126,49 +126,42 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
                     list: Currency.currenciesList,
                     isCurrency: true,
                     controller: _firstFieldController,
-                    isFieldSelected: isFirstFieldSelected,
-                    isLabelSelected: isFirstLabelSelected,
-                    fieldIndex: firstFieldIndex,
+                    isFieldSelected: _isFirstFieldSelected,
+                    isLabelSelected: _isFirstLabelSelected,
+                    fieldIndex: _firstFieldIndex,
                     onFieldSelect: () {
                       setState(() {
-                        isFirstFieldSelected = true;
+                        _isFirstFieldSelected = true;
                       });
                     },
                     onLabelSelect: () {
                       setState(() {
-                        isFirstLabelSelected = true;
+                        _isFirstLabelSelected = true;
                       });
                       convert();
                     },
                     changeSelectedIndex: changeSelectedIndex,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Divider(thickness: 0.5),
-                  ),
+                  const SizedBox(height: 16),
                   FieldListTile(
                     list: Currency.currenciesList,
                     isCurrency: true,
                     controller: _secondFieldController,
-                    isFieldSelected: !isFirstFieldSelected,
-                    isLabelSelected: !isFirstLabelSelected,
-                    fieldIndex: secondFieldIndex,
+                    isFieldSelected: !_isFirstFieldSelected,
+                    isLabelSelected: !_isFirstLabelSelected,
+                    fieldIndex: _secondFieldIndex,
                     onFieldSelect: () {
                       setState(() {
-                        isFirstFieldSelected = false;
+                        _isFirstFieldSelected = false;
                       });
                     },
                     onLabelSelect: () {
                       setState(() {
-                        isFirstLabelSelected = false;
+                        _isFirstLabelSelected = false;
                       });
                       convert();
                     },
                     changeSelectedIndex: changeSelectedIndex,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Divider(thickness: 0.5),
                   ),
                 ],
               ),
@@ -187,7 +180,7 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
           Expanded(
             flex: 3,
             child: Keypad(
-              controller: isFirstFieldSelected
+              controller: _isFirstFieldSelected
                   ? _firstFieldController
                   : _secondFieldController,
               onChanged: convert,

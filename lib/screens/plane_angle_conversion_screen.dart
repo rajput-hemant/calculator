@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import '../models/plane_angle.dart';
 import '../utils/utils.dart';
 import '../widgets/field_list_tile.dart';
@@ -21,29 +20,29 @@ class _PlaneAngleConversionScreenState
   final TextEditingController _secondFieldController =
       TextEditingController(text: "0.0174533");
 
-  bool isFirstFieldSelected = true;
-  bool isFirstLabelSelected = true;
+  bool _isFirstFieldSelected = true;
+  bool _isFirstLabelSelected = true;
 
-  int firstFieldIndex = 0;
-  int secondFieldIndex = 1;
+  int _firstFieldIndex = 0;
+  int _secondFieldIndex = 1;
 
   void convert() {
     convertUnit(
       _firstFieldController,
       _secondFieldController,
-      firstFieldIndex,
-      secondFieldIndex,
+      _firstFieldIndex,
+      _secondFieldIndex,
       PlaneAngle.planeAngleList,
-      isFirstFieldSelected,
+      _isFirstFieldSelected,
     );
   }
 
   void changeSelectedIndex(int index) {
     setState(() {
-      if (isFirstLabelSelected) {
-        firstFieldIndex = index;
+      if (_isFirstLabelSelected) {
+        _firstFieldIndex = index;
       } else {
-        secondFieldIndex = index;
+        _secondFieldIndex = index;
       }
     });
 
@@ -77,48 +76,41 @@ class _PlaneAngleConversionScreenState
                   FieldListTile(
                     list: PlaneAngle.planeAngleList,
                     controller: _firstFieldController,
-                    isFieldSelected: isFirstFieldSelected,
-                    isLabelSelected: isFirstLabelSelected,
-                    fieldIndex: firstFieldIndex,
+                    isFieldSelected: _isFirstFieldSelected,
+                    isLabelSelected: _isFirstLabelSelected,
+                    fieldIndex: _firstFieldIndex,
                     onFieldSelect: () {
                       setState(() {
-                        isFirstFieldSelected = true;
+                        _isFirstFieldSelected = true;
                       });
                     },
                     onLabelSelect: () {
                       setState(() {
-                        isFirstLabelSelected = true;
+                        _isFirstLabelSelected = true;
                       });
                       convert();
                     },
                     changeSelectedIndex: changeSelectedIndex,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Divider(),
-                  ),
+                  const SizedBox(height: 16),
                   FieldListTile(
                     list: PlaneAngle.planeAngleList,
                     controller: _secondFieldController,
-                    isFieldSelected: !isFirstFieldSelected,
-                    isLabelSelected: !isFirstLabelSelected,
-                    fieldIndex: secondFieldIndex,
+                    isFieldSelected: !_isFirstFieldSelected,
+                    isLabelSelected: !_isFirstLabelSelected,
+                    fieldIndex: _secondFieldIndex,
                     onFieldSelect: () {
                       setState(() {
-                        isFirstFieldSelected = false;
+                        _isFirstFieldSelected = false;
                       });
                     },
                     onLabelSelect: () {
                       setState(() {
-                        isFirstLabelSelected = false;
+                        _isFirstLabelSelected = false;
                       });
                       convert();
                     },
                     changeSelectedIndex: changeSelectedIndex,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Divider(),
                   ),
                 ],
               ),
@@ -127,7 +119,7 @@ class _PlaneAngleConversionScreenState
           Expanded(
             flex: 3,
             child: Keypad(
-              controller: isFirstFieldSelected
+              controller: _isFirstFieldSelected
                   ? _firstFieldController
                   : _secondFieldController,
               onChanged: convert,

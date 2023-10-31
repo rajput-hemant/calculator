@@ -30,14 +30,17 @@ class FieldListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: Theme.of(context).colorScheme.secondary,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
+            borderRadius: BorderRadius.circular(8),
             onTap: () async {
               onLabelSelect();
               final selectedIndex = await Navigator.push(
@@ -55,67 +58,67 @@ class FieldListTile extends StatelessWidget {
                 changeSelectedIndex(selectedIndex);
               }
             },
-            child: Row(
-              children: [
-                if (isCurrency == true)
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (isCurrency == true)
+                    Text(
+                      "${list[fieldIndex].flag!} ",
+                      style: const TextStyle(fontSize: 20),
+                    ),
                   Text(
-                    "${list[fieldIndex].flag!} ",
-                    style: const TextStyle(fontSize: 20),
+                    list[fieldIndex].name,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 15),
                   ),
-                Text(
-                  list[fieldIndex].name,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 15),
-                ),
-                const SizedBox(width: 18),
-                Text(
-                  isCurrency == true
-                      ? "(${list[fieldIndex].symbol})"
-                      : "(${list[fieldIndex].id})",
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 12,
+                  const SizedBox(width: 18),
+                  Text(
+                    isCurrency == true
+                        ? "(${list[fieldIndex].symbol})"
+                        : "(${list[fieldIndex].id})",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.75),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Icon(
+                    FontAwesomeIcons.chevronRight,
+                    size: 15,
                     color: Theme.of(context)
                         .colorScheme
                         .onSurface
-                        .withOpacity(0.75),
+                        .withOpacity(0.5),
                   ),
-                ),
-                const SizedBox(width: 4),
-                Icon(
-                  FontAwesomeIcons.chevronRight,
-                  size: 15,
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          const SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: TextField(
-              controller: controller,
-              autofocus: isFieldSelected,
-              onTap: () {
-                onFieldSelect();
-                // this is to place the cursor at the end of the text
-                controller.selection = TextSelection.fromPosition(
-                  TextPosition(offset: controller.text.length),
-                );
-              },
-              showCursor: false,
-              readOnly: true,
-              keyboardType: TextInputType.none,
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                  fontSize: 20,
-                  color: isFieldSelected
-                      ? Theme.of(context).colorScheme.primary
-                      : null),
-              decoration: const InputDecoration(border: InputBorder.none),
-            ),
+          TextField(
+            controller: controller,
+            autofocus: isFieldSelected,
+            showCursor: false,
+            readOnly: true,
+            keyboardType: TextInputType.none,
+            style: TextStyle(
+                fontSize: 24,
+                color: isFieldSelected
+                    ? Theme.of(context).colorScheme.primary
+                    : null),
+            decoration: const InputDecoration(border: InputBorder.none),
+            onTap: () {
+              onFieldSelect();
+              // this is to place the cursor at the end of the text
+              controller.selection = TextSelection.fromPosition(
+                TextPosition(offset: controller.text.length),
+              );
+            },
           ),
         ],
       ),

@@ -19,29 +19,29 @@ class _FrequencyConversionScreenState extends State<FrequencyConversionScreen> {
   final TextEditingController _secondFieldController =
       TextEditingController(text: "0.001");
 
-  bool isFirstFieldSelected = true;
-  bool isFirstLabelSelected = true;
+  bool _isFirstFieldSelected = true;
+  bool _isFirstLabelSelected = true;
 
-  int firstFieldIndex = 0;
-  int secondFieldIndex = 1;
+  int _firstFieldIndex = 0;
+  int _secondFieldIndex = 1;
 
   void convert() {
     convertUnit(
       _firstFieldController,
       _secondFieldController,
-      firstFieldIndex,
-      secondFieldIndex,
+      _firstFieldIndex,
+      _secondFieldIndex,
       Frequency.frequencyList,
-      isFirstFieldSelected,
+      _isFirstFieldSelected,
     );
   }
 
   void changeSelectedIndex(int index) {
     setState(() {
-      if (isFirstLabelSelected) {
-        firstFieldIndex = index;
+      if (_isFirstLabelSelected) {
+        _firstFieldIndex = index;
       } else {
-        secondFieldIndex = index;
+        _secondFieldIndex = index;
       }
     });
 
@@ -75,48 +75,41 @@ class _FrequencyConversionScreenState extends State<FrequencyConversionScreen> {
                   FieldListTile(
                     list: Frequency.frequencyList,
                     controller: _firstFieldController,
-                    isFieldSelected: isFirstFieldSelected,
-                    isLabelSelected: isFirstLabelSelected,
-                    fieldIndex: firstFieldIndex,
+                    isFieldSelected: _isFirstFieldSelected,
+                    isLabelSelected: _isFirstLabelSelected,
+                    fieldIndex: _firstFieldIndex,
                     onFieldSelect: () {
                       setState(() {
-                        isFirstFieldSelected = true;
+                        _isFirstFieldSelected = true;
                       });
                     },
                     onLabelSelect: () {
                       setState(() {
-                        isFirstLabelSelected = true;
+                        _isFirstLabelSelected = true;
                       });
                       convert();
                     },
                     changeSelectedIndex: changeSelectedIndex,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Divider(),
-                  ),
+                  const SizedBox(height: 16),
                   FieldListTile(
                     list: Frequency.frequencyList,
                     controller: _secondFieldController,
-                    isFieldSelected: !isFirstFieldSelected,
-                    isLabelSelected: !isFirstLabelSelected,
-                    fieldIndex: secondFieldIndex,
+                    isFieldSelected: !_isFirstFieldSelected,
+                    isLabelSelected: !_isFirstLabelSelected,
+                    fieldIndex: _secondFieldIndex,
                     onFieldSelect: () {
                       setState(() {
-                        isFirstFieldSelected = false;
+                        _isFirstFieldSelected = false;
                       });
                     },
                     onLabelSelect: () {
                       setState(() {
-                        isFirstLabelSelected = false;
+                        _isFirstLabelSelected = false;
                       });
                       convert();
                     },
                     changeSelectedIndex: changeSelectedIndex,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Divider(),
                   ),
                 ],
               ),
@@ -125,7 +118,7 @@ class _FrequencyConversionScreenState extends State<FrequencyConversionScreen> {
           Expanded(
             flex: 3,
             child: Keypad(
-              controller: isFirstFieldSelected
+              controller: _isFirstFieldSelected
                   ? _firstFieldController
                   : _secondFieldController,
               onChanged: convert,

@@ -30,8 +30,8 @@ class RoundButton extends StatelessWidget {
             Theme.of(context).colorScheme.onInverseSurface.withOpacity(0.5),
       ),
       icon: SizedBox(
-        height: MediaQuery.of(context).size.height / (isScientic ? 10 : 8),
-        width: MediaQuery.of(context).size.width / (isScientic ? 10 : 8),
+        height: MediaQuery.of(context).size.height / (isScientic ? 10 : 7),
+        width: MediaQuery.of(context).size.width / (isScientic ? 10 : 7),
         child: Center(
           child: icon == null
               ? Text(

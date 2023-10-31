@@ -5,7 +5,7 @@ import '../provider/preferences_provider.dart';
 import '../routes/routes.dart';
 
 class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  const MainAppBar({Key? key}) : super(key: key);
+  const MainAppBar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(100);

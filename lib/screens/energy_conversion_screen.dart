@@ -18,29 +18,29 @@ class _EnergyConversionScreenState extends State<EnergyConversionScreen> {
   final TextEditingController _secondFieldController =
       TextEditingController(text: "0.001");
 
-  bool isFirstFieldSelected = true;
-  bool isFirstLabelSelected = true;
+  bool _isFirstFieldSelected = true;
+  bool _isFirstLabelSelected = true;
 
-  int firstFieldIndex = 5;
-  int secondFieldIndex = 6;
+  int _firstFieldIndex = 5;
+  int _secondFieldIndex = 6;
 
   void convert() {
     convertUnit(
       _firstFieldController,
       _secondFieldController,
-      firstFieldIndex,
-      secondFieldIndex,
+      _firstFieldIndex,
+      _secondFieldIndex,
       Energy.energyList,
-      isFirstFieldSelected,
+      _isFirstFieldSelected,
     );
   }
 
   void changeSelectedIndex(int index) {
     setState(() {
-      if (isFirstLabelSelected) {
-        firstFieldIndex = index;
+      if (_isFirstLabelSelected) {
+        _firstFieldIndex = index;
       } else {
-        secondFieldIndex = index;
+        _secondFieldIndex = index;
       }
     });
 
@@ -74,48 +74,41 @@ class _EnergyConversionScreenState extends State<EnergyConversionScreen> {
                   FieldListTile(
                     list: Energy.energyList,
                     controller: _firstFieldController,
-                    isFieldSelected: isFirstFieldSelected,
-                    isLabelSelected: isFirstLabelSelected,
-                    fieldIndex: firstFieldIndex,
+                    isFieldSelected: _isFirstFieldSelected,
+                    isLabelSelected: _isFirstLabelSelected,
+                    fieldIndex: _firstFieldIndex,
                     onFieldSelect: () {
                       setState(() {
-                        isFirstFieldSelected = true;
+                        _isFirstFieldSelected = true;
                       });
                     },
                     onLabelSelect: () {
                       setState(() {
-                        isFirstLabelSelected = true;
+                        _isFirstLabelSelected = true;
                       });
                       convert();
                     },
                     changeSelectedIndex: changeSelectedIndex,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Divider(),
-                  ),
+                  const SizedBox(height: 16),
                   FieldListTile(
                     list: Energy.energyList,
                     controller: _secondFieldController,
-                    isFieldSelected: !isFirstFieldSelected,
-                    isLabelSelected: !isFirstLabelSelected,
-                    fieldIndex: secondFieldIndex,
+                    isFieldSelected: !_isFirstFieldSelected,
+                    isLabelSelected: !_isFirstLabelSelected,
+                    fieldIndex: _secondFieldIndex,
                     onFieldSelect: () {
                       setState(() {
-                        isFirstFieldSelected = false;
+                        _isFirstFieldSelected = false;
                       });
                     },
                     onLabelSelect: () {
                       setState(() {
-                        isFirstLabelSelected = false;
+                        _isFirstLabelSelected = false;
                       });
                       convert();
                     },
                     changeSelectedIndex: changeSelectedIndex,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Divider(),
                   ),
                 ],
               ),
@@ -124,7 +117,7 @@ class _EnergyConversionScreenState extends State<EnergyConversionScreen> {
           Expanded(
             flex: 3,
             child: Keypad(
-              controller: isFirstFieldSelected
+              controller: _isFirstFieldSelected
                   ? _firstFieldController
                   : _secondFieldController,
               onChanged: convert,

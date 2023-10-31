@@ -19,74 +19,74 @@ class _TemperatureConversionScreenState
   final TextEditingController _secondFieldController =
       TextEditingController(text: "0.0001");
 
-  bool isFirstFieldSelected = true;
-  bool isFirstLabelSelected = true;
+  bool _isFirstFieldSelected = true;
+  bool _isFirstLabelSelected = true;
 
-  int firstFieldIndex = 0;
-  int secondFieldIndex = 1;
+  int _firstFieldIndex = 0;
+  int _secondFieldIndex = 1;
 
   void convert() {
-    final double inputValue = double.parse(isFirstFieldSelected
+    final double inputValue = double.parse(_isFirstFieldSelected
         ? _firstFieldController.text
         : _secondFieldController.text);
 
     double outputValue;
 
-    if (firstFieldIndex == 0 && secondFieldIndex == 1) {
+    if (_firstFieldIndex == 0 && _secondFieldIndex == 1) {
       // Celsius to Fahrenheit
       outputValue = (inputValue * 9 / 5) + 32;
-    } else if (firstFieldIndex == 0 && secondFieldIndex == 2) {
+    } else if (_firstFieldIndex == 0 && _secondFieldIndex == 2) {
       // Celsius to Kelvin
       outputValue = inputValue + 273.15;
-    } else if (firstFieldIndex == 0 && secondFieldIndex == 3) {
+    } else if (_firstFieldIndex == 0 && _secondFieldIndex == 3) {
       // Celsius to Rankine
       outputValue = (inputValue + 273.15) * 9 / 5;
-    } else if (firstFieldIndex == 0 && secondFieldIndex == 4) {
+    } else if (_firstFieldIndex == 0 && _secondFieldIndex == 4) {
       // Celsius to Réaumur
       outputValue = inputValue * 4 / 5;
-    } else if (firstFieldIndex == 1 && secondFieldIndex == 0) {
+    } else if (_firstFieldIndex == 1 && _secondFieldIndex == 0) {
       // Fahrenheit to Celsius
       outputValue = (inputValue - 32) * 5 / 9;
-    } else if (firstFieldIndex == 1 && secondFieldIndex == 2) {
+    } else if (_firstFieldIndex == 1 && _secondFieldIndex == 2) {
       // Fahrenheit to Kelvin
       outputValue = (inputValue - 32) * 5 / 9 + 273.15;
-    } else if (firstFieldIndex == 1 && secondFieldIndex == 3) {
+    } else if (_firstFieldIndex == 1 && _secondFieldIndex == 3) {
       // Fahrenheit to Rankine
       outputValue = inputValue + 459.67;
-    } else if (firstFieldIndex == 1 && secondFieldIndex == 4) {
+    } else if (_firstFieldIndex == 1 && _secondFieldIndex == 4) {
       // Fahrenheit to Réaumur
       outputValue = (inputValue - 32) * 4 / 9;
-    } else if (firstFieldIndex == 2 && secondFieldIndex == 0) {
+    } else if (_firstFieldIndex == 2 && _secondFieldIndex == 0) {
       // Kelvin to Celsius
       outputValue = inputValue - 273.15;
-    } else if (firstFieldIndex == 2 && secondFieldIndex == 1) {
+    } else if (_firstFieldIndex == 2 && _secondFieldIndex == 1) {
       // Kelvin to Fahrenheit
       outputValue = (inputValue - 273.15) * 9 / 5 + 32;
-    } else if (firstFieldIndex == 2 && secondFieldIndex == 3) {
+    } else if (_firstFieldIndex == 2 && _secondFieldIndex == 3) {
       // Kelvin to Rankine
       outputValue = inputValue * 9 / 5;
-    } else if (firstFieldIndex == 2 && secondFieldIndex == 4) {
+    } else if (_firstFieldIndex == 2 && _secondFieldIndex == 4) {
       // Kelvin to Réaumur
       outputValue = (inputValue - 273.15) * 4 / 5;
-    } else if (firstFieldIndex == 3 && secondFieldIndex == 0) {
+    } else if (_firstFieldIndex == 3 && _secondFieldIndex == 0) {
       // Rankine to Celsius
       outputValue = (inputValue - 491.67) * 5 / 9;
-    } else if (firstFieldIndex == 3 && secondFieldIndex == 1) {
+    } else if (_firstFieldIndex == 3 && _secondFieldIndex == 1) {
       // Rankine to Fahrenheit
       outputValue = inputValue - 459.67;
-    } else if (firstFieldIndex == 3 && secondFieldIndex == 2) {
+    } else if (_firstFieldIndex == 3 && _secondFieldIndex == 2) {
       // Rankine to Kelvin
       outputValue = inputValue * 5 / 9;
-    } else if (firstFieldIndex == 3 && secondFieldIndex == 4) {
+    } else if (_firstFieldIndex == 3 && _secondFieldIndex == 4) {
       // Rankine to Réaumur
       outputValue = (inputValue - 491.67) * 4 / 9;
-    } else if (firstFieldIndex == 4 && secondFieldIndex == 0) {
+    } else if (_firstFieldIndex == 4 && _secondFieldIndex == 0) {
       // Réaumur to Celsius
       outputValue = inputValue * 5 / 4;
-    } else if (firstFieldIndex == 4 && secondFieldIndex == 1) {
+    } else if (_firstFieldIndex == 4 && _secondFieldIndex == 1) {
       // Réaumur to Fahrenheit
       outputValue = (inputValue * 9 / 4) + 32;
-    } else if (firstFieldIndex == 4 && secondFieldIndex == 2) {
+    } else if (_firstFieldIndex == 4 && _secondFieldIndex == 2) {
       // Réaumur to Kelvin
       outputValue = (inputValue * 5 / 4) + 273.15;
     } else {
@@ -95,7 +95,7 @@ class _TemperatureConversionScreenState
     }
 
     setState(() {
-      if (isFirstFieldSelected) {
+      if (_isFirstFieldSelected) {
         _secondFieldController.text = outputValue.toStringAsFixed(6);
       } else {
         _firstFieldController.text = outputValue.toStringAsFixed(6);
@@ -105,10 +105,10 @@ class _TemperatureConversionScreenState
 
   void changeSelectedIndex(int index) {
     setState(() {
-      if (isFirstLabelSelected) {
-        firstFieldIndex = index;
+      if (_isFirstLabelSelected) {
+        _firstFieldIndex = index;
       } else {
-        secondFieldIndex = index;
+        _secondFieldIndex = index;
       }
     });
 
@@ -142,48 +142,41 @@ class _TemperatureConversionScreenState
                   FieldListTile(
                     list: Temperature.temperatureList,
                     controller: _firstFieldController,
-                    isFieldSelected: isFirstFieldSelected,
-                    isLabelSelected: isFirstLabelSelected,
-                    fieldIndex: firstFieldIndex,
+                    isFieldSelected: _isFirstFieldSelected,
+                    isLabelSelected: _isFirstLabelSelected,
+                    fieldIndex: _firstFieldIndex,
                     onFieldSelect: () {
                       setState(() {
-                        isFirstFieldSelected = true;
+                        _isFirstFieldSelected = true;
                       });
                     },
                     onLabelSelect: () {
                       setState(() {
-                        isFirstLabelSelected = true;
+                        _isFirstLabelSelected = true;
                       });
                       convert();
                     },
                     changeSelectedIndex: changeSelectedIndex,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Divider(),
-                  ),
+                  const SizedBox(height: 16),
                   FieldListTile(
                     list: Temperature.temperatureList,
                     controller: _secondFieldController,
-                    isFieldSelected: !isFirstFieldSelected,
-                    isLabelSelected: !isFirstLabelSelected,
-                    fieldIndex: secondFieldIndex,
+                    isFieldSelected: !_isFirstFieldSelected,
+                    isLabelSelected: !_isFirstLabelSelected,
+                    fieldIndex: _secondFieldIndex,
                     onFieldSelect: () {
                       setState(() {
-                        isFirstFieldSelected = false;
+                        _isFirstFieldSelected = false;
                       });
                     },
                     onLabelSelect: () {
                       setState(() {
-                        isFirstLabelSelected = false;
+                        _isFirstLabelSelected = false;
                       });
                       convert();
                     },
                     changeSelectedIndex: changeSelectedIndex,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Divider(),
                   ),
                 ],
               ),
@@ -192,7 +185,7 @@ class _TemperatureConversionScreenState
           Expanded(
             flex: 3,
             child: Keypad(
-              controller: isFirstFieldSelected
+              controller: _isFirstFieldSelected
                   ? _firstFieldController
                   : _secondFieldController,
               onChanged: convert,

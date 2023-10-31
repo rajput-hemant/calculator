@@ -35,32 +35,42 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      body: Column(
-        children: [
-          SwitchListTile(
-            value: preferences.darkMode,
-            onChanged: (_) {
-              ref.read(prefrencesProvider.notifier).toggleDarkMode();
-            },
-            title: const Text("Dark Mode"),
-          ),
-          SwitchListTile(
-            value: preferences.tabView,
-            onChanged: (_) {
-              ref.read(prefrencesProvider.notifier).toggleTabView();
-            },
-            title: const Text("Tab View"),
-          ),
-          ListTile(
-            title: const Text("Version"),
-            subtitle: Text(
-              _appVersion,
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-              ),
+      body: Container(
+        margin: const EdgeInsets.all(4),
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SwitchListTile(
+              title: const Text("Dark Mode"),
+              value: preferences.darkMode,
+              onChanged: (_) {
+                ref.read(prefrencesProvider.notifier).toggleDarkMode();
+              },
             ),
-          )
-        ],
+            SwitchListTile(
+              title: const Text("Tab View"),
+              value: preferences.tabView,
+              onChanged: (_) {
+                ref.read(prefrencesProvider.notifier).toggleTabView();
+              },
+            ),
+            ListTile(
+              title: const Text("Version"),
+              subtitle: Text(
+                _appVersion,
+                style: TextStyle(
+                  color:
+                      Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
