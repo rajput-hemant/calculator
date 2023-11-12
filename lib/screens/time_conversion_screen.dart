@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/models.dart';
+import '../provider/preferences_provider.dart';
 import '../utils/utils.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad.dart';
 
-class TimeConversionScreen extends StatefulWidget {
+class TimeConversionScreen extends ConsumerStatefulWidget {
   const TimeConversionScreen({super.key});
 
   @override
-  State<TimeConversionScreen> createState() => _TimeConversionScreenState();
+  ConsumerState<TimeConversionScreen> createState() =>
+      _TimeConversionScreenState();
 }
 
-class _TimeConversionScreenState extends State<TimeConversionScreen> {
+class _TimeConversionScreenState extends ConsumerState<TimeConversionScreen> {
   final TextEditingController _firstFieldController =
       TextEditingController(text: "1");
   final TextEditingController _secondFieldController =
@@ -21,30 +24,40 @@ class _TimeConversionScreenState extends State<TimeConversionScreen> {
   bool _isFirstFieldSelected = true;
   bool _isFirstLabelSelected = true;
 
-  int _firstFieldIndex = 8;
-  int _secondFieldIndex = 7;
-
   void convert() {
-    convertUnit(
-      _firstFieldController,
-      _secondFieldController,
-      _firstFieldIndex,
-      _secondFieldIndex,
-      Time.timeList,
-      _isFirstFieldSelected,
-    );
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.read(prefrencesProvider).unitIndexes[Units.time]!;
+
+    setState(() {
+      convertUnit(
+        _firstFieldController,
+        _secondFieldController,
+        firstFieldIndex,
+        secondFieldIndex,
+        Time.timeList,
+        _isFirstFieldSelected,
+      );
+    });
   }
 
   void changeSelectedIndex(int index) {
-    setState(() {
-      if (_isFirstLabelSelected) {
-        _firstFieldIndex = index;
-      } else {
-        _secondFieldIndex = index;
-      }
-    });
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.watch(prefrencesProvider).unitIndexes[Units.time]!;
+
+    ref.read(prefrencesProvider.notifier).setUnitIndexes(
+          Units.time,
+          _isFirstLabelSelected
+              ? [index, secondFieldIndex]
+              : [firstFieldIndex, index],
+        );
 
     convert();
+  }
+
+  @override
+  void initState() {
+    convert();
+    super.initState();
   }
 
   @override
@@ -56,6 +69,9 @@ class _TimeConversionScreenState extends State<TimeConversionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.watch(prefrencesProvider).unitIndexes[Units.time]!;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -76,7 +92,7 @@ class _TimeConversionScreenState extends State<TimeConversionScreen> {
                     controller: _firstFieldController,
                     isFieldSelected: _isFirstFieldSelected,
                     isLabelSelected: _isFirstLabelSelected,
-                    fieldIndex: _firstFieldIndex,
+                    fieldIndex: firstFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = true;
@@ -96,7 +112,7 @@ class _TimeConversionScreenState extends State<TimeConversionScreen> {
                     controller: _secondFieldController,
                     isFieldSelected: !_isFirstFieldSelected,
                     isLabelSelected: !_isFirstLabelSelected,
-                    fieldIndex: _secondFieldIndex,
+                    fieldIndex: secondFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = false;

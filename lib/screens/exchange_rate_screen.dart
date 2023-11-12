@@ -28,12 +28,9 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
   bool _isFirstFieldSelected = true;
   bool _isFirstLabelSelected = true;
 
-  int _firstFieldIndex = 15;
-  int _secondFieldIndex = 31;
-
-  void convert() async {
-    String from = Currency.currenciesList[_firstFieldIndex].id;
-    String to = Currency.currenciesList[_secondFieldIndex].id;
+  void convert(int firstFieldIndex, int secondFieldIndex) async {
+    String from = Currency.currenciesList[firstFieldIndex].id;
+    String to = Currency.currenciesList[secondFieldIndex].id;
 
     try {
       double amount = double.parse(_isFirstFieldSelected
@@ -60,15 +57,19 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
   }
 
   void changeSelectedIndex(int index) {
-    setState(() {
-      if (_isFirstLabelSelected) {
-        _firstFieldIndex = index;
-      } else {
-        _secondFieldIndex = index;
-      }
-    });
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.watch(prefrencesProvider).unitIndexes[Units.currency]!;
 
-    convert();
+    ref.read(prefrencesProvider.notifier).setUnitIndexes(
+          Units.currency,
+          _isFirstLabelSelected
+              ? [index, secondFieldIndex]
+              : [firstFieldIndex, index],
+        );
+
+    _isFirstFieldSelected
+        ? convert(firstFieldIndex, index)
+        : convert(index, secondFieldIndex);
   }
 
   @override
@@ -76,6 +77,10 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
     MoneyConverter.fetchRates().then((rates) {
       setState(() {
         _rates = rates;
+
+        final [firstFieldIndex, secondFieldIndex] =
+            ref.read(prefrencesProvider).unitIndexes[Units.currency]!;
+        convert(firstFieldIndex, secondFieldIndex);
       });
     });
 
@@ -103,7 +108,10 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isTabView = ref.watch(prefrencesProvider).tabView;
+    final prefs = ref.watch(prefrencesProvider);
+    final isTabView = prefs.tabView;
+    final [firstFieldIndex, secondFieldIndex] =
+        prefs.unitIndexes[Units.currency]!;
 
     return Scaffold(
       appBar: isTabView
@@ -128,7 +136,7 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
                     controller: _firstFieldController,
                     isFieldSelected: _isFirstFieldSelected,
                     isLabelSelected: _isFirstLabelSelected,
-                    fieldIndex: _firstFieldIndex,
+                    fieldIndex: firstFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = true;
@@ -138,7 +146,7 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
                       setState(() {
                         _isFirstLabelSelected = true;
                       });
-                      convert();
+                      convert(firstFieldIndex, secondFieldIndex);
                     },
                     changeSelectedIndex: changeSelectedIndex,
                   ),
@@ -149,7 +157,7 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
                     controller: _secondFieldController,
                     isFieldSelected: !_isFirstFieldSelected,
                     isLabelSelected: !_isFirstLabelSelected,
-                    fieldIndex: _secondFieldIndex,
+                    fieldIndex: secondFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = false;
@@ -159,7 +167,7 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
                       setState(() {
                         _isFirstLabelSelected = false;
                       });
-                      convert();
+                      convert(firstFieldIndex, secondFieldIndex);
                     },
                     changeSelectedIndex: changeSelectedIndex,
                   ),
@@ -183,7 +191,7 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
               controller: _isFirstFieldSelected
                   ? _firstFieldController
                   : _secondFieldController,
-              onChanged: convert,
+              onChanged: () => convert(firstFieldIndex, secondFieldIndex),
             ),
           ),
         ],

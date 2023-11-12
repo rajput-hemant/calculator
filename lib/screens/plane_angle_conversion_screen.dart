@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/plane_angle.dart';
+import '../models/models.dart';
+import '../provider/preferences_provider.dart';
 import '../utils/utils.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad.dart';
 
-class PlaneAngleConversionScreen extends StatefulWidget {
+class PlaneAngleConversionScreen extends ConsumerStatefulWidget {
   const PlaneAngleConversionScreen({super.key});
 
   @override
-  State<PlaneAngleConversionScreen> createState() =>
+  ConsumerState<PlaneAngleConversionScreen> createState() =>
       _PlaneAngleConversionScreenState();
 }
 
 class _PlaneAngleConversionScreenState
-    extends State<PlaneAngleConversionScreen> {
+    extends ConsumerState<PlaneAngleConversionScreen> {
   final TextEditingController _firstFieldController =
       TextEditingController(text: "1");
   final TextEditingController _secondFieldController =
@@ -23,30 +25,40 @@ class _PlaneAngleConversionScreenState
   bool _isFirstFieldSelected = true;
   bool _isFirstLabelSelected = true;
 
-  int _firstFieldIndex = 0;
-  int _secondFieldIndex = 1;
-
   void convert() {
-    convertUnit(
-      _firstFieldController,
-      _secondFieldController,
-      _firstFieldIndex,
-      _secondFieldIndex,
-      PlaneAngle.planeAngleList,
-      _isFirstFieldSelected,
-    );
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.read(prefrencesProvider).unitIndexes[Units.planeAngle]!;
+
+    setState(() {
+      convertUnit(
+        _firstFieldController,
+        _secondFieldController,
+        firstFieldIndex,
+        secondFieldIndex,
+        PlaneAngle.planeAngleList,
+        _isFirstFieldSelected,
+      );
+    });
   }
 
   void changeSelectedIndex(int index) {
-    setState(() {
-      if (_isFirstLabelSelected) {
-        _firstFieldIndex = index;
-      } else {
-        _secondFieldIndex = index;
-      }
-    });
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.watch(prefrencesProvider).unitIndexes[Units.planeAngle]!;
+
+    ref.read(prefrencesProvider.notifier).setUnitIndexes(
+          Units.planeAngle,
+          _isFirstLabelSelected
+              ? [index, secondFieldIndex]
+              : [firstFieldIndex, index],
+        );
 
     convert();
+  }
+
+  @override
+  void initState() {
+    convert();
+    super.initState();
   }
 
   @override
@@ -58,6 +70,9 @@ class _PlaneAngleConversionScreenState
 
   @override
   Widget build(BuildContext context) {
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.watch(prefrencesProvider).unitIndexes[Units.planeAngle]!;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -78,7 +93,7 @@ class _PlaneAngleConversionScreenState
                     controller: _firstFieldController,
                     isFieldSelected: _isFirstFieldSelected,
                     isLabelSelected: _isFirstLabelSelected,
-                    fieldIndex: _firstFieldIndex,
+                    fieldIndex: firstFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = true;
@@ -98,7 +113,7 @@ class _PlaneAngleConversionScreenState
                     controller: _secondFieldController,
                     isFieldSelected: !_isFirstFieldSelected,
                     isLabelSelected: !_isFirstLabelSelected,
-                    fieldIndex: _secondFieldIndex,
+                    fieldIndex: secondFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = false;

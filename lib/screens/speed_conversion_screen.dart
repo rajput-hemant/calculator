@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/models.dart';
+import '../provider/preferences_provider.dart';
 import '../utils/utils.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad.dart';
 
-class SpeedConversionScreen extends StatefulWidget {
+class SpeedConversionScreen extends ConsumerStatefulWidget {
   const SpeedConversionScreen({super.key});
 
   @override
-  State<SpeedConversionScreen> createState() => _SpeedConversionScreenState();
+  ConsumerState<SpeedConversionScreen> createState() =>
+      _SpeedConversionScreenState();
 }
 
-class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
+class _SpeedConversionScreenState extends ConsumerState<SpeedConversionScreen> {
   final TextEditingController _firstFieldController =
       TextEditingController(text: "1");
   final TextEditingController _secondFieldController =
@@ -21,28 +24,40 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
   bool _isFirstFieldSelected = true;
   bool _isFirstLabelSelected = true;
 
-  int _firstFieldIndex = 1;
-  int _secondFieldIndex = 2;
-
   void convert() {
-    convertUnit(
-      _firstFieldController,
-      _secondFieldController,
-      _firstFieldIndex,
-      _secondFieldIndex,
-      Speed.speedList,
-      _isFirstFieldSelected,
-    );
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.read(prefrencesProvider).unitIndexes[Units.speed]!;
+
+    setState(() {
+      convertUnit(
+        _firstFieldController,
+        _secondFieldController,
+        firstFieldIndex,
+        secondFieldIndex,
+        Speed.speedList,
+        _isFirstFieldSelected,
+      );
+    });
   }
 
   void changeSelectedIndex(int index) {
-    setState(() {
-      if (_isFirstLabelSelected) {
-        _firstFieldIndex = index;
-      } else {
-        _secondFieldIndex = index;
-      }
-    });
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.watch(prefrencesProvider).unitIndexes[Units.speed]!;
+
+    ref.read(prefrencesProvider.notifier).setUnitIndexes(
+          Units.speed,
+          _isFirstLabelSelected
+              ? [index, secondFieldIndex]
+              : [firstFieldIndex, index],
+        );
+
+    convert();
+  }
+
+  @override
+  void initState() {
+    convert();
+    super.initState();
   }
 
   @override
@@ -54,6 +69,9 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.watch(prefrencesProvider).unitIndexes[Units.speed]!;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -74,7 +92,7 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
                     controller: _firstFieldController,
                     isFieldSelected: _isFirstFieldSelected,
                     isLabelSelected: _isFirstLabelSelected,
-                    fieldIndex: _firstFieldIndex,
+                    fieldIndex: firstFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = true;
@@ -94,7 +112,7 @@ class _SpeedConversionScreenState extends State<SpeedConversionScreen> {
                     controller: _secondFieldController,
                     isFieldSelected: !_isFirstFieldSelected,
                     isLabelSelected: !_isFirstLabelSelected,
-                    fieldIndex: _secondFieldIndex,
+                    fieldIndex: secondFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = false;

@@ -10,14 +10,16 @@ class MoneyConverter {
 
   /// Fetches the exchange rates from the API
   /// and returns a [Future] of the response body
-  static Future<dynamic> fetchRates() async {
+  static Future<dynamic> fetchRates({bool refreshing = false}) async {
     final prefs = await SharedPreferences.getInstance();
     const threeHoursInMillis =
         3 * 60 * 60 * 1000; // Three hours in milliseconds
 
     // If the rates were fetched less than three hours ago,
     // return the saved rates
-    if (prefs.containsKey("rates") && prefs.containsKey("lastUpdated")) {
+    if (!refreshing &&
+        prefs.containsKey("rates") &&
+        prefs.containsKey("lastUpdated")) {
       final savedRates = prefs.getString("rates");
       final lastUpdated = prefs.getInt("lastUpdated");
 

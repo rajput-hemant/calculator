@@ -1,92 +1,94 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/models.dart';
+import '../provider/preferences_provider.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad.dart';
 
-class TemperatureConversionScreen extends StatefulWidget {
+class TemperatureConversionScreen extends ConsumerStatefulWidget {
   const TemperatureConversionScreen({super.key});
 
   @override
-  State<TemperatureConversionScreen> createState() =>
+  ConsumerState<TemperatureConversionScreen> createState() =>
       _TemperatureConversionScreenState();
 }
 
 class _TemperatureConversionScreenState
-    extends State<TemperatureConversionScreen> {
+    extends ConsumerState<TemperatureConversionScreen> {
   final TextEditingController _firstFieldController =
       TextEditingController(text: "1");
   final TextEditingController _secondFieldController =
-      TextEditingController(text: "0.0001");
+      TextEditingController(text: "33.80");
 
   bool _isFirstFieldSelected = true;
   bool _isFirstLabelSelected = true;
 
-  int _firstFieldIndex = 0;
-  int _secondFieldIndex = 1;
-
   void convert() {
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.read(prefrencesProvider).unitIndexes[Units.temperature]!;
+
     final double inputValue = double.parse(_isFirstFieldSelected
         ? _firstFieldController.text
         : _secondFieldController.text);
 
     double outputValue;
 
-    if (_firstFieldIndex == 0 && _secondFieldIndex == 1) {
+    if (firstFieldIndex == 0 && secondFieldIndex == 1) {
       // Celsius to Fahrenheit
       outputValue = (inputValue * 9 / 5) + 32;
-    } else if (_firstFieldIndex == 0 && _secondFieldIndex == 2) {
+    } else if (firstFieldIndex == 0 && secondFieldIndex == 2) {
       // Celsius to Kelvin
       outputValue = inputValue + 273.15;
-    } else if (_firstFieldIndex == 0 && _secondFieldIndex == 3) {
+    } else if (firstFieldIndex == 0 && secondFieldIndex == 3) {
       // Celsius to Rankine
       outputValue = (inputValue + 273.15) * 9 / 5;
-    } else if (_firstFieldIndex == 0 && _secondFieldIndex == 4) {
+    } else if (firstFieldIndex == 0 && secondFieldIndex == 4) {
       // Celsius to Réaumur
       outputValue = inputValue * 4 / 5;
-    } else if (_firstFieldIndex == 1 && _secondFieldIndex == 0) {
+    } else if (firstFieldIndex == 1 && secondFieldIndex == 0) {
       // Fahrenheit to Celsius
       outputValue = (inputValue - 32) * 5 / 9;
-    } else if (_firstFieldIndex == 1 && _secondFieldIndex == 2) {
+    } else if (firstFieldIndex == 1 && secondFieldIndex == 2) {
       // Fahrenheit to Kelvin
       outputValue = (inputValue - 32) * 5 / 9 + 273.15;
-    } else if (_firstFieldIndex == 1 && _secondFieldIndex == 3) {
+    } else if (firstFieldIndex == 1 && secondFieldIndex == 3) {
       // Fahrenheit to Rankine
       outputValue = inputValue + 459.67;
-    } else if (_firstFieldIndex == 1 && _secondFieldIndex == 4) {
+    } else if (firstFieldIndex == 1 && secondFieldIndex == 4) {
       // Fahrenheit to Réaumur
       outputValue = (inputValue - 32) * 4 / 9;
-    } else if (_firstFieldIndex == 2 && _secondFieldIndex == 0) {
+    } else if (firstFieldIndex == 2 && secondFieldIndex == 0) {
       // Kelvin to Celsius
       outputValue = inputValue - 273.15;
-    } else if (_firstFieldIndex == 2 && _secondFieldIndex == 1) {
+    } else if (firstFieldIndex == 2 && secondFieldIndex == 1) {
       // Kelvin to Fahrenheit
       outputValue = (inputValue - 273.15) * 9 / 5 + 32;
-    } else if (_firstFieldIndex == 2 && _secondFieldIndex == 3) {
+    } else if (firstFieldIndex == 2 && secondFieldIndex == 3) {
       // Kelvin to Rankine
       outputValue = inputValue * 9 / 5;
-    } else if (_firstFieldIndex == 2 && _secondFieldIndex == 4) {
+    } else if (firstFieldIndex == 2 && secondFieldIndex == 4) {
       // Kelvin to Réaumur
       outputValue = (inputValue - 273.15) * 4 / 5;
-    } else if (_firstFieldIndex == 3 && _secondFieldIndex == 0) {
+    } else if (firstFieldIndex == 3 && secondFieldIndex == 0) {
       // Rankine to Celsius
       outputValue = (inputValue - 491.67) * 5 / 9;
-    } else if (_firstFieldIndex == 3 && _secondFieldIndex == 1) {
+    } else if (firstFieldIndex == 3 && secondFieldIndex == 1) {
       // Rankine to Fahrenheit
       outputValue = inputValue - 459.67;
-    } else if (_firstFieldIndex == 3 && _secondFieldIndex == 2) {
+    } else if (firstFieldIndex == 3 && secondFieldIndex == 2) {
       // Rankine to Kelvin
       outputValue = inputValue * 5 / 9;
-    } else if (_firstFieldIndex == 3 && _secondFieldIndex == 4) {
+    } else if (firstFieldIndex == 3 && secondFieldIndex == 4) {
       // Rankine to Réaumur
       outputValue = (inputValue - 491.67) * 4 / 9;
-    } else if (_firstFieldIndex == 4 && _secondFieldIndex == 0) {
+    } else if (firstFieldIndex == 4 && secondFieldIndex == 0) {
       // Réaumur to Celsius
       outputValue = inputValue * 5 / 4;
-    } else if (_firstFieldIndex == 4 && _secondFieldIndex == 1) {
+    } else if (firstFieldIndex == 4 && secondFieldIndex == 1) {
       // Réaumur to Fahrenheit
       outputValue = (inputValue * 9 / 4) + 32;
-    } else if (_firstFieldIndex == 4 && _secondFieldIndex == 2) {
+    } else if (firstFieldIndex == 4 && secondFieldIndex == 2) {
       // Réaumur to Kelvin
       outputValue = (inputValue * 5 / 4) + 273.15;
     } else {
@@ -104,15 +106,23 @@ class _TemperatureConversionScreenState
   }
 
   void changeSelectedIndex(int index) {
-    setState(() {
-      if (_isFirstLabelSelected) {
-        _firstFieldIndex = index;
-      } else {
-        _secondFieldIndex = index;
-      }
-    });
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.watch(prefrencesProvider).unitIndexes[Units.temperature]!;
+
+    ref.read(prefrencesProvider.notifier).setUnitIndexes(
+          Units.temperature,
+          _isFirstLabelSelected
+              ? [index, secondFieldIndex]
+              : [firstFieldIndex, index],
+        );
 
     convert();
+  }
+
+  @override
+  void initState() {
+    convert();
+    super.initState();
   }
 
   @override
@@ -124,10 +134,13 @@ class _TemperatureConversionScreenState
 
   @override
   Widget build(BuildContext context) {
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.watch(prefrencesProvider).unitIndexes[Units.temperature]!;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Area Conversion',
+          'Temperature Conversion',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -144,7 +157,7 @@ class _TemperatureConversionScreenState
                     controller: _firstFieldController,
                     isFieldSelected: _isFirstFieldSelected,
                     isLabelSelected: _isFirstLabelSelected,
-                    fieldIndex: _firstFieldIndex,
+                    fieldIndex: firstFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = true;
@@ -164,7 +177,7 @@ class _TemperatureConversionScreenState
                     controller: _secondFieldController,
                     isFieldSelected: !_isFirstFieldSelected,
                     isLabelSelected: !_isFirstLabelSelected,
-                    fieldIndex: _secondFieldIndex,
+                    fieldIndex: secondFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = false;

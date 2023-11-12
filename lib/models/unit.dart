@@ -19,3 +19,21 @@ abstract class Unit {
   final String? flag, symbol;
   final double? rate;
 }
+
+enum Units {
+  area,
+  currency,
+  data,
+  energy,
+  frequency,
+  fuel,
+  length,
+  planeAngle,
+  power,
+  pressure,
+  temperature,
+  speed,
+  time,
+  volume,
+  weight,
+}

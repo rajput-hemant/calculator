@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/energy.dart';
+import '../models/models.dart';
+import '../provider/preferences_provider.dart';
 import '../utils/utils.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad.dart';
 
-class EnergyConversionScreen extends StatefulWidget {
+class EnergyConversionScreen extends ConsumerStatefulWidget {
   const EnergyConversionScreen({super.key});
 
   @override
-  State<EnergyConversionScreen> createState() => _EnergyConversionScreenState();
+  ConsumerState<EnergyConversionScreen> createState() =>
+      _EnergyConversionScreenState();
 }
 
-class _EnergyConversionScreenState extends State<EnergyConversionScreen> {
+class _EnergyConversionScreenState
+    extends ConsumerState<EnergyConversionScreen> {
   final TextEditingController _firstFieldController =
       TextEditingController(text: "1");
   final TextEditingController _secondFieldController =
@@ -21,30 +25,40 @@ class _EnergyConversionScreenState extends State<EnergyConversionScreen> {
   bool _isFirstFieldSelected = true;
   bool _isFirstLabelSelected = true;
 
-  int _firstFieldIndex = 5;
-  int _secondFieldIndex = 6;
-
   void convert() {
-    convertUnit(
-      _firstFieldController,
-      _secondFieldController,
-      _firstFieldIndex,
-      _secondFieldIndex,
-      Energy.energyList,
-      _isFirstFieldSelected,
-    );
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.read(prefrencesProvider).unitIndexes[Units.energy]!;
+
+    setState(() {
+      convertUnit(
+        _firstFieldController,
+        _secondFieldController,
+        firstFieldIndex,
+        secondFieldIndex,
+        Energy.energyList,
+        _isFirstFieldSelected,
+      );
+    });
   }
 
   void changeSelectedIndex(int index) {
-    setState(() {
-      if (_isFirstLabelSelected) {
-        _firstFieldIndex = index;
-      } else {
-        _secondFieldIndex = index;
-      }
-    });
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.watch(prefrencesProvider).unitIndexes[Units.energy]!;
+
+    ref.read(prefrencesProvider.notifier).setUnitIndexes(
+          Units.energy,
+          _isFirstLabelSelected
+              ? [index, secondFieldIndex]
+              : [firstFieldIndex, index],
+        );
 
     convert();
+  }
+
+  @override
+  void initState() {
+    convert();
+    super.initState();
   }
 
   @override
@@ -56,6 +70,9 @@ class _EnergyConversionScreenState extends State<EnergyConversionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.watch(prefrencesProvider).unitIndexes[Units.energy]!;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -76,7 +93,7 @@ class _EnergyConversionScreenState extends State<EnergyConversionScreen> {
                     controller: _firstFieldController,
                     isFieldSelected: _isFirstFieldSelected,
                     isLabelSelected: _isFirstLabelSelected,
-                    fieldIndex: _firstFieldIndex,
+                    fieldIndex: firstFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = true;
@@ -96,7 +113,7 @@ class _EnergyConversionScreenState extends State<EnergyConversionScreen> {
                     controller: _secondFieldController,
                     isFieldSelected: !_isFirstFieldSelected,
                     isLabelSelected: !_isFirstLabelSelected,
-                    fieldIndex: _secondFieldIndex,
+                    fieldIndex: secondFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = false;

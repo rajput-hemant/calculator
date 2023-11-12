@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/frequency.dart';
+import '../models/models.dart';
+import '../provider/preferences_provider.dart';
 import '../utils/utils.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad.dart';
 
-class FrequencyConversionScreen extends StatefulWidget {
+class FrequencyConversionScreen extends ConsumerStatefulWidget {
   const FrequencyConversionScreen({super.key});
 
   @override
-  State<FrequencyConversionScreen> createState() =>
+  ConsumerState<FrequencyConversionScreen> createState() =>
       _FrequencyConversionScreenState();
 }
 
-class _FrequencyConversionScreenState extends State<FrequencyConversionScreen> {
+class _FrequencyConversionScreenState
+    extends ConsumerState<FrequencyConversionScreen> {
   final TextEditingController _firstFieldController =
       TextEditingController(text: "1");
   final TextEditingController _secondFieldController =
@@ -22,30 +25,40 @@ class _FrequencyConversionScreenState extends State<FrequencyConversionScreen> {
   bool _isFirstFieldSelected = true;
   bool _isFirstLabelSelected = true;
 
-  int _firstFieldIndex = 0;
-  int _secondFieldIndex = 1;
-
   void convert() {
-    convertUnit(
-      _firstFieldController,
-      _secondFieldController,
-      _firstFieldIndex,
-      _secondFieldIndex,
-      Frequency.frequencyList,
-      _isFirstFieldSelected,
-    );
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.read(prefrencesProvider).unitIndexes[Units.frequency]!;
+
+    setState(() {
+      convertUnit(
+        _firstFieldController,
+        _secondFieldController,
+        firstFieldIndex,
+        secondFieldIndex,
+        Frequency.frequencyList,
+        _isFirstFieldSelected,
+      );
+    });
   }
 
   void changeSelectedIndex(int index) {
-    setState(() {
-      if (_isFirstLabelSelected) {
-        _firstFieldIndex = index;
-      } else {
-        _secondFieldIndex = index;
-      }
-    });
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.watch(prefrencesProvider).unitIndexes[Units.frequency]!;
+
+    ref.read(prefrencesProvider.notifier).setUnitIndexes(
+          Units.frequency,
+          _isFirstLabelSelected
+              ? [index, secondFieldIndex]
+              : [firstFieldIndex, index],
+        );
 
     convert();
+  }
+
+  @override
+  void initState() {
+    convert();
+    super.initState();
   }
 
   @override
@@ -57,6 +70,9 @@ class _FrequencyConversionScreenState extends State<FrequencyConversionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final [firstFieldIndex, secondFieldIndex] =
+        ref.watch(prefrencesProvider).unitIndexes[Units.frequency]!;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -77,7 +93,7 @@ class _FrequencyConversionScreenState extends State<FrequencyConversionScreen> {
                     controller: _firstFieldController,
                     isFieldSelected: _isFirstFieldSelected,
                     isLabelSelected: _isFirstLabelSelected,
-                    fieldIndex: _firstFieldIndex,
+                    fieldIndex: firstFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = true;
@@ -97,7 +113,7 @@ class _FrequencyConversionScreenState extends State<FrequencyConversionScreen> {
                     controller: _secondFieldController,
                     isFieldSelected: !_isFirstFieldSelected,
                     isLabelSelected: !_isFirstLabelSelected,
-                    fieldIndex: _secondFieldIndex,
+                    fieldIndex: secondFieldIndex,
                     onFieldSelect: () {
                       setState(() {
                         _isFirstFieldSelected = false;
