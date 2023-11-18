@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Get the version from the command line arguments
+version=$1
+
+# Check if version is provided
+if [[ -z $version ]]; then
+  echo "Version not provided. Exiting..."
+  exit 1
+fi
+
+# Set the output directory
+output_dir="build/app/outputs/flutter-apk"
+
+# Rename the app-release.apk file
+mv "${output_dir}/app-release.apk" "${output_dir}/Calculator-v${version}-universal-release.apk"
+mv "${output_dir}/app-release.apk.sha1" "${output_dir}/Calculator-v${version}-universal.sha1"
+
+# Rename the other build files
+for file in "${output_dir}/app-"*"-release.apk"; do
+    new_file="${file/app-/Calculator-v${version}-}"
+    new_sha1_file="${new_file/.apk/.sha1}"
+    mv "$file" "$new_file"
+    mv "${file}.sha1" "$new_sha1_file"
+done
