@@ -21,7 +21,7 @@ dependencies:
   flutter_dotenv: ^5.1.0
   url_launcher: ^6.2.6
   rflutter_alert: ^2.0.7
-  package_info_plus: ^7.0.0
+  package_info_plus: ^8.0.0
 
 dev_dependencies:
   flutter_test:
