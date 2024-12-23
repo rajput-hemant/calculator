@@ -17,7 +17,7 @@ dependencies:
   intl: ^0.20.1
   http: ^1.2.2
   flutter_riverpod: ^2.6.1
-  shared_preferences: ^2.3.3
+  shared_preferences: ^2.3.4
   flutter_dotenv: ^5.2.1
   url_launcher: ^6.3.1
   rflutter_alert: ^2.0.7
