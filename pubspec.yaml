@@ -5,7 +5,7 @@ publish_to: "none" # to prevent accidental publication of package to pub.dev
 version: 0.2.5+7
 
 environment:
-  sdk: ">=3.7.2 <4.0.0"
+  sdk: ">=3.8.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -15,7 +15,7 @@ dependencies:
   font_awesome_flutter: ^10.8.0
   math_expressions: ^2.7.0
   intl: ^0.20.2
-  http: ^1.3.0
+  http: ^1.4.0
   flutter_riverpod: ^2.6.1
   shared_preferences: ^2.5.3
   flutter_dotenv: ^5.2.1
