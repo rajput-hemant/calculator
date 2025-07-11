@@ -19,7 +19,7 @@ dependencies:
   flutter_riverpod: ^2.6.1
   shared_preferences: ^2.5.3
   flutter_dotenv: ^5.2.1
-  url_launcher: ^6.3.1
+  url_launcher: ^6.3.2
   rflutter_alert: ^2.0.7
   package_info_plus: ^8.3.0
 
