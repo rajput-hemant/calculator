@@ -1,0 +1,1 @@
+<p><i>Calculator</i> is a simple but elegant Calculator with Currency (Exchange Rate) and Unit Converter.</p>
