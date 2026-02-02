@@ -5,7 +5,7 @@ publish_to: "none" # to prevent accidental publication of package to pub.dev
 version: 0.2.5+7
 
 environment:
-  sdk: "3.10.7"
+  sdk: "3.10.8"
 
 dependencies:
   flutter:
