@@ -5,19 +5,19 @@ publish_to: "none" # to prevent accidental publication of package to pub.dev
 version: 0.2.5+7
 
 environment:
-  sdk: "3.11.3"
+  sdk: "3.11.4"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.8
+  cupertino_icons: 1.0.9
   font_awesome_flutter: 11.0.0
   math_expressions: ^3.1.0
   intl: ^0.20.2
   http: 1.6.0
   flutter_riverpod: 3.3.1
-  shared_preferences: 2.5.4
+  shared_preferences: 2.5.5
   flutter_dotenv: ^6.0.0
   url_launcher: ^6.3.2
   rflutter_alert: ^2.0.7
