@@ -18,10 +18,10 @@ dependencies:
   http: 1.6.0
   flutter_riverpod: 3.3.1
   shared_preferences: 2.5.5
-  flutter_dotenv: ^6.0.0
+  flutter_dotenv: ^6.0.1
   url_launcher: ^6.3.2
   rflutter_alert: ^2.0.7
-  package_info_plus: ^10.0.0
+  package_info_plus: ^10.1.0
 
 dev_dependencies:
   flutter_test:
