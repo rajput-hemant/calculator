@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../provider/preferences_provider.dart';
+import '../utils/result_formatter.dart';
 import '../utils/utils.dart';
 import '../widgets/keypad.dart';
 import '../widgets/main_appbar.dart';
@@ -70,10 +71,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
       return;
     }
 
-    // if resulte ends with .0, remove it
-    if (result.endsWith(".0")) {
-      result = result.substring(0, result.length - 2);
-    }
+    result = formatResult(result);
 
     setState(() => _output = result);
   }
