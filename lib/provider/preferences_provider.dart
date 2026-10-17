@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/models.dart';
@@ -31,9 +31,11 @@ class Preferences {
   });
 }
 
-class PreferencesProvider extends StateNotifier<Preferences> {
-  PreferencesProvider() : super(Preferences()) {
+class PreferencesNotifier extends Notifier<Preferences> {
+  @override
+  Preferences build() {
     _loadStateFromSharedPrefs();
+    return Preferences();
   }
 
   Future<void> _loadStateFromSharedPrefs() async {
@@ -83,7 +85,6 @@ class PreferencesProvider extends StateNotifier<Preferences> {
   }
 }
 
-final prefrencesProvider =
-    StateNotifierProvider<PreferencesProvider, Preferences>(
-  (ref) => PreferencesProvider(),
+final prefrencesProvider = NotifierProvider<PreferencesNotifier, Preferences>(
+  PreferencesNotifier.new,
 );
