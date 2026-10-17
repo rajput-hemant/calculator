@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/models.dart';
 import '../provider/preferences_provider.dart';
 import '../utils/utils.dart';
+import '../utils/text_editing.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad.dart';
 
@@ -18,9 +19,9 @@ class VolumeConversionScreen extends ConsumerStatefulWidget {
 class _VolumeConversionScreenState
     extends ConsumerState<VolumeConversionScreen> {
   final TextEditingController _firstFieldController =
-      TextEditingController(text: "1");
+      textEditingController("1");
   final TextEditingController _secondFieldController =
-      TextEditingController(text: "1000000");
+      textEditingController("1000000");
 
   bool _isFirstFieldSelected = true;
   bool _isFirstLabelSelected = true;

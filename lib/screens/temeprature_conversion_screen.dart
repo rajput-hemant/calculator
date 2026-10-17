@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/models.dart';
 import '../provider/preferences_provider.dart';
+import '../utils/text_editing.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad.dart';
 
@@ -17,9 +18,9 @@ class TemperatureConversionScreen extends ConsumerStatefulWidget {
 class _TemperatureConversionScreenState
     extends ConsumerState<TemperatureConversionScreen> {
   final TextEditingController _firstFieldController =
-      TextEditingController(text: "1");
+      textEditingController("1");
   final TextEditingController _secondFieldController =
-      TextEditingController(text: "33.80");
+      textEditingController("33.80");
 
   bool _isFirstFieldSelected = true;
   bool _isFirstLabelSelected = true;
@@ -98,9 +99,15 @@ class _TemperatureConversionScreenState
 
     setState(() {
       if (_isFirstFieldSelected) {
-        _secondFieldController.text = outputValue.toStringAsFixed(6);
+        setTextKeepingCaret(
+          _secondFieldController,
+          outputValue.toStringAsFixed(6),
+        );
       } else {
-        _firstFieldController.text = outputValue.toStringAsFixed(6);
+        setTextKeepingCaret(
+          _firstFieldController,
+          outputValue.toStringAsFixed(6),
+        );
       }
     });
   }

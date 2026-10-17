@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/models.dart';
 import '../provider/preferences_provider.dart';
 import '../utils/utils.dart';
+import '../utils/text_editing.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad.dart';
 
@@ -17,9 +18,9 @@ class DataConversionScreen extends ConsumerStatefulWidget {
 
 class _DataConversionScreenState extends ConsumerState<DataConversionScreen> {
   final TextEditingController _firstFieldController =
-      TextEditingController(text: "1");
+      textEditingController("1");
   final TextEditingController _secondFieldController =
-      TextEditingController(text: "1024");
+      textEditingController("1024");
 
   bool _isFirstFieldSelected = true;
   bool _isFirstLabelSelected = true;

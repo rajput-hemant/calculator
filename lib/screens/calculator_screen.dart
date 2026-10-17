@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../provider/preferences_provider.dart';
 import '../utils/result_formatter.dart';
+import '../utils/text_editing.dart';
 import '../utils/utils.dart';
 import '../widgets/keypad.dart';
 import '../widgets/main_appbar.dart';
@@ -15,22 +16,16 @@ class CalculatorScreen extends ConsumerStatefulWidget {
 }
 
 class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
-  final _expressionController = TextEditingController();
+  final _expressionController = textEditingController();
 
   String _output = "";
   double _fontSize = 48;
 
   void parseExpression(String expression) {
     setState(() {
-      _expressionController.text = _output;
-
+      setTextKeepingCaret(_expressionController, _output);
       _output = "";
     });
-
-    // set cursor to the end of the expression
-    _expressionController.selection = TextSelection.fromPosition(
-      TextPosition(offset: _expressionController.text.length),
-    );
   }
 
   void parseExpressionOnChange(String expression) {

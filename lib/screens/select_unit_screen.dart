@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/models.dart';
+import '../utils/text_editing.dart';
 
 class SelectUnitScreen extends StatefulWidget {
   const SelectUnitScreen({
@@ -19,7 +20,7 @@ class SelectUnitScreen extends StatefulWidget {
 }
 
 class _SelectUnitScreenState extends State<SelectUnitScreen> {
-  final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = textEditingController();
   late List<Unit> _filteredList = widget.list;
   bool _isSearching = false;
 
@@ -51,7 +52,7 @@ class _SelectUnitScreenState extends State<SelectUnitScreen> {
     setState(() {
       _isSearching = !_isSearching;
       if (!_isSearching) {
-        _searchController.clear();
+        setTextKeepingCaret(_searchController, "");
         _filterList('');
       }
     });

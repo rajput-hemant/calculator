@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/models.dart';
 import '../provider/preferences_provider.dart';
 import '../utils/money_coverter.dart';
+import '../utils/text_editing.dart';
 import '../widgets/field_list_tile.dart';
 import '../widgets/keypad.dart';
 
@@ -21,9 +22,9 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
   String _lastUpdated = "-";
 
   final TextEditingController _firstFieldController =
-      TextEditingController(text: "1");
+      textEditingController("1");
   final TextEditingController _secondFieldController =
-      TextEditingController(text: "0.01");
+      textEditingController("0.01");
 
   bool _isFirstFieldSelected = true;
   bool _isFirstLabelSelected = true;
@@ -41,18 +42,20 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
           ? _rates["data"][to] / _rates["data"][from]
           : _rates["data"][from] / _rates["data"][to];
 
+      final newText = (amount * rate).toStringAsFixed(2);
+
       setState(() {
         if (_isFirstFieldSelected) {
-          _secondFieldController.text = (amount * rate).toStringAsFixed(2);
+          setTextKeepingCaret(_secondFieldController, newText);
         } else {
-          _firstFieldController.text = (amount * rate).toStringAsFixed(2);
+          setTextKeepingCaret(_firstFieldController, newText);
         }
       });
     } catch (e) {
       // clear the text fields on invalid double error,
       // which is thrown when any one of the text fields is empty/cleared
-      _firstFieldController.clear();
-      _secondFieldController.clear();
+      setTextKeepingCaret(_firstFieldController, "");
+      setTextKeepingCaret(_secondFieldController, "");
     }
   }
 

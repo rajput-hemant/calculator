@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../utils/text_editing.dart';
 import 'round_button.dart';
 
 class Keypad extends StatefulWidget {
@@ -36,8 +37,8 @@ class _KeypadState extends State<Keypad> {
     if (!_enableInput) {
       return;
     }
-    // get the current cursor position
-    final cursorPosition = widget.controller.selection.start;
+    // The selection is unset (-1) while no field is focused, so clamp it.
+    final cursorPosition = caretOffset(widget.controller);
     // update the text in the controller with the given text at the current cursor position
     final updatedText =
         '${widget.controller.text.substring(0, cursorPosition)}$text${widget.controller.text.substring(cursorPosition)}';
@@ -52,23 +53,19 @@ class _KeypadState extends State<Keypad> {
 
   void removeLastCharacter() {
     // Get the current cursor position
-    final cursorPosition = widget.controller.selection.start;
-
-    // Get the current text in the controller
-    final currentText = widget.controller.text;
+    final cursorPosition = caretOffset(widget.controller);
 
     // Remove the character before the cursor position
-    final updatedText = currentText.replaceRange(
-        cursorPosition > 0 ? cursorPosition - 1 : 0, cursorPosition, '');
+    final deleteFrom = cursorPosition > 0 ? cursorPosition - 1 : 0;
+    final updatedText =
+        widget.controller.text.replaceRange(deleteFrom, cursorPosition, '');
 
     // Set the updated text in the controller
-    widget.controller.value =
-        widget.controller.value.copyWith(text: updatedText);
-
-    // Update the cursor position after the inserted text
-    final updatedCursorPosition = cursorPosition > 0 ? cursorPosition - 1 : 0;
-    widget.controller.selection =
-        TextSelection.collapsed(offset: updatedCursorPosition);
+    // and update the cursor position after the inserted text
+    widget.controller.value = TextEditingValue(
+      text: updatedText,
+      selection: TextSelection.collapsed(offset: deleteFrom),
+    );
   }
 
   // show toast notification and disable input if length of text is > 15
@@ -220,7 +217,7 @@ class _KeypadState extends State<Keypad> {
                     iconColor: Theme.of(context).colorScheme.errorContainer,
                     backgroundColor: Theme.of(context).colorScheme.error,
                     onPressed: () {
-                      widget.controller.clear();
+                      setTextKeepingCaret(widget.controller, "");
                       widget.onChanged();
                     },
                   ),
@@ -308,7 +305,7 @@ class _KeypadState extends State<Keypad> {
                     iconColor: Theme.of(context).colorScheme.errorContainer,
                     backgroundColor: Theme.of(context).colorScheme.error,
                     onPressed: () {
-                      widget.controller.clear();
+                      setTextKeepingCaret(widget.controller, "");
                       insertText("0");
                       widget.onChanged();
                     },
