@@ -88,7 +88,7 @@ class FieldListTile extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  Icon(
+                  FaIcon(
                     FontAwesomeIcons.chevronRight,
                     size: 15,
                     color: Theme.of(context)

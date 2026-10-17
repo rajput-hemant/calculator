@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class UnitItem extends StatelessWidget {
   const UnitItem({
@@ -8,7 +9,7 @@ class UnitItem extends StatelessWidget {
     required this.onPressed,
   });
 
-  final IconData icon;
+  final FaIconData icon;
   final String label;
   final VoidCallback onPressed;
 
@@ -20,7 +21,7 @@ class UnitItem extends StatelessWidget {
       icon: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon),
+          FaIcon(icon),
           const SizedBox(height: 8),
           Text(
             label,

@@ -188,7 +188,7 @@ class _AboutScreenState extends ConsumerState<AboutScreen> {
       ),
       trailing: IconButton(
         onPressed: () => UrlLauncher(url),
-        icon: const Icon(FontAwesomeIcons.github),
+        icon: const FaIcon(FontAwesomeIcons.github),
       ),
     );
   }

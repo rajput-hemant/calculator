@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RoundButton extends StatelessWidget {
   const RoundButton({
@@ -12,7 +13,7 @@ class RoundButton extends StatelessWidget {
     this.onPressed,
   });
 
-  final IconData? icon;
+  final FaIconData? icon;
   final String? text;
   final TextStyle? textStyle;
   final Color? iconColor;
@@ -42,7 +43,7 @@ class RoundButton extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                 )
-              : Icon(icon, color: iconColor),
+              : FaIcon(icon, color: iconColor),
         ),
       ),
     );
