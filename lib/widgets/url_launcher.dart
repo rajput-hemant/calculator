@@ -1,23 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class UrlLauncher {
-  String link;
+Future<void> openUrl(BuildContext context, String url) async {
+  final opened = await launchUrl(
+    Uri.parse(url),
+    mode: LaunchMode.externalApplication,
+  );
 
-  UrlLauncher(this.link) {
-    _launchUrl();
-  }
-
-  Future<void> _launchUrl() async {
-    Uri url = Uri.parse(link);
-
-    if (await canLaunchUrl(url)) {
-      await launchUrl(
-        url,
-        webViewConfiguration: const WebViewConfiguration(),
-        mode: LaunchMode.externalApplication,
-      );
-    } else {
-      throw 'can\'t launch $url';
-    }
+  if (!opened && context.mounted) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text("Couldn't open the link")));
   }
 }

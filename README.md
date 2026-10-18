@@ -48,12 +48,8 @@ git clone https://github.com/rajput-hemant/calculator
 cd calculator
 ```
 
-- Rename **`.env.example`** -> **`.env`** and add your Currency API Key.
-
-```sh
-# Free Currency API Key (https://freecurrencyapi.com)
-CURRENCY_API_KEY="" # <- Add your API Key here
-```
+- Rename **`.env.example`** -> **`.env`**. Exchange rates need no API key:
+  both sources (Frankfurter and the fawazahmed0 currency-api) are keyless.
 
 - Run the app with Android Studio or VS Code. Or the command line:
 

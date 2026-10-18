@@ -1,97 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../provider/preferences_provider.dart';
 import '../routes/routes.dart';
+import '../theme/app_icons.dart';
+import '../theme/palette.dart';
+import '../theme/tokens.dart';
+import 'glass.dart';
 
-class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  const MainAppBar({super.key});
+/// The calculator's top bar: History on the left, and Convert, the scientific
+/// toggle and More on the right.
+class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const MainAppBar({
+    super.key,
+    this.showScientific = false,
+    this.onScientificToggle,
+  });
+
+  final bool showScientific;
+  final VoidCallback? onScientificToggle;
 
   @override
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(Tokens.topBarHeight);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final prefs = ref.watch(prefrencesProvider);
-
-    return AppBar(
-      leading: Padding(
-        padding: const EdgeInsets.only(top: 8, left: 8, bottom: 8),
-        child: Image.asset("assets/images/app_icon.png"),
+  Widget build(BuildContext context) {
+    final p = Palette.of(context);
+    return GlassTopBar(
+      leading: GlassAction(
+        icon: AppIcons.history,
+        tooltip: 'History',
+        onPressed: () => Navigator.pushNamed(context, Routes.historyScreen),
       ),
-      title: const Text(
-        'Calculator',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      actions: [
-        if (!prefs.tabView)
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.unitConverterScreen);
-            },
-            icon: prefs.darkMode
-                ? Image.asset(
-                    "assets/images/grid-light.png",
-                    width: 24,
-                    height: 24,
-                  )
-                : Image.asset(
-                    "assets/images/grid-dark.png",
-                    width: 24,
-                    height: 24,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withOpacity(0.75),
-                  ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GlassAction(
+            icon: AppIcons.convert,
+            tooltip: 'Convert',
+            onPressed: () =>
+                Navigator.pushNamed(context, Routes.unitConverterScreen),
           ),
-        PopupMenuButton(
-          surfaceTintColor: prefs.darkMode
-              ? Theme.of(context).colorScheme.onSurface
-              : Theme.of(context).colorScheme.surface,
-          onSelected: (String? item) {
-            Navigator.pushNamed(context, "/${item!.toLowerCase()}-screen");
-          },
-          itemBuilder: (context) {
-            return ["Settings", "About"].map((String item) {
-              return PopupMenuItem(
-                value: item,
-                child: Text(item),
-              );
-            }).toList();
-          },
-          elevation: 15,
-          offset: Offset(0.0, AppBar().preferredSize.height),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(8),
+          if (onScientificToggle != null)
+            GlassAction(
+              icon: AppIcons.scientific,
+              tooltip: 'Scientific functions',
+              selected: showScientific,
+              onPressed: onScientificToggle,
+            ),
+          PopupMenuButton<String>(
+            tooltip: 'More options',
+            padding: EdgeInsets.zero,
+            position: PopupMenuPosition.under,
+            onSelected: (route) => Navigator.pushNamed(context, route),
+            itemBuilder: (context) => const [
+              PopupMenuItem(
+                value: Routes.settingsScreen,
+                child: Text('Settings'),
+              ),
+              PopupMenuItem(value: Routes.aboutScreen, child: Text('About')),
+            ],
+            child: SizedBox.square(
+              dimension: Tokens.glassControl,
+              child: Icon(AppIcons.more, size: 24, color: p.label2),
             ),
           ),
-        )
-      ],
-      bottom: prefs.tabView
-          ? const TabBar(
-              labelPadding: EdgeInsets.symmetric(horizontal: 8),
-              labelStyle: TextStyle(
-                fontWeight: FontWeight.w700,
-              ),
-              dividerColor: Colors.transparent,
-              tabs: [
-                Tab(
-                  text: "Calculator",
-                ),
-                Tab(
-                  text: "Exchange Rate",
-                ),
-                Tab(
-                  text: "Unit Converter",
-                ),
-              ],
-            )
-          : null,
+        ],
+      ),
     );
   }
 }

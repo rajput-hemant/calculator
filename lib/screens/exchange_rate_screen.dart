@@ -5,10 +5,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/models.dart';
 import '../provider/preferences_provider.dart';
+import '../theme/app_icons.dart';
+import '../theme/palette.dart';
+import '../theme/tokens.dart';
 import '../utils/money_coverter.dart';
 import '../utils/text_editing.dart';
 import '../widgets/field_list_tile.dart';
+import '../widgets/glass.dart';
 import '../widgets/keypad.dart';
+import '../widgets/readable_width.dart';
+
+/// "2:22 PM" for today, "Oct 17" otherwise.
+String _updatedText(DateTime time) {
+  final now = DateTime.now();
+  final isToday =
+      time.year == now.year && time.month == now.month && time.day == now.day;
+  return isToday
+      ? DateFormat.jm().format(time)
+      : DateFormat.MMMd().format(time);
+}
 
 class ExchangeRateScreen extends ConsumerStatefulWidget {
   const ExchangeRateScreen({super.key});
@@ -18,29 +33,42 @@ class ExchangeRateScreen extends ConsumerStatefulWidget {
 }
 
 class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
-  late Map<String, dynamic> _rates;
+  Map<String, dynamic> _rates = {"data": <String, double>{}};
   String _lastUpdated = "-";
+  bool _isRefreshing = false;
 
-  final TextEditingController _firstFieldController =
-      textEditingController("1");
-  final TextEditingController _secondFieldController =
-      textEditingController("0.01");
+  final TextEditingController _firstFieldController = textEditingController(
+    "1",
+  );
+  final TextEditingController _secondFieldController = textEditingController(
+    "0.01",
+  );
 
   bool _isFirstFieldSelected = true;
   bool _isFirstLabelSelected = true;
 
-  void convert(int firstFieldIndex, int secondFieldIndex) async {
+  void convert(int firstFieldIndex, int secondFieldIndex) {
     String from = Currency.currenciesList[firstFieldIndex].id;
     String to = Currency.currenciesList[secondFieldIndex].id;
 
+    final data = _rates["data"] as Map;
+    final fromRate = data[from];
+    final toRate = data[to];
+    // A missing rate only happens when the fallback provider was unreachable,
+    // so leave the fields untouched instead of clearing the user's input.
+    if (fromRate is! num || toRate is! num) return;
+
     try {
-      double amount = double.parse(_isFirstFieldSelected
-          ? _firstFieldController.text
-          : _secondFieldController.text);
+      double amount = double.parse(
+        _isFirstFieldSelected
+            ? _firstFieldController.text
+            : _secondFieldController.text,
+      );
 
       double rate = _isFirstFieldSelected
-          ? _rates["data"][to] / _rates["data"][from]
-          : _rates["data"][from] / _rates["data"][to];
+          ? toRate / fromRate
+          : fromRate / toRate;
+      if (!rate.isFinite) return;
 
       final newText = (amount * rate).toStringAsFixed(2);
 
@@ -52,18 +80,19 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
         }
       });
     } catch (e) {
-      // clear the text fields on invalid double error,
-      // which is thrown when any one of the text fields is empty/cleared
       setTextKeepingCaret(_firstFieldController, "");
       setTextKeepingCaret(_secondFieldController, "");
     }
   }
 
   void changeSelectedIndex(int index) {
-    final [firstFieldIndex, secondFieldIndex] =
-        ref.watch(prefrencesProvider).unitIndexes[Units.currency]!;
+    final [firstFieldIndex, secondFieldIndex] = ref
+        .read(prefrencesProvider)
+        .unitIndexes[Units.currency]!;
 
-    ref.read(prefrencesProvider.notifier).setUnitIndexes(
+    ref
+        .read(prefrencesProvider.notifier)
+        .setUnitIndexes(
           Units.currency,
           _isFirstLabelSelected
               ? [index, secondFieldIndex]
@@ -75,31 +104,62 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
         : convert(index, secondFieldIndex);
   }
 
-  @override
-  void initState() {
-    MoneyConverter.fetchRates().then((rates) {
+  Future<void> _refreshRates() async {
+    if (_isRefreshing) return;
+    setState(() => _isRefreshing = true);
+    try {
+      final rates = await MoneyConverter.fetchRates(refreshing: true);
+      final prefs = await SharedPreferences.getInstance();
+      if (!mounted) return;
+      final lastUpdated = prefs.getInt("lastUpdated");
       setState(() {
         _rates = rates;
+        if (lastUpdated != null) {
+          _lastUpdated = _updatedText(
+            DateTime.fromMillisecondsSinceEpoch(lastUpdated),
+          );
+        }
+        final [firstFieldIndex, secondFieldIndex] = ref
+            .read(prefrencesProvider)
+            .unitIndexes[Units.currency]!;
+        convert(firstFieldIndex, secondFieldIndex);
+      });
+    } catch (e) {
+      // Refresh failed; leave existing data showing.
+    } finally {
+      if (mounted) setState(() => _isRefreshing = false);
+    }
+  }
 
-        final [firstFieldIndex, secondFieldIndex] =
-            ref.read(prefrencesProvider).unitIndexes[Units.currency]!;
+  @override
+  void initState() {
+    super.initState();
+    MoneyConverter.fetchRates().then((rates) {
+      if (!mounted) return;
+      setState(() {
+        _rates = rates;
+        _lastUpdated = DateFormat.MMMd().format(
+          DateTime.parse(rates["date"] as String),
+        );
+
+        final [firstFieldIndex, secondFieldIndex] = ref
+            .read(prefrencesProvider)
+            .unitIndexes[Units.currency]!;
         convert(firstFieldIndex, secondFieldIndex);
       });
     });
 
     SharedPreferences.getInstance().then((prefs) {
+      if (!mounted) return;
       final lastUpdated = prefs.getInt("lastUpdated");
       if (lastUpdated != null) {
         setState(() {
-          String formattedDateTime = DateFormat('MMMM d, y, h:mm a')
-              .format(DateTime.fromMillisecondsSinceEpoch(lastUpdated));
-
-          _lastUpdated = formattedDateTime;
+          _lastUpdated = _updatedText(
+            DateTime.fromMillisecondsSinceEpoch(lastUpdated),
+          );
         });
       }
     });
-
-    super.initState();
   }
 
   @override
@@ -109,95 +169,159 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
     super.dispose();
   }
 
+  void _swap() {
+    final [firstFieldIndex, secondFieldIndex] = ref
+        .read(prefrencesProvider)
+        .unitIndexes[Units.currency]!;
+
+    final firstValue = _firstFieldController.text;
+    setTextKeepingCaret(_firstFieldController, _secondFieldController.text);
+    setTextKeepingCaret(_secondFieldController, firstValue);
+
+    setState(() {
+      _isFirstFieldSelected = !_isFirstFieldSelected;
+      _isFirstLabelSelected = !_isFirstLabelSelected;
+    });
+    ref.read(prefrencesProvider.notifier).setUnitIndexes(Units.currency, [
+      secondFieldIndex,
+      firstFieldIndex,
+    ]);
+    convert(secondFieldIndex, firstFieldIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final p = Palette.of(context);
     final prefs = ref.watch(prefrencesProvider);
-    final isTabView = prefs.tabView;
     final [firstFieldIndex, secondFieldIndex] =
         prefs.unitIndexes[Units.currency]!;
 
+    final fromCurrency = Currency.currenciesList[firstFieldIndex];
+    final toCurrency = Currency.currenciesList[secondFieldIndex];
+    final data = _rates["data"] as Map?;
+    final fromRate = (data?[fromCurrency.id] as num?)?.toDouble();
+    final toRate = (data?[toCurrency.id] as num?)?.toDouble();
+    // Never print a rate we do not have: a missing code would otherwise show
+    // a fabricated 1:1 rate from a `?? 1.0` fallback.
+    final bool rateUnavailable =
+        data != null &&
+        data.isNotEmpty &&
+        (fromRate == null || toRate == null || fromRate == 0);
+    final rateText = data == null || data.isEmpty
+        ? "Fetching rates..."
+        : rateUnavailable
+        ? "Rate unavailable"
+        : "1 ${fromCurrency.id} = ${(toRate! / fromRate!).toStringAsFixed(4)} ${toCurrency.id}";
+    final statusText = _lastUpdated == "-"
+        ? rateText
+        : "$rateText · Updated $_lastUpdated";
+
     return Scaffold(
-      appBar: isTabView
-          ? null
-          : AppBar(
-              title: const Text(
-                'Currency Conversion',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
+      backgroundColor: p.bg,
+      extendBodyBehindAppBar: true,
+      appBar: GlassTopBar(
+        title: Units.currency.label,
+        trailing: GlassAction(
+          icon: AppIcons.swap,
+          tooltip: 'Swap currencies',
+          onPressed: _swap,
+        ),
+      ),
+      body: ReadableWidth(
+        child: Padding(
+          padding: EdgeInsets.only(top: Tokens.topBarInset(context)),
+          child: LayoutBuilder(
+            builder: (context, box) {
+              final keypad = Keypad(
+                controller: _isFirstFieldSelected
+                    ? _firstFieldController
+                    : _secondFieldController,
+                onChanged: () => convert(firstFieldIndex, secondFieldIndex),
+              );
+              final fields = [
+                const SizedBox(height: Gaps.sm),
+                FieldListTile(
+                  list: Currency.currenciesList,
+                  title: 'Currency',
+                  isCurrency: true,
+                  controller: _firstFieldController,
+                  isFieldSelected: _isFirstFieldSelected,
+                  fieldIndex: firstFieldIndex,
+                  onFieldSelect: () {
+                    setState(() => _isFirstFieldSelected = true);
+                  },
+                  onLabelSelect: () {
+                    setState(() => _isFirstLabelSelected = true);
+                    convert(firstFieldIndex, secondFieldIndex);
+                  },
+                  changeSelectedIndex: changeSelectedIndex,
+                ),
+                FieldListTile(
+                  list: Currency.currenciesList,
+                  title: 'Currency',
+                  isCurrency: true,
+                  isOutput: true,
+                  controller: _secondFieldController,
+                  isFieldSelected: !_isFirstFieldSelected,
+                  fieldIndex: secondFieldIndex,
+                  onFieldSelect: () {
+                    setState(() => _isFirstFieldSelected = false);
+                  },
+                  onLabelSelect: () {
+                    setState(() => _isFirstLabelSelected = false);
+                    convert(firstFieldIndex, secondFieldIndex);
+                  },
+                  changeSelectedIndex: changeSelectedIndex,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    Gaps.lg,
+                    Gaps.xs,
+                    Gaps.xs,
+                    0,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          statusText,
+                          textAlign: TextAlign.center,
+                          style: AppText.callout.copyWith(
+                            color: rateUnavailable ? p.danger : p.label2,
+                          ),
+                        ),
+                      ),
+                      GlassAction(
+                        icon: AppIcons.refresh,
+                        tooltip: 'Refresh rates',
+                        onPressed: _isRefreshing ? null : _refreshRates,
+                      ),
+                    ],
+                  ),
+                ),
+              ];
+              if (box.maxWidth > box.maxHeight) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(children: fields),
+                      ),
+                    ),
+                    SizedBox(width: box.maxWidth / 2, child: keypad),
+                  ],
+                );
+              }
+              return Column(
                 children: [
-                  FieldListTile(
-                    list: Currency.currenciesList,
-                    isCurrency: true,
-                    controller: _firstFieldController,
-                    isFieldSelected: _isFirstFieldSelected,
-                    isLabelSelected: _isFirstLabelSelected,
-                    fieldIndex: firstFieldIndex,
-                    onFieldSelect: () {
-                      setState(() {
-                        _isFirstFieldSelected = true;
-                      });
-                    },
-                    onLabelSelect: () {
-                      setState(() {
-                        _isFirstLabelSelected = true;
-                      });
-                      convert(firstFieldIndex, secondFieldIndex);
-                    },
-                    changeSelectedIndex: changeSelectedIndex,
-                  ),
-                  const SizedBox(height: 16),
-                  FieldListTile(
-                    list: Currency.currenciesList,
-                    isCurrency: true,
-                    controller: _secondFieldController,
-                    isFieldSelected: !_isFirstFieldSelected,
-                    isLabelSelected: !_isFirstLabelSelected,
-                    fieldIndex: secondFieldIndex,
-                    onFieldSelect: () {
-                      setState(() {
-                        _isFirstFieldSelected = false;
-                      });
-                    },
-                    onLabelSelect: () {
-                      setState(() {
-                        _isFirstLabelSelected = false;
-                      });
-                      convert(firstFieldIndex, secondFieldIndex);
-                    },
-                    changeSelectedIndex: changeSelectedIndex,
-                  ),
+                  ...fields,
+                  Expanded(child: keypad),
                 ],
-              ),
-            ),
+              );
+            },
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text(
-              "Last Upadated: $_lastUpdated",
-              style: TextStyle(
-                fontSize: 10,
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Keypad(
-              controller: _isFirstFieldSelected
-                  ? _firstFieldController
-                  : _secondFieldController,
-              onChanged: () => convert(firstFieldIndex, secondFieldIndex),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

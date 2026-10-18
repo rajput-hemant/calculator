@@ -1,4 +1,5 @@
 export 'area.dart';
+export 'history_entry.dart';
 export 'currency.dart';
 export 'data.dart';
 export 'energy.dart';

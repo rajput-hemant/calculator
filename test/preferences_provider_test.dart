@@ -16,15 +16,13 @@ void main() {
 
     final preferences = container.read(prefrencesProvider);
 
-    expect(preferences.darkMode, isTrue);
-    expect(preferences.tabView, isTrue);
+    expect(preferences.themeMode, ThemeMode.system);
     expect(preferences.unitIndexes[Units.area], [8, 7]);
   });
 
   test('loads stored preferences', () async {
     SharedPreferences.setMockInitialValues({
-      'darkMode': false,
-      'tabView': false,
+      'themeMode': 'dark',
       Units.area.toString(): ['1', '2'],
     });
     final container = ProviderContainer.test();
@@ -33,41 +31,55 @@ void main() {
     await settle();
 
     final preferences = container.read(prefrencesProvider);
-    expect(preferences.darkMode, isFalse);
-    expect(preferences.tabView, isFalse);
+    expect(preferences.themeMode, ThemeMode.dark);
     expect(preferences.unitIndexes[Units.area], [1, 2]);
     // Keys without a stored value keep their defaults.
     expect(preferences.unitIndexes[Units.length], [5, 0]);
   });
 
-  test('toggleDarkMode flips the state and persists it', () async {
-    SharedPreferences.setMockInitialValues({});
+  test(
+    'falls back to system for missing or unknown stored themeMode',
+    () async {
+      SharedPreferences.setMockInitialValues({
+        // The retired 'darkMode' bool must not resurrect as an override.
+        'darkMode': true,
+        'themeMode': 'purple',
+      });
+      final container = ProviderContainer.test();
+
+      container.read(prefrencesProvider);
+      await settle();
+
+      expect(container.read(prefrencesProvider).themeMode, ThemeMode.system);
+    },
+  );
+
+  test('loads the retired square shape as squircle', () async {
+    SharedPreferences.setMockInitialValues({'buttonShape': 'square'});
     final container = ProviderContainer.test();
 
     container.read(prefrencesProvider);
     await settle();
 
-    container.read(prefrencesProvider.notifier).toggleDarkMode();
-    await settle();
-
-    expect(container.read(prefrencesProvider).darkMode, isFalse);
-    final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getBool('darkMode'), isFalse);
+    expect(
+      container.read(prefrencesProvider).buttonShape,
+      ButtonShape.squircle,
+    );
   });
 
-  test('toggleTabView flips the state and persists it', () async {
+  test('setThemeMode updates the state and persists it', () async {
     SharedPreferences.setMockInitialValues({});
     final container = ProviderContainer.test();
 
     container.read(prefrencesProvider);
     await settle();
 
-    container.read(prefrencesProvider.notifier).toggleTabView();
+    container.read(prefrencesProvider.notifier).setThemeMode(ThemeMode.light);
     await settle();
 
-    expect(container.read(prefrencesProvider).tabView, isFalse);
+    expect(container.read(prefrencesProvider).themeMode, ThemeMode.light);
     final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getBool('tabView'), isFalse);
+    expect(prefs.getString('themeMode'), 'light');
   });
 
   test('setUnitIndexes updates the map and persists it', () async {
@@ -77,7 +89,10 @@ void main() {
     container.read(prefrencesProvider);
     await settle();
 
-    container.read(prefrencesProvider.notifier).setUnitIndexes(Units.area, [3, 4]);
+    container.read(prefrencesProvider.notifier).setUnitIndexes(Units.area, [
+      3,
+      4,
+    ]);
     await settle();
 
     expect(container.read(prefrencesProvider).unitIndexes[Units.area], [3, 4]);
@@ -85,7 +100,9 @@ void main() {
     expect(prefs.getStringList(Units.area.toString()), ['3', '4']);
   });
 
-  test('notifies listeners when toggleDarkMode is called', () async {
+  test('setUnitIndexes notifies listeners so the UI rebuilds', () async {
+    // Regression: mutating the map in place left the state object identical
+    // and silenced the rebuild.
     SharedPreferences.setMockInitialValues({});
     final container = ProviderContainer.test();
 
@@ -95,28 +112,54 @@ void main() {
     var notifications = 0;
     container.listen(prefrencesProvider, (_, _) => notifications++);
 
-    container.read(prefrencesProvider.notifier).toggleDarkMode();
+    container.read(prefrencesProvider.notifier).setUnitIndexes(Units.currency, [
+      2,
+      5,
+    ]);
+    await settle();
+
+    expect(notifications, 1);
+    expect(container.read(prefrencesProvider).unitIndexes[Units.currency], [
+      2,
+      5,
+    ]);
+  });
+
+  test('notifies listeners when setThemeMode is called', () async {
+    SharedPreferences.setMockInitialValues({});
+    final container = ProviderContainer.test();
+
+    container.read(prefrencesProvider);
+    await settle();
+
+    var notifications = 0;
+    container.listen(prefrencesProvider, (_, _) => notifications++);
+
+    container.read(prefrencesProvider.notifier).setThemeMode(ThemeMode.dark);
 
     expect(notifications, 1);
   });
 
-  testWidgets('widget wiring drives themeMode from the provider',
-      (tester) async {
+  testWidgets('widget wiring drives themeMode from the provider', (
+    tester,
+  ) async {
     SharedPreferences.setMockInitialValues({});
 
-    await tester.pumpWidget(
-      const ProviderScope(child: _ThemeProbe()),
-    );
+    await tester.pumpWidget(const ProviderScope(child: _ThemeProbe()));
     await tester.pump();
 
     MaterialApp app() => tester.widget<MaterialApp>(find.byType(MaterialApp));
 
-    expect(app().themeMode, ThemeMode.dark);
+    // The default is to follow the system, never a baked-in dark or light.
+    expect(app().themeMode, ThemeMode.system);
 
-    await tester.tap(find.text('toggle'));
+    await tester.tap(find.text('light'));
     await tester.pump();
-
     expect(app().themeMode, ThemeMode.light);
+
+    await tester.tap(find.text('dark'));
+    await tester.pump();
+    expect(app().themeMode, ThemeMode.dark);
   });
 }
 
@@ -127,17 +170,28 @@ class _ThemeProbe extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDarkMode = ref.watch(prefrencesProvider).darkMode;
+    final themeMode = ref.watch(prefrencesProvider).themeMode;
 
     return MaterialApp(
-      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      themeMode: themeMode,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       home: Scaffold(
-        body: ElevatedButton(
-          onPressed: () =>
-              ref.read(prefrencesProvider.notifier).toggleDarkMode(),
-          child: const Text('toggle'),
+        body: Column(
+          children: [
+            TextButton(
+              onPressed: () => ref
+                  .read(prefrencesProvider.notifier)
+                  .setThemeMode(ThemeMode.light),
+              child: const Text('light'),
+            ),
+            TextButton(
+              onPressed: () => ref
+                  .read(prefrencesProvider.notifier)
+                  .setThemeMode(ThemeMode.dark),
+              child: const Text('dark'),
+            ),
+          ],
         ),
       ),
     );

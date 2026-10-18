@@ -1,194 +1,119 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
-import '../provider/preferences_provider.dart';
+import '../provider/app_info_provider.dart';
+import '../theme/app_icons.dart';
+import '../theme/palette.dart';
+import '../theme/tokens.dart';
+import '../widgets/brand_mark.dart';
+import '../widgets/glass.dart';
+import '../widgets/grouped_list.dart';
+import '../widgets/readable_width.dart';
 import '../widgets/url_launcher.dart';
 
-class AboutScreen extends ConsumerStatefulWidget {
+const _repoUrl = 'https://github.com/rajput-hemant/calculator';
+
+class AboutScreen extends ConsumerWidget {
   const AboutScreen({super.key});
 
-  @override
-  ConsumerState<AboutScreen> createState() => _AboutScreenState();
-}
-
-class _AboutScreenState extends ConsumerState<AboutScreen> {
-  late String _appVersion = "0.2.0";
+  static const double _markSize = 96;
 
   @override
-  void initState() {
-    PackageInfo.fromPlatform().then((pkg) {
-      setState(() {
-        _appVersion = pkg.version;
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final isDarkMode = ref.watch(prefrencesProvider).darkMode;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final version = ref.watch(appVersionProvider);
+    final p = Palette.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'About',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
+      backgroundColor: p.grouped,
+      extendBodyBehindAppBar: true,
+      appBar: const GlassTopBar(),
+      body: ReadableWidth(
+        child: ListView(
+          padding: EdgeInsets.only(
+            top: Tokens.topBarInset(context),
+            bottom: Gaps.huge,
+          ),
           children: [
-            Image.asset(
-              'assets/images/app_icon.png',
-              height: 120,
-            ),
-            ListTile(
-              title: const Center(
-                child: Text(
-                  'Calculator',
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                ),
-              ),
-              subtitle: Center(
-                child: Text(_appVersion),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                "A Simple but elegant Calculator app made with Flutter using Google's Material Design with Currency (Exchange Rate) and Unit Converter.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'PTSans',
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-              child: Text(
-                'This is an Open-Source project \nand can be found on',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
-                ),
-                backgroundColor: Theme.of(context).colorScheme.onBackground,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: Image.asset(
-                'assets/images/github-${isDarkMode ? "dark" : "light"}.png',
-                height: 25,
-              ),
-              onPressed: () => UrlLauncher(
-                  'https://github.com/Khushal-ag/calculator/tree/khushal'),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              child: Text(
-                'If you liked our work\n'
-                'show some ❤️ and ⭐ the Repository.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16),
+            Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: Gaps.xl),
+              child: Column(
+                children: [
+                  Semantics(
+                    image: true,
+                    label: 'Calculator logo',
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(_markSize * 0.26),
+                        boxShadow: Glass.shadow(p),
+                      ),
+                      child: const BrandMark(size: _markSize),
+                    ),
+                  ),
+                  const SizedBox(height: Gaps.lg),
+                  Text(
+                    'Calculator',
+                    style: AppText.largeTitle.copyWith(
+                      fontSize: 28,
+                      height: 34 / 28,
+                      color: p.label,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    'Version ${version.value ?? ''}',
+                    style: AppText.callout.copyWith(color: p.label2),
+                  ),
+                  const SizedBox(height: Gaps.sm),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Text(
+                      'A simple, elegant calculator with unit and currency converters.',
+                      textAlign: TextAlign.center,
+                      style: AppText.callout.copyWith(color: p.label2),
+                    ),
+                  ),
+                ],
               ),
             ),
-            const Spacer(),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.onBackground,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 6,
+            InsetGroup(
+              children: [
+                GroupCell(
+                  leading: const IconTile(AppIcons.code),
+                  title: 'Source code',
+                  subtitle: 'github.com/rajput-hemant/calculator',
+                  trailing: Icon(
+                    AppIcons.openExternal,
+                    size: 18,
+                    color: p.label3,
+                  ),
+                  onTap: () => openUrl(context, _repoUrl),
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                GroupCell(
+                  leading: const IconTile(AppIcons.bug),
+                  title: 'Report an issue',
+                  trailing: Icon(
+                    AppIcons.openExternal,
+                    size: 18,
+                    color: p.label3,
+                  ),
+                  onTap: () => openUrl(context, '$_repoUrl/issues'),
                 ),
-              ),
-              child: Text(
-                'Our Team',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.background,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              onPressed: () => Alert(
-                context: context,
-                title: "Contact Us",
-                style: const AlertStyle(
-                  isCloseButton: false,
-                  titleStyle: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
+                GroupCell(
+                  leading: const IconTile(AppIcons.licenses),
+                  title: 'Open-source licenses',
+                  chevron: true,
+                  onTap: () => showLicensePage(
+                    context: context,
+                    applicationName: 'Calculator',
+                    applicationVersion: version.value,
+                    applicationIcon: const BrandMark(size: 48),
                   ),
                 ),
-                content: Column(
-                  children: [
-                    teamTile(
-                        'Khushal Agarwal', 'https://github.com/Khushal-ag'),
-                    teamTile(
-                        'Hemant Rajput', 'https://github.com/rajput-hemant'),
-                    teamTile(
-                        'Ritik Kuntal', 'https://github.com/kuntal-hrithik'),
-                    teamTile(
-                        'Vikas Singh', 'https://github.com/Vikas-Singh-10'),
-                    teamTile('Kalyani Agarwal', 'https://github.com/kalyaniag'),
-                    teamTile('Shruti Tripathi', 'https://github.com/shru-ty'),
-                  ],
-                ),
-                buttons: [
-                  DialogButton(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      'Back',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Theme.of(context).colorScheme.background,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                ],
-              ).show(),
+              ],
             ),
-            const Spacer(flex: 2),
-            const Text(
-              "Made with ❤️ using Flutter.",
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SectionFooter('Made with Flutter', center: true),
           ],
         ),
-      ),
-    );
-  }
-
-  ListTile teamTile(String name, String url) {
-    return ListTile(
-      title: Text(
-        name,
-        style: const TextStyle(
-          fontSize: 15,
-        ),
-      ),
-      trailing: IconButton(
-        onPressed: () => UrlLauncher(url),
-        icon: const FaIcon(FontAwesomeIcons.github),
       ),
     );
   }

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
-final lightColorScheme = ColorScheme.fromSeed(
-  seedColor: const Color(0x00207CDF),
+import 'tokens.dart';
+
+/// The light scheme, derived from the brand seed.
+///
+/// `vibrant` raises the chroma without moving the hue. `expressive` is
+/// deliberately not used here: it rotates the seed hue by 240 degrees, which
+/// turns this blue into a green.
+final ColorScheme lightColorScheme = ColorScheme.fromSeed(
+  seedColor: Tokens.seed,
   brightness: Brightness.light,
-  secondary: Colors.white.withOpacity(0.5),
-  error: Colors.redAccent,
-  errorContainer: const Color(0xFFF9DEDC),
+  dynamicSchemeVariant: DynamicSchemeVariant.vibrant,
 );
