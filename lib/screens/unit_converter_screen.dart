@@ -132,6 +132,8 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
                     onChanged: (text) => setState(() => _query = text),
                     textAlign: TextAlign.center,
                     textAlignVertical: TextAlignVertical.center,
+                    expands: true,
+                    maxLines: null,
                     style: AppText.body.copyWith(color: p.label),
                     decoration: InputDecoration(
                       filled: false,
