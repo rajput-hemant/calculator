@@ -8,7 +8,7 @@
 
 **v0.2.5**
 
-### A Simple but elegant Calculator app made with Flutter using Google's Material Design with Currency (Exchange Rate) and Unit Converter.
+### A simple but elegant Calculator app made with Flutter and its own Paper design system, with Currency (Exchange Rate) and Unit Converter.
 
 ## ![][android] Download APK
 
