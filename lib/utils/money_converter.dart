@@ -183,9 +183,7 @@ class MoneyConverter {
       if (decoded is Map<String, dynamic> && decoded["data"] is Map) {
         return decoded;
       }
-    } catch (_) {
-      // fall through to null
-    }
+    } catch (_) {}
     return null;
   }
 }

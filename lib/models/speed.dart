@@ -10,7 +10,6 @@ class Speed implements Unit {
   @override
   String? get symbol => null;
 
-  //Basic Unit Metre/second
   static const speedList = [
     Speed(id: 'km/h', name: 'Kilometer/hour', rate: 3.6),
     Speed(id: 'km/s', name: 'Kilometer/second', rate: 0.001),

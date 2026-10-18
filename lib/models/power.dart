@@ -10,7 +10,6 @@ class Power implements Unit {
   @override
   String? get symbol => null;
 
-  // Base unit Watt
   static const powerList = [
     Power(id: 'Btu/s', name: 'British thermal unit/second', rate: 0.0009478171),
     Power(id: 'ft.lb/s', name: 'Foot-pound/second', rate: 0.7375621489),

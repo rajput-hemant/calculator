@@ -10,7 +10,6 @@ class Temperature implements Unit {
   @override
   String? get symbol => null;
 
-  // Base Unit Celsius
   static const temperatureList = [
     Temperature(id: '°C', name: 'Celsius'),
     Temperature(id: '°F', name: 'Fahrenheit'),

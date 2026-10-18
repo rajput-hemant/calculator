@@ -56,8 +56,7 @@ Widget fullPadUnderTest(
 }
 
 const List<String> basicLabels = [
-  'AC',
-  '( )',
+  'C',
   '%',
   '÷',
   '7',
@@ -72,6 +71,7 @@ const List<String> basicLabels = [
   '2',
   '3',
   '+',
+  '()',
   '0',
   '.',
   '=',
@@ -93,8 +93,8 @@ const List<String> scientificLabels = [
   'e',
   '%',
   'DEG',
-  'AC',
-  '( )',
+  'C',
+  'x!',
   '÷',
   '7',
   '8',
@@ -108,7 +108,7 @@ const List<String> scientificLabels = [
   '2',
   '3',
   '+',
-  '±',
+  '()',
   '0',
   '.',
   '=',
@@ -155,7 +155,7 @@ void main() {
 
     await tester.pumpWidget(keypadUnderTest(controller));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('AC'));
+    await tester.tap(find.text('C'));
     await tester.pumpAndSettle();
 
     expect(tester.takeException(), isNull);
@@ -175,7 +175,7 @@ void main() {
 
       await tester.pumpWidget(keypadUnderTest(controller, isCalculator: false));
       await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(AppIcons.backspace));
+      await tester.tap(find.byIcon(AppIcons.backspace).first);
       await tester.pumpAndSettle();
 
       expect(tester.takeException(), isNull);
@@ -184,7 +184,6 @@ void main() {
     },
   );
 
-  // New tests for grid hit targets and scientific functions
   testWidgets('grid cell responds anywhere in the cell', (tester) async {
     final controller = TextEditingController();
     await tester.pumpWidget(keypadUnderTest(controller));
@@ -198,7 +197,6 @@ void main() {
     final controller = TextEditingController();
     await tester.pumpWidget(keypadUnderTest(controller, isCalculator: true));
 
-    // Verify that scientific keys render by finding number keys
     expect(find.text('7'), findsOneWidget);
     expect(find.text('8'), findsOneWidget);
   });
@@ -226,7 +224,6 @@ void main() {
   ) async {
     final controller = TextEditingController();
 
-    // Scientific: the top-left slot is sin, no "(" chip row anywhere.
     await tester.pumpWidget(
       keypadUnderTest(controller, isCalculator: true, showScientific: true),
     );
@@ -236,12 +233,11 @@ void main() {
     await tester.pumpAndSettle();
     expect(controller.text, 'sin(');
 
-    // Basic: the same top-left slot is AC; sin is gone, keys resize in place.
     await tester.pumpWidget(keypadUnderTest(controller, isCalculator: true));
     await tester.pumpAndSettle();
     expect(find.text('sin'), findsNothing);
-    expect(find.text('AC'), findsOneWidget);
-    await tester.tap(find.text('( )'));
+    expect(find.text('C'), findsOneWidget);
+    await tester.tap(find.text('()'));
     await tester.pumpAndSettle();
     expect(controller.text, 'sin((');
   });
@@ -288,7 +284,7 @@ void main() {
       'x²': '²',
       'xʸ': '^',
       'π': 'π',
-      '( )': '(',
+      'x!': '!',
       '%': '%',
     };
 
@@ -340,7 +336,6 @@ void main() {
           );
         }
 
-        // Keys stay near-square instead of stretching with screen height.
         final keyBox = tester.getSize(
           find
               .ancestor(of: find.text('7'), matching: find.byType(PressMorph))
@@ -362,14 +357,10 @@ void main() {
     await tester.pumpWidget(keypadUnderTest(controller, isCalculator: true));
     await tester.pumpAndSettle();
 
-    for (final label in ['7', '+', 'AC', '±']) {
+    for (final label in ['7', '+', 'C']) {
       final style = tester.widget<Text>(find.text(label)).style!;
       expect(style.fontSize, greaterThanOrEqualTo(22), reason: label);
     }
-    expect(
-      tester.widget<Text>(find.text('AC')).style!.fontWeight,
-      FontWeight.w500,
-    );
   });
 
   testWidgets('keypad key taps on transparent padding region fire callback', (
@@ -379,13 +370,11 @@ void main() {
     await tester.pumpWidget(keypadUnderTest(controller));
     await tester.pumpAndSettle();
 
-    // Tap on the '1' key's padding region (not on the glyph).
     // PressMorph's HitTestBehavior.opaque ensures the entire key area
     // including transparent padding around the glyph receives tap events.
     await tester.tap(find.text('1'));
     await tester.pumpAndSettle();
 
-    // The callback should have been fired - no exception occurred.
     expect(tester.takeException(), isNull);
   });
 
@@ -437,5 +426,19 @@ void main() {
     }
 
     expect(controller.text, '1.5^2.');
+  });
+
+  testWidgets('the parentheses key opens first, then closes after an operand', (
+    tester,
+  ) async {
+    final controller = TextEditingController();
+    await tester.pumpWidget(keypadUnderTest(controller, isCalculator: true));
+    await tester.pumpAndSettle();
+
+    for (final key in ['()', '7', '()']) {
+      await tester.tap(find.text(key));
+      await tester.pumpAndSettle();
+    }
+    expect(controller.text, '(7)');
   });
 }

@@ -32,7 +32,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
 
   String _output = "";
   bool _showScientific = false;
-  bool _degMode = true; // true = degrees, false = radians
+  bool _degMode = true;
   bool _justEvaluated = false;
 
   /// Equations already evaluated this session, oldest first.

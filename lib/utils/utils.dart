@@ -25,7 +25,6 @@ void convertUnit(
 
   String output;
   if (firstFieldIndex == secondFieldIndex) {
-    // Same unit in, same value out.
     output = inputText;
   } else if (list is List<Temperature>) {
     // Temperatures have no linear rate: pivot through Celsius, which covers

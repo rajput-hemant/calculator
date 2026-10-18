@@ -10,7 +10,6 @@ class Pressure implements Unit {
   @override
   String? get symbol => null;
 
-  //Basic Unit Hectopascal
   static const pressureList = [
     Pressure(id: "bar", name: "Bar", rate: 0.001),
     Pressure(id: "hPa", name: "Hectopascal", rate: 1.0),

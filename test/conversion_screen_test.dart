@@ -73,7 +73,6 @@ void main() {
     await tester.tap(find.byTooltip('Swap units'));
     await tester.pumpAndSettle();
 
-    // Units swapped: Centimetre to Metre.
     expect(find.text('1 cm = 0.01 m'), findsOneWidget);
   });
 
@@ -90,7 +89,6 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Default From pill: Metre. Picking must go through a sheet, no push.
     await tester.tap(find.text('Metre'));
     await tester.pumpAndSettle();
 
@@ -100,7 +98,6 @@ void main() {
     await tester.tap(find.text('Kilometre'));
     await tester.pumpAndSettle();
 
-    // Sheet closed and the pick was persisted into the first field.
     expect(find.byType(SelectUnitSheet), findsNothing);
     expect(find.text('1 km = 100000 cm'), findsOneWidget);
   });
@@ -118,7 +115,6 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Currency is promoted ahead of every other category card.
     expect(find.text('Currency'), findsOneWidget);
     expect(find.text('Length'), findsOneWidget);
     expect(find.text('11'), findsWidgets);
@@ -140,7 +136,6 @@ void main() {
       );
       await tester.pump();
 
-      // Gap between text field and unit selector button
       expect(
         find.byWidgetPredicate((w) => w is SizedBox && w.width == Gaps.md),
         findsWidgets,

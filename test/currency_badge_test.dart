@@ -18,7 +18,6 @@ void main() {
     expect(find.text('🇺🇸'), findsOneWidget);
     expect(find.text('USD'), findsNothing);
     expect(find.byType(CircleAvatar), findsNothing);
-    // Badge is a Container with circle shape
     final containers = tester.widgetList(find.byType(Container)).toList();
     expect(containers.isNotEmpty, true);
   });

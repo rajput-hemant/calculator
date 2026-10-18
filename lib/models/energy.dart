@@ -10,7 +10,6 @@ class Energy implements Unit {
   @override
   String? get symbol => null;
 
-  // Basic Unit: Joule (J)
   static final energyList = [
     const Energy(id: 'btu', name: 'British Thermal Unit', rate: 0.000947817),
     const Energy(id: 'cal', name: 'Calorie', rate: 0.239006),

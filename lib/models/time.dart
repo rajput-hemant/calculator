@@ -10,7 +10,6 @@ class Time implements Unit {
   @override
   String? get symbol => null;
 
-  // Base Unit Second
   static const timeList = [
     Time(id: 'century', name: 'Century', rate: 3.17098e-10),
     Time(id: 'day', name: 'Day', rate: 1.15741e-5),

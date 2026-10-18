@@ -10,7 +10,6 @@ class Weight implements Unit {
   @override
   String? get symbol => null;
 
-  //Base Unit Kilogram
   static const weightList = [
     Weight(name: 'Carat', id: 'ct', rate: 5000.0),
     Weight(name: 'Grain', id: 'gr', rate: 15432.3583529),
