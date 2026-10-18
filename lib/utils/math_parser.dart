@@ -5,6 +5,9 @@ const _radToDeg = '57.29577951308232';
 
 // Scientific notation, or the constant e; the first alternative keeps 1e-7.
 final _eToken = RegExp(r'(\d[\d.]*)e([+\-]?\d+)|(?<![a-z])e(?![a-z])');
+// "base + n%" and "base - n%" mean base plus or minus n percent of base.
+final _percentOfBase = RegExp(r'^(.*[\d)])([+\-])(\d[\d.]*)%$');
+final _percentNumber = RegExp(r'(\d[\d.]*)%');
 final _sqrtOperand = RegExp(r'√(\d[\d.]*)');
 final _trigHead = RegExp(r'(?<![a-z])(sin|cos|tan|arcsin|arccos|arctan)\(');
 // Juxtaposition like 2(3), 2sin(1) or (1)2 means multiplication.
@@ -33,7 +36,13 @@ class MathParser {
   /// %) and returns the raw result, or null when it is not a valid expression
   /// or not a finite number. [degrees] makes trig take and return degrees.
   static String? evaluate(String typed, {required bool degrees}) {
-    var s = closeParens(typed)
+    var s = closeParens(typed);
+    s = s.replaceAllMapped(
+      _percentOfBase,
+      (m) => '(${m[1]})*(1${m[2]}${m[3]}*0.01)',
+    );
+    s = s
+        .replaceAllMapped(_percentNumber, (m) => '(${m[1]}*0.01)')
         .replaceAll('sin⁻¹', 'arcsin')
         .replaceAll('cos⁻¹', 'arccos')
         .replaceAll('tan⁻¹', 'arctan')
