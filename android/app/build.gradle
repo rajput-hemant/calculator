@@ -76,6 +76,13 @@ android {
         }
     }
 
+    packaging {
+        jniLibs {
+            // Compress native libs in the APK (smaller download than stored libs).
+            useLegacyPackaging = true
+        }
+    }
+
     dependenciesInfo {
         // Disables dependency metadata when building APKs (for IzzyOnDroid/F-Droid)
         includeInApk = false
