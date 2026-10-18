@@ -10,6 +10,7 @@ import '../widgets/glass.dart';
 import '../widgets/grouped_list.dart';
 import '../widgets/readable_width.dart';
 import '../widgets/url_launcher.dart';
+import '../widgets/top_bar.dart';
 
 const _repoUrl = 'https://github.com/rajput-hemant/calculator';
 
@@ -26,7 +27,7 @@ class AboutScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: p.grouped,
       extendBodyBehindAppBar: true,
-      appBar: const GlassTopBar(),
+      appBar: const TopBar(),
       body: ReadableWidth(
         child: ListView(
           padding: EdgeInsets.only(

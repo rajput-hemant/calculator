@@ -8,24 +8,24 @@ import '../theme/app_shapes.dart';
 import '../theme/palette.dart';
 import '../theme/tokens.dart';
 import '../widgets/controls.dart';
-import '../widgets/glass.dart';
 import '../widgets/grouped_list.dart';
 import '../widgets/readable_width.dart';
+import '../widgets/top_bar.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(prefrencesProvider);
+    final preferences = ref.watch(preferencesProvider);
     final version = ref.watch(appVersionProvider);
-    final notifier = ref.read(prefrencesProvider.notifier);
+    final notifier = ref.read(preferencesProvider.notifier);
     final p = Palette.of(context);
 
     return Scaffold(
       backgroundColor: p.grouped,
       extendBodyBehindAppBar: true,
-      appBar: const GlassTopBar(title: 'Settings'),
+      appBar: const TopBar(title: 'Settings'),
       body: ReadableWidth(
         child: ListView(
           padding: EdgeInsets.only(

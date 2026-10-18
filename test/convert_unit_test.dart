@@ -84,4 +84,43 @@ void main() {
 
     expect(to.text, '100');
   });
+
+  test('fuel economy: 10 km/l is 10 l/100km (reciprocal, not 0.1)', () {
+    final kmPerLitre = _fuelIndex('km/l');
+    final litresPer100Km = _fuelIndex('l/100km');
+    from.text = '10';
+    to.text = '';
+
+    convertUnit(
+      from,
+      to,
+      kmPerLitre,
+      litresPer100Km,
+      FuelEconomy.fuelEconomyList,
+      true,
+    );
+
+    expect(double.parse(to.text), closeTo(10, 1e-9));
+  });
+
+  test('fuel economy: 0 l/100km leaves the other field unchanged', () {
+    final kmPerLitre = _fuelIndex('km/l');
+    final litresPer100Km = _fuelIndex('l/100km');
+    from.text = '0';
+    to.text = '12.5';
+
+    convertUnit(
+      from,
+      to,
+      litresPer100Km,
+      kmPerLitre,
+      FuelEconomy.fuelEconomyList,
+      true,
+    );
+
+    expect(to.text, '12.5');
+  });
 }
+
+int _fuelIndex(String id) =>
+    FuelEconomy.fuelEconomyList.indexWhere((unit) => unit.id == id);

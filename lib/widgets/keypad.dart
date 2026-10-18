@@ -15,7 +15,10 @@ import 'press_morph.dart';
 // else starts a fresh expression.
 const _continuations = {'+', '-', 'x', '/', '%', '^', '²', '±'};
 
-final _operatorChar = RegExp(r'[+\-x/%]');
+final _binaryOperators = RegExp(r'^[+\-x/^]$');
+final _trailingOperators = RegExp(r'[+\-x/^]+$');
+final _signable = RegExp(r'[x/^]$');
+final _notNumber = RegExp(r'[^\d.]');
 
 class Keypad extends ConsumerStatefulWidget {
   const Keypad({
@@ -66,7 +69,7 @@ class _KeypadState extends ConsumerState<Keypad> {
   // Medium is the keyboard tap. On Samsung, light, heavy and selection
   // haptics are 1 ms pulses, too short to feel.
   void _haptic() {
-    if (ref.read(prefrencesProvider).hapticsEnabled) {
+    if (ref.read(preferencesProvider).hapticsEnabled) {
       HapticFeedback.mediumImpact();
     }
   }
@@ -76,9 +79,18 @@ class _KeypadState extends ConsumerState<Keypad> {
     final fresh = _justEvaluated && !_continuations.contains(text);
     final current = fresh ? '' : widget.controller.text;
     final cursor = fresh ? 0 : caretOffset(widget.controller);
+    final after = current.substring(cursor);
+    var before = current.substring(0, cursor);
+    if (_binaryOperators.hasMatch(text)) {
+      // An operator typed after another replaces it. A minus may follow x / ^
+      // as a sign.
+      if (text != '-' || !_signable.hasMatch(before)) {
+        before = before.replaceFirst(_trailingOperators, '');
+      }
+    }
     widget.controller.value = TextEditingValue(
-      text: '${current.substring(0, cursor)}$text${current.substring(cursor)}',
-      selection: TextSelection.collapsed(offset: cursor + text.length),
+      text: '$before$text$after',
+      selection: TextSelection.collapsed(offset: before.length + text.length),
     );
     widget.onChanged();
   }
@@ -96,7 +108,7 @@ class _KeypadState extends ConsumerState<Keypad> {
 
   void _smartDot() {
     final text = widget.controller.text;
-    final lastOperatorIndex = text.lastIndexOf(_operatorChar);
+    final lastOperatorIndex = text.lastIndexOf(_notNumber);
     final lastDotIndex = text.lastIndexOf('.');
     if (!_justEvaluated && lastDotIndex > lastOperatorIndex) return;
     insertText('.');
@@ -123,7 +135,7 @@ class _KeypadState extends ConsumerState<Keypad> {
   Widget build(BuildContext context) {
     final p = Palette.of(context);
     final (:buttonShape, :buttonElevation) = ref.watch(
-      prefrencesProvider.select(
+      preferencesProvider.select(
         (s) => (buttonShape: s.buttonShape, buttonElevation: s.buttonElevation),
       ),
     );

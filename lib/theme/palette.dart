@@ -153,7 +153,55 @@ class Palette extends ThemeExtension<Palette> {
       : const Color(0xFF0B0B0C);
 
   @override
-  Palette copyWith() => this;
+  Palette copyWith({
+    Color? bg,
+    Color? grouped,
+    Color? cell,
+    Color? card,
+    Color? thumb,
+    Color? fill,
+    Color? key,
+    Color? keyFn,
+    Color? keyPress,
+    Color? keyShadow,
+    Color? label,
+    Color? label2,
+    Color? label3,
+    Color? separator,
+    Color? accent,
+    Color? onAccent,
+    Color? accentSoft,
+    Color? accentPress,
+    Color? danger,
+    Color? glass,
+    Color? glassRim,
+    Color? glassShadow,
+    Color? scrim,
+  }) => Palette(
+    bg: bg ?? this.bg,
+    grouped: grouped ?? this.grouped,
+    cell: cell ?? this.cell,
+    card: card ?? this.card,
+    thumb: thumb ?? this.thumb,
+    fill: fill ?? this.fill,
+    key: key ?? this.key,
+    keyFn: keyFn ?? this.keyFn,
+    keyPress: keyPress ?? this.keyPress,
+    keyShadow: keyShadow ?? this.keyShadow,
+    label: label ?? this.label,
+    label2: label2 ?? this.label2,
+    label3: label3 ?? this.label3,
+    separator: separator ?? this.separator,
+    accent: accent ?? this.accent,
+    onAccent: onAccent ?? this.onAccent,
+    accentSoft: accentSoft ?? this.accentSoft,
+    accentPress: accentPress ?? this.accentPress,
+    danger: danger ?? this.danger,
+    glass: glass ?? this.glass,
+    glassRim: glassRim ?? this.glassRim,
+    glassShadow: glassShadow ?? this.glassShadow,
+    scrim: scrim ?? this.scrim,
+  );
 
   @override
   Palette lerp(Palette? other, double t) {

@@ -10,9 +10,9 @@ import '../theme/app_shapes.dart';
 import '../theme/palette.dart';
 import '../theme/tokens.dart';
 import '../utils/glyphs.dart';
-import '../widgets/glass.dart';
 import '../widgets/grouped_list.dart';
 import '../widgets/readable_width.dart';
+import '../widgets/top_bar.dart';
 
 sealed class _Item {
   const _Item();
@@ -52,14 +52,6 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
   List<_Item> _items = const [];
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(historyProvider.notifier).load();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final p = Palette.of(context);
     final entries = ref.watch(historyProvider);
@@ -68,10 +60,10 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
     return Scaffold(
       backgroundColor: p.grouped,
       extendBodyBehindAppBar: true,
-      appBar: GlassTopBar(
+      appBar: TopBar(
         trailing: entries.isEmpty
             ? null
-            : GlassTextAction(
+            : TopBarTextAction(
                 label: 'Clear',
                 onPressed: () => _confirmClear(context),
               ),
@@ -240,7 +232,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
         ],
       ),
     );
-    if (clear ?? false) ref.read(historyProvider.notifier).clearAll();
+    if (!mounted || !(clear ?? false)) return;
+    ref.read(historyProvider.notifier).clearAll();
   }
 
   void _insertResult(BuildContext context, String result) {

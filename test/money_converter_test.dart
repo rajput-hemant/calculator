@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:calculator/models/models.dart';
 import 'package:calculator/screens/exchange_rate_screen.dart';
-import 'package:calculator/utils/money_coverter.dart';
+import 'package:calculator/utils/money_converter.dart';
 import 'package:calculator/widgets/field_list_tile.dart';
 import 'package:calculator/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -150,6 +150,15 @@ void main() {
       expect((v2['rates'] as Map)['USD'], 1.0);
     },
   );
+
+  test('an empty v2 array parses to null', () {
+    expect(MoneyConverter.parseFrankfurter('[]'), isNull);
+  });
+
+  test('a malformed v2 body parses to null', () {
+    expect(MoneyConverter.parseFrankfurter('{"message": "oops"}'), isNull);
+    expect(MoneyConverter.parseFrankfurter('not json'), isNull);
+  });
 
   test('every currency renders a symbol: v2, then non-empty legacy, then the ISO code', () {
     for (final currency in Currency.currenciesList) {

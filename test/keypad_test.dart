@@ -388,4 +388,54 @@ void main() {
     // The callback should have been fired - no exception occurred.
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('a second operator replaces the first, so 7+++7 reads 7+7', (
+    tester,
+  ) async {
+    final controller = TextEditingController();
+    await tester.pumpWidget(keypadUnderTest(controller, isCalculator: true));
+    await tester.pumpAndSettle();
+
+    for (final key in ['7', 'Plus', 'Plus', 'Plus', '7']) {
+      await tester.tap(find.bySemanticsLabel(key));
+      await tester.pumpAndSettle();
+    }
+
+    expect(controller.text, '7+7');
+  });
+
+  testWidgets('minus after multiply is a sign, and plus then replaces both', (
+    tester,
+  ) async {
+    final controller = TextEditingController();
+    await tester.pumpWidget(keypadUnderTest(controller, isCalculator: true));
+    await tester.pumpAndSettle();
+
+    for (final key in ['5', 'Multiply', 'Minus']) {
+      await tester.tap(find.bySemanticsLabel(key));
+      await tester.pumpAndSettle();
+    }
+    expect(controller.text, '5x-');
+
+    await tester.tap(find.bySemanticsLabel('Plus'));
+    await tester.pumpAndSettle();
+    expect(controller.text, '5+');
+  });
+
+  testWidgets('a decimal point is accepted after a power operator', (
+    tester,
+  ) async {
+    final controller = TextEditingController();
+    await tester.pumpWidget(
+      keypadUnderTest(controller, isCalculator: true, showScientific: true),
+    );
+    await tester.pumpAndSettle();
+
+    for (final key in ['1', 'Point', '5', 'Power', '2', 'Point']) {
+      await tester.tap(find.bySemanticsLabel(key));
+      await tester.pumpAndSettle();
+    }
+
+    expect(controller.text, '1.5^2.');
+  });
 }

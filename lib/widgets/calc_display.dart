@@ -73,39 +73,31 @@ class CalcDisplay extends StatelessWidget {
               },
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              AnimatedSwitcher(
-                duration: Motion.quick,
-                switchInCurve: Motion.enter,
-                switchOutCurve: Motion.exit,
-                transitionBuilder: (child, animation) => FadeTransition(
-                  opacity: animation,
-                  child: SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(0, 0.12),
-                      end: Offset.zero,
-                    ).animate(animation),
-                    child: child,
-                  ),
-                ),
-                child: FittedBox(
-                  key: ValueKey<String>(shown),
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    displayGlyphs(shown),
-                    maxLines: 1,
-                    style:
-                        (scientific
-                                ? Numerals.displayCompact
-                                : Numerals.display)
-                            .copyWith(color: p.label),
-                  ),
-                ),
+          AnimatedSwitcher(
+            duration: Motion.quick,
+            switchInCurve: Motion.enter,
+            switchOutCurve: Motion.exit,
+            transitionBuilder: (child, animation) => FadeTransition(
+              opacity: animation,
+              child: SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(0, 0.12),
+                  end: Offset.zero,
+                ).animate(animation),
+                child: child,
               ),
-            ],
+            ),
+            child: FittedBox(
+              key: ValueKey<String>(shown),
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerRight,
+              child: Text(
+                displayGlyphs(shown),
+                maxLines: 1,
+                style: (scientific ? Numerals.displayCompact : Numerals.display)
+                    .copyWith(color: p.label),
+              ),
+            ),
           ),
         ],
       ),
@@ -178,10 +170,6 @@ class _TapeRollerState extends State<_TapeRoller> {
   void didUpdateWidget(_TapeRoller oldWidget) {
     super.didUpdateWidget(oldWidget);
     final lines = widget.lines;
-    if (lines.isEmpty) {
-      if (_controller.hasClients) _controller.jumpTo(0);
-      return;
-    }
     final focus = widget.focus;
     // A new line, a new focus or typing brings the focused line to the front.
     final changed =

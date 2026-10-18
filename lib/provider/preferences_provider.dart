@@ -66,14 +66,13 @@ class Preferences {
 class PreferencesNotifier extends Notifier<Preferences> {
   @override
   Preferences build() {
-    // Start async loading but return defaults immediately so the UI
-    // can render synchronously with valid data.
     unawaited(_loadStateFromSharedPrefs());
     return const Preferences();
   }
 
   Future<void> _loadStateFromSharedPrefs() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
+    unawaited(prefs.remove('cornerRadius'));
 
     // Unknown or missing names (including the retired 'darkMode' bool era)
     // fall back to following the system.
@@ -94,31 +93,28 @@ class PreferencesNotifier extends Notifier<Preferences> {
         ButtonElevation.raised;
     final hapticsEnabled = prefs.getBool('hapticsEnabled') ?? true;
 
-    // Use default Preferences to get the unit keys, since `state` is not
-    // available during the initial build().
-    final defaultPrefs = const Preferences();
+    const defaultPrefs = Preferences();
     final unitIndexes = <Units, List<int>>{};
     for (final key in defaultPrefs.unitIndexes.keys) {
-      final stored = prefs.getStringList(key.toString());
-      unitIndexes[key] =
-          stored?.map(int.parse).toList() ?? defaultPrefs.unitIndexes[key]!;
+      final stored = prefs
+          .getStringList(key.toString())
+          ?.map(int.tryParse)
+          .nonNulls
+          .toList();
+      unitIndexes[key] = stored?.length == 2
+          ? stored!
+          : defaultPrefs.unitIndexes[key]!;
     }
 
-    // Riverpod Notifier doesn't have a mounted getter; instead we catch
-    // any state update after disposal by checking if we can still access
-    // the provider container. This is a pragmatic approach for tests.
-    try {
-      state = state.copyWith(
-        themeMode: themeMode,
-        accentColor: accentColor,
-        buttonShape: buttonShape,
-        buttonElevation: buttonElevation,
-        hapticsEnabled: hapticsEnabled,
-        unitIndexes: unitIndexes,
-      );
-    } catch (_) {
-      // Notifier disposed; ignore the update.
-    }
+    if (!ref.mounted) return;
+    state = state.copyWith(
+      themeMode: themeMode,
+      accentColor: accentColor,
+      buttonShape: buttonShape,
+      buttonElevation: buttonElevation,
+      hapticsEnabled: hapticsEnabled,
+      unitIndexes: unitIndexes,
+    );
   }
 
   void setThemeMode(ThemeMode mode) {
@@ -175,6 +171,6 @@ class PreferencesNotifier extends Notifier<Preferences> {
   }
 }
 
-final prefrencesProvider = NotifierProvider<PreferencesNotifier, Preferences>(
+final preferencesProvider = NotifierProvider<PreferencesNotifier, Preferences>(
   PreferencesNotifier.new,
 );

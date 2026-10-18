@@ -1,5 +1,3 @@
-export 'math_parser.dart';
-
 import 'package:flutter/material.dart';
 
 import '../models/models.dart';
@@ -36,28 +34,40 @@ void convertUnit(
       _toCelsius(input, firstFieldIndex),
       secondFieldIndex,
     ).toStringAsFixed(6);
+  } else if (list is List<FuelEconomy>) {
+    final kmPerLitre = _toKmPerLitre(input, list[firstFieldIndex]);
+    final result = _fromKmPerLitre(kmPerLitre, list[secondFieldIndex]);
+    if (!result.isFinite) return;
+    output = result.toString();
   } else {
-    output = (input * list[secondFieldIndex].rate! / list[firstFieldIndex].rate!)
-        .toString();
+    output =
+        (input * list[secondFieldIndex].rate! / list[firstFieldIndex].rate!)
+            .toString();
   }
 
   setTextKeepingCaret(outputController, output);
 }
 
 double _toCelsius(double value, int index) => switch (index) {
-      0 => value, // Celsius
-      1 => (value - 32) * 5 / 9, // Fahrenheit
-      2 => value - 273.15, // Kelvin
-      3 => (value - 491.67) * 5 / 9, // Rankine
-      4 => value * 5 / 4, // Réaumur
-      _ => (value - 7.5) * 40 / 21, // Rømer
-    };
+  0 => value, // Celsius
+  1 => (value - 32) * 5 / 9, // Fahrenheit
+  2 => value - 273.15, // Kelvin
+  3 => (value - 491.67) * 5 / 9, // Rankine
+  4 => value * 5 / 4, // Réaumur
+  _ => (value - 7.5) * 40 / 21, // Rømer
+};
 
 double _fromCelsius(double value, int index) => switch (index) {
-      0 => value,
-      1 => value * 9 / 5 + 32,
-      2 => value + 273.15,
-      3 => (value + 273.15) * 9 / 5,
-      4 => value * 4 / 5,
-      _ => value * 21 / 40 + 7.5,
-    };
+  0 => value,
+  1 => value * 9 / 5 + 32,
+  2 => value + 273.15,
+  3 => (value + 273.15) * 9 / 5,
+  4 => value * 4 / 5,
+  _ => value * 21 / 40 + 7.5,
+};
+
+double _toKmPerLitre(double value, FuelEconomy unit) =>
+    unit.inverse ? unit.rate / value : value / unit.rate;
+
+double _fromKmPerLitre(double value, FuelEconomy unit) =>
+    unit.inverse ? unit.rate / value : value * unit.rate;

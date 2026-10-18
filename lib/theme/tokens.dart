@@ -14,8 +14,8 @@ abstract final class Tokens {
   /// Floating top bar height, below the status bar.
   static const double topBarHeight = 64;
 
-  /// Glass buttons and capsules; equals the Android minimum tap target.
-  static const double glassControl = 48;
+  /// Top bar buttons and capsule controls; the Android minimum tap target.
+  static const double control = 48;
 
   /// Space content leaves for the floating top bar.
   static double topBarInset(BuildContext context) =>
@@ -24,18 +24,12 @@ abstract final class Tokens {
 
 /// Corner radii, on the Material 3 shape scale.
 abstract final class Radii {
-  static const double xs = 4;
   static const double sm = 8;
   static const double md = 12;
   static const double lg = 16;
-  static const double xl = 20;
-  static const double xxl = 24;
   static const double xxxl = 28;
-  static const double huge = 32;
-  static const double giant = 48;
-  static const double full = 999;
 
-  /// Glass capsules and buttons (half of [Tokens.glassControl]).
+  /// Capsule controls (half of [Tokens.control]).
   static const double control = 24;
 
   /// Inset groups and converter cards.
@@ -74,13 +68,6 @@ abstract final class Motion {
     mass: 1,
     stiffness: 380,
     ratio: 0.9,
-  );
-
-  /// Small overshoot, for presses and things that pop into existence.
-  static final SpringDescription bouncy = SpringDescription.withDampingRatio(
-    mass: 1,
-    stiffness: 520,
-    ratio: 0.72,
   );
 }
 

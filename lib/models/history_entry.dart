@@ -13,16 +13,16 @@ class HistoryEntry {
   });
 
   Map<String, dynamic> toJson() => {
-        'expression': expression,
-        'result': result,
-        'timestamp': timestamp.toIso8601String(),
-      };
+    'expression': expression,
+    'result': result,
+    'timestamp': timestamp.toIso8601String(),
+  };
 
   factory HistoryEntry.fromJson(Map<String, dynamic> json) => HistoryEntry(
-        expression: json['expression'] as String,
-        result: json['result'] as String,
-        timestamp: DateTime.parse(json['timestamp'] as String),
-      );
+    expression: json['expression'] as String,
+    result: json['result'] as String,
+    timestamp: DateTime.parse(json['timestamp'] as String),
+  );
 
   @override
   String toString() => 'HistoryEntry($expression = $result)';

@@ -18,33 +18,17 @@ Glyph contrast stays at or above 4.5:1 in all variants.
 
 ## Regenerate
 
-From the SVG master:
+Export the SVG at any size, e.g. 512 with headless Chrome:
 
 ```bash
-# PNG at exact size (example 512)
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --headless=new --disable-gpu --screenshot=output.png --window-size=512,512 --hide-scrollbars file://$(pwd)/app-icon-master.svg
 ```
 
-Or with `sips` (macOS):
-
-```bash
-sips -z 512 512 app-icon-master.svg output-512.png
-```
-
-Android mipmaps and adaptive layers use the same master: scale to 48/72/96/144/192 for legacy mipmaps, 432 for adaptive foreground.
-
 ## Wired files
 
-- `assets/images/app_icon.png` - refreshed About screen image
-- `android/app/src/main/res/mipmap-*/ic_launcher.png` - all densities
+- `assets/images/app_icon.png` - README image
+- `android/app/src/main/res/mipmap-*/ic_launcher.png` - legacy launcher icons
 - `android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml` - adaptive icon
-- `android/app/src/main/res/values/ic_launcher_background.xml` - background colour
-- `android/app/src/main/res/drawable/ic_launcher_foreground.png` - adaptive foreground
-- `android/app/src/main/res/drawable/ic_launcher_monochrome.png` - Android 13 monochrome
-- `ios/Runner/Assets.xcassets/AppIcon.appiconset/*.png` - light set (1024 marketing + all scales)
-- `ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json` - valid; light only (dark/tinted PNGs present but schema not confirmed)
-
-## What was skipped / not verified
-
-- The exact iOS 18 `Contents.json` appearance keys schema for dark and tinted was not confirmed; those variants are present as PNG files but not wired in Contents.json. Confirm the schema before adding them.
-- No new dependencies added; no version bump, no pubspec changes.
+- `android/app/src/main/res/drawable/ic_launcher_foreground.xml` and `ic_launcher_monochrome.xml` - vector layers
+- `android/app/src/main/res/values/ic_launcher_adaptive_background.xml` - adaptive background colour
+- `ios/Runner/Assets.xcassets/AppIcon.appiconset/` - iOS icons

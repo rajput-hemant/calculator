@@ -2,19 +2,9 @@ import 'package:calculator/utils/math_parser.dart';
 import 'package:calculator/utils/result_formatter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-// Mirrors the display pipeline in calculator_screen.dart: transforms, parse, format.
 String display(String typed) {
-  String expression = typed.replaceAll("sin\u207B\u00B9", "arcsin")
-      .replaceAll("cos\u207B\u00B9", "arccos")
-      .replaceAll("tan\u207B\u00B9", "arctan")
-      .replaceAll("\u00B2", "^2")
-      .replaceAll("π", "*3.141592653589793")
-      .replaceAll("x", "*")
-      .replaceAll("√", "sqrt(");
-
-  String result = MathParser.parseExpression(expression);
-  if (result == "Expression Error") return result;
-  return formatResult(result);
+  final r = MathParser.evaluate(typed, degrees: true);
+  return r == null ? 'Expression Error' : formatResult(r);
 }
 
 void main() {

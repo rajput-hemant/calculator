@@ -8,8 +8,8 @@ import '../theme/tokens.dart';
 import '../utils/text_editing.dart';
 import 'controls.dart';
 import 'currency_badge.dart';
-import 'glass.dart';
 import 'grouped_list.dart';
+import 'top_bar.dart';
 
 typedef _Row = ({int index, Unit unit});
 
@@ -103,7 +103,7 @@ class _SelectUnitSheetState extends State<SelectUnitSheet> {
                   style: AppText.title.copyWith(color: p.label),
                 ),
               ),
-              GlassAction(
+              TopBarAction(
                 icon: AppIcons.close,
                 tooltip: 'Close',
                 onPressed: () => Navigator.pop(context),

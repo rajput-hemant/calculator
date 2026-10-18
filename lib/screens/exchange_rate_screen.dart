@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/models.dart';
 import '../provider/preferences_provider.dart';
 import '../theme/app_icons.dart';
 import '../theme/palette.dart';
 import '../theme/tokens.dart';
-import '../utils/money_coverter.dart';
+import '../utils/money_converter.dart';
 import '../utils/text_editing.dart';
 import '../widgets/field_list_tile.dart';
-import '../widgets/glass.dart';
 import '../widgets/keypad.dart';
 import '../widgets/readable_width.dart';
+import '../widgets/top_bar.dart';
 
 /// "2:22 PM" for today, "Oct 17" otherwise.
 String _updatedText(DateTime time) {
@@ -36,6 +35,7 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
   Map<String, dynamic> _rates = {"data": <String, double>{}};
   String _lastUpdated = "-";
   bool _isRefreshing = false;
+  bool _failed = false;
 
   final TextEditingController _firstFieldController = textEditingController(
     "1",
@@ -58,40 +58,30 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
     // so leave the fields untouched instead of clearing the user's input.
     if (fromRate is! num || toRate is! num) return;
 
-    try {
-      double amount = double.parse(
-        _isFirstFieldSelected
-            ? _firstFieldController.text
-            : _secondFieldController.text,
-      );
+    final amount = double.tryParse(
+      _isFirstFieldSelected
+          ? _firstFieldController.text
+          : _secondFieldController.text,
+    );
+    if (amount == null) return;
 
-      double rate = _isFirstFieldSelected
-          ? toRate / fromRate
-          : fromRate / toRate;
-      if (!rate.isFinite) return;
+    final rate = _isFirstFieldSelected ? toRate / fromRate : fromRate / toRate;
+    if (!rate.isFinite) return;
 
-      final newText = (amount * rate).toStringAsFixed(2);
-
-      setState(() {
-        if (_isFirstFieldSelected) {
-          setTextKeepingCaret(_secondFieldController, newText);
-        } else {
-          setTextKeepingCaret(_firstFieldController, newText);
-        }
-      });
-    } catch (e) {
-      setTextKeepingCaret(_firstFieldController, "");
-      setTextKeepingCaret(_secondFieldController, "");
-    }
+    final newText = (amount * rate).toStringAsFixed(2);
+    setTextKeepingCaret(
+      _isFirstFieldSelected ? _secondFieldController : _firstFieldController,
+      newText,
+    );
   }
 
   void changeSelectedIndex(int index) {
     final [firstFieldIndex, secondFieldIndex] = ref
-        .read(prefrencesProvider)
+        .read(preferencesProvider)
         .unitIndexes[Units.currency]!;
 
     ref
-        .read(prefrencesProvider.notifier)
+        .read(preferencesProvider.notifier)
         .setUnitIndexes(
           Units.currency,
           _isFirstLabelSelected
@@ -104,28 +94,30 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
         : convert(index, secondFieldIndex);
   }
 
-  Future<void> _refreshRates() async {
+  Future<void> _load({bool refreshing = false}) async {
     if (_isRefreshing) return;
     setState(() => _isRefreshing = true);
     try {
-      final rates = await MoneyConverter.fetchRates(refreshing: true);
-      final prefs = await SharedPreferences.getInstance();
+      final rates = await MoneyConverter.fetchRates(refreshing: refreshing);
       if (!mounted) return;
-      final lastUpdated = prefs.getInt("lastUpdated");
+      final fetchedAt = rates["fetchedAt"] as int?;
+      final date = rates["date"] as String?;
+      final updated = fetchedAt != null
+          ? _updatedText(DateTime.fromMillisecondsSinceEpoch(fetchedAt))
+          : date != null
+          ? DateFormat.MMMd().format(DateTime.parse(date))
+          : "-";
+      final [firstFieldIndex, secondFieldIndex] = ref
+          .read(preferencesProvider)
+          .unitIndexes[Units.currency]!;
       setState(() {
         _rates = rates;
-        if (lastUpdated != null) {
-          _lastUpdated = _updatedText(
-            DateTime.fromMillisecondsSinceEpoch(lastUpdated),
-          );
-        }
-        final [firstFieldIndex, secondFieldIndex] = ref
-            .read(prefrencesProvider)
-            .unitIndexes[Units.currency]!;
-        convert(firstFieldIndex, secondFieldIndex);
+        _lastUpdated = updated;
+        _failed = false;
       });
-    } catch (e) {
-      // Refresh failed; leave existing data showing.
+      convert(firstFieldIndex, secondFieldIndex);
+    } catch (_) {
+      if (mounted) setState(() => _failed = true);
     } finally {
       if (mounted) setState(() => _isRefreshing = false);
     }
@@ -134,32 +126,7 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
   @override
   void initState() {
     super.initState();
-    MoneyConverter.fetchRates().then((rates) {
-      if (!mounted) return;
-      setState(() {
-        _rates = rates;
-        _lastUpdated = DateFormat.MMMd().format(
-          DateTime.parse(rates["date"] as String),
-        );
-
-        final [firstFieldIndex, secondFieldIndex] = ref
-            .read(prefrencesProvider)
-            .unitIndexes[Units.currency]!;
-        convert(firstFieldIndex, secondFieldIndex);
-      });
-    });
-
-    SharedPreferences.getInstance().then((prefs) {
-      if (!mounted) return;
-      final lastUpdated = prefs.getInt("lastUpdated");
-      if (lastUpdated != null) {
-        setState(() {
-          _lastUpdated = _updatedText(
-            DateTime.fromMillisecondsSinceEpoch(lastUpdated),
-          );
-        });
-      }
-    });
+    _load();
   }
 
   @override
@@ -171,7 +138,7 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
 
   void _swap() {
     final [firstFieldIndex, secondFieldIndex] = ref
-        .read(prefrencesProvider)
+        .read(preferencesProvider)
         .unitIndexes[Units.currency]!;
 
     final firstValue = _firstFieldController.text;
@@ -182,7 +149,7 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
       _isFirstFieldSelected = !_isFirstFieldSelected;
       _isFirstLabelSelected = !_isFirstLabelSelected;
     });
-    ref.read(prefrencesProvider.notifier).setUnitIndexes(Units.currency, [
+    ref.read(preferencesProvider.notifier).setUnitIndexes(Units.currency, [
       secondFieldIndex,
       firstFieldIndex,
     ]);
@@ -192,7 +159,7 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
   @override
   Widget build(BuildContext context) {
     final p = Palette.of(context);
-    final prefs = ref.watch(prefrencesProvider);
+    final prefs = ref.watch(preferencesProvider);
     final [firstFieldIndex, secondFieldIndex] =
         prefs.unitIndexes[Units.currency]!;
 
@@ -208,7 +175,7 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
         data.isNotEmpty &&
         (fromRate == null || toRate == null || fromRate == 0);
     final rateText = data == null || data.isEmpty
-        ? "Fetching rates..."
+        ? (_failed ? "Rates unavailable offline" : "Fetching rates...")
         : rateUnavailable
         ? "Rate unavailable"
         : "1 ${fromCurrency.id} = ${(toRate! / fromRate!).toStringAsFixed(4)} ${toCurrency.id}";
@@ -219,9 +186,9 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
     return Scaffold(
       backgroundColor: p.bg,
       extendBodyBehindAppBar: true,
-      appBar: GlassTopBar(
+      appBar: TopBar(
         title: Units.currency.label,
-        trailing: GlassAction(
+        trailing: TopBarAction(
           icon: AppIcons.swap,
           tooltip: 'Swap currencies',
           onPressed: _swap,
@@ -287,14 +254,18 @@ class _ExchangeRateScreenState extends ConsumerState<ExchangeRateScreen> {
                           statusText,
                           textAlign: TextAlign.center,
                           style: AppText.callout.copyWith(
-                            color: rateUnavailable ? p.danger : p.label2,
+                            color: rateUnavailable || _failed
+                                ? p.danger
+                                : p.label2,
                           ),
                         ),
                       ),
-                      GlassAction(
+                      TopBarAction(
                         icon: AppIcons.refresh,
                         tooltip: 'Refresh rates',
-                        onPressed: _isRefreshing ? null : _refreshRates,
+                        onPressed: _isRefreshing
+                            ? null
+                            : () => _load(refreshing: true),
                       ),
                     ],
                   ),

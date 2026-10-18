@@ -34,11 +34,13 @@ class HistoryNotifier extends Notifier<List<HistoryEntry>> {
           final expression = _extract(raw, 'expression');
           final resultStr = _extract(raw, 'result');
           final tsStr = _extract(raw, 'timestamp');
-          loaded.add(HistoryEntry(
-            expression: expression,
-            result: resultStr,
-            timestamp: DateTime.parse(tsStr),
-          ));
+          loaded.add(
+            HistoryEntry(
+              expression: expression,
+              result: resultStr,
+              timestamp: DateTime.parse(tsStr),
+            ),
+          );
         } catch (_) {
           // Ignore malformed entries
         }

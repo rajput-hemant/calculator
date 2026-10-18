@@ -30,6 +30,8 @@ class MoneyConverter {
   /// day and still picks up each new publication the same day.
   static const Duration _ttl = Duration(hours: 6);
 
+  static const Duration _timeout = Duration(seconds: 10);
+
   static const String _ratesKey = "rates";
   static const String _lastUpdatedKey = "lastUpdated";
 
@@ -57,12 +59,12 @@ class MoneyConverter {
     }
 
     try {
-      final primaryBody = await _get(client, _frankfurterEndPoint);
-      final fallbackBody = await _get(client, _fallbackEndPoint) ??
-          await _get(client, _fallbackMirrorEndPoint);
-
-      final primary = primaryBody == null ? null : parseFrankfurter(primaryBody);
-      final fallback = fallbackBody == null ? null : parseFallback(fallbackBody);
+      final bodies = await Future.wait([
+        _get(client, _frankfurterEndPoint),
+        _getFallback(client),
+      ]);
+      final primary = bodies[0] == null ? null : parseFrankfurter(bodies[0]!);
+      final fallback = bodies[1] == null ? null : parseFallback(bodies[1]!);
 
       // A strict superset fallback means one working provider is enough; only
       // when both fail is there nothing to serve.
@@ -86,35 +88,44 @@ class MoneyConverter {
     }
   }
 
-  /// Reshapes a Frankfurter `/v2/rates?base=USD` body into the same map the
-  /// old `/v1/latest` parser produced: `{"date", "rates": {CODE: units per
-  /// USD}}`. Unlike v1's object form, v2 returns a flat array of pairs that can
-  /// carry several dates in one payload, so the record date is the OLDEST date
-  /// present: never claim fresher data than we actually have.
+  /// Reshapes a Frankfurter `/v2/rates?base=USD` body into
+  /// `{"date", "rates": {CODE: units per USD}}`. v2 returns a flat array of
+  /// pairs that can carry several dates, so the record date is the OLDEST one:
+  /// never claim fresher data than we actually have. Null on a malformed body.
   static Map<String, dynamic>? parseFrankfurter(String body) {
-    final records = (jsonDecode(body) as List).cast<Map<String, dynamic>>();
-    final dates = records.map((r) => r["date"] as String).toList()..sort();
-    return {
-      "date": dates.first,
-      "rates": <String, double>{
-        for (final r in records) r["quote"] as String: (r["rate"] as num).toDouble(),
-        "USD": 1.0, // Injected for safety; v2 already includes the base.
-      },
-    };
+    try {
+      final records = (jsonDecode(body) as List).cast<Map<String, dynamic>>();
+      final dates = records.map((r) => r["date"] as String).toList()..sort();
+      return {
+        "date": dates.first,
+        "rates": <String, double>{
+          for (final r in records)
+            r["quote"] as String: (r["rate"] as num).toDouble(),
+          "USD": 1.0,
+        },
+      };
+    } catch (_) {
+      return null;
+    }
   }
 
   /// Reshapes a fawazahmed0 `/v1/currencies/usd.json` body. Keys are lowercase
   /// and the base is already present, so only the case needs normalising.
+  /// Null on a malformed body.
   static Map<String, dynamic>? parseFallback(String body) {
-    final decoded = jsonDecode(body) as Map<String, dynamic>;
-    final raw = decoded["usd"] as Map<String, dynamic>;
-    return {
-      "date": decoded["date"],
-      "rates": <String, double>{
-        for (final entry in raw.entries)
-          entry.key.toUpperCase(): (entry.value as num).toDouble(),
-      },
-    };
+    try {
+      final decoded = jsonDecode(body) as Map<String, dynamic>;
+      final raw = decoded["usd"] as Map<String, dynamic>;
+      return {
+        "date": decoded["date"],
+        "rates": <String, double>{
+          for (final entry in raw.entries)
+            entry.key.toUpperCase(): (entry.value as num).toDouble(),
+        },
+      };
+    } catch (_) {
+      return null;
+    }
   }
 
   /// Merges both provider payloads into one map, primary winning per code.
@@ -132,10 +143,10 @@ class MoneyConverter {
     // The two sources can legitimately land a day apart, so show the older of
     // the two: never claim fresher data than we actually have. ISO dates sort
     // chronologically as plain strings.
-    final dates = [primary?["date"], fallback?["date"]]
-        .whereType<String>()
-        .toList()
-      ..sort();
+    final dates = [
+      primary?["date"],
+      fallback?["date"],
+    ].whereType<String>().toList()..sort();
 
     return {
       "date": dates.isEmpty ? null : dates.first,
@@ -148,11 +159,15 @@ class MoneyConverter {
 
   /// Returns the body on HTTP 200, or null on any failure so the caller can
   /// degrade to the other provider instead of throwing.
+  static Future<String?> _getFallback(http.Client? client) async =>
+      await _get(client, _fallbackEndPoint) ??
+      await _get(client, _fallbackMirrorEndPoint);
+
   static Future<String?> _get(http.Client? client, String url) async {
     try {
       final uri = Uri.parse(url);
-      final response =
-          client == null ? await http.get(uri) : await client.get(uri);
+      final response = await (client == null ? http.get(uri) : client.get(uri))
+          .timeout(_timeout);
       return response.statusCode == 200 ? response.body : null;
     } catch (_) {
       return null;

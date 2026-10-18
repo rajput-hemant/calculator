@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'models/models.dart';
@@ -8,11 +7,7 @@ import 'routes/routes.dart';
 import 'screens/screens.dart';
 import 'theme/app_theme.dart';
 
-Future<void> main() async {
-  await dotenv.load();
-
-  WidgetsFlutterBinding.ensureInitialized();
-
+void main() {
   runApp(const ProviderScope(child: Calculator()));
 }
 
@@ -24,10 +19,10 @@ class Calculator extends ConsumerWidget {
     // Only these settings affect the app shell; watching the whole
     // preferences object would rebuild it on every toggle.
     final seedColor = Color(
-      ref.watch(prefrencesProvider.select((p) => p.accentColor)),
+      ref.watch(preferencesProvider.select((p) => p.accentColor)),
     );
-    final themeMode = ref.watch(prefrencesProvider.select((p) => p.themeMode));
-    final shape = ref.watch(prefrencesProvider.select((p) => p.buttonShape));
+    final themeMode = ref.watch(preferencesProvider.select((p) => p.themeMode));
+    final shape = ref.watch(preferencesProvider.select((p) => p.buttonShape));
 
     return MaterialApp(
       title: 'Calculator',

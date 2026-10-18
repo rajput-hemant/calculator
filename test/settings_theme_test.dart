@@ -38,21 +38,21 @@ void main() {
       tester.element(find.byType(SettingsScreen)),
     );
 
-    expect(container.read(prefrencesProvider).themeMode, ThemeMode.system);
+    expect(container.read(preferencesProvider).themeMode, ThemeMode.system);
 
     await tester.tap(find.text('Light'));
     await tester.pumpAndSettle();
-    expect(container.read(prefrencesProvider).themeMode, ThemeMode.light);
+    expect(container.read(preferencesProvider).themeMode, ThemeMode.light);
 
     await tester.tap(find.text('Dark'));
     await tester.pumpAndSettle();
-    expect(container.read(prefrencesProvider).themeMode, ThemeMode.dark);
+    expect(container.read(preferencesProvider).themeMode, ThemeMode.dark);
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getString('themeMode'), 'dark');
 
     await tester.tap(find.text('System'));
     await tester.pumpAndSettle();
-    expect(container.read(prefrencesProvider).themeMode, ThemeMode.system);
+    expect(container.read(preferencesProvider).themeMode, ThemeMode.system);
   });
 
   testWidgets('a removed accent preset is not selected and does not crash', (

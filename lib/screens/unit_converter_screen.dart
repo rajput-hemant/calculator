@@ -10,6 +10,7 @@ import '../theme/tokens.dart';
 import '../widgets/glass.dart';
 import '../widgets/grouped_list.dart';
 import '../widgets/readable_width.dart';
+import '../widgets/top_bar.dart';
 
 /// One Convert hub entry: what it is, its icon and where it opens.
 class _Category {
@@ -85,14 +86,14 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
       backgroundColor: p.grouped,
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
-      appBar: const GlassTopBar(),
+      appBar: const TopBar(),
       body: ReadableWidth(
         child: Stack(
           children: [
             ListView(
               padding: EdgeInsets.only(
                 top: Tokens.topBarInset(context),
-                bottom: Gaps.sm + Tokens.glassControl + Gaps.sm + safeBottom,
+                bottom: Gaps.sm + Tokens.control + Gaps.sm + safeBottom,
               ),
               children: [
                 const LargeTitle('Convert'),
@@ -126,7 +127,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
               bottom: barBottom + Gaps.sm,
               child: Glass(
                 child: SizedBox(
-                  height: Tokens.glassControl,
+                  height: Tokens.control,
                   child: TextField(
                     onChanged: (text) => setState(() => _query = text),
                     textAlign: TextAlign.center,

@@ -9,9 +9,9 @@ import '../theme/tokens.dart';
 import '../utils/text_editing.dart';
 import '../utils/utils.dart';
 import '../widgets/field_list_tile.dart';
-import '../widgets/glass.dart';
 import '../widgets/keypad.dart';
 import '../widgets/readable_width.dart';
+import '../widgets/top_bar.dart';
 
 /// Drops the ".0" that `Double.toString` leaves on whole numbers.
 String _plain(String text) =>
@@ -43,7 +43,7 @@ class _ConversionScreenState extends ConsumerState<ConversionScreen> {
 
   void convert() {
     final [firstFieldIndex, secondFieldIndex] = ref
-        .read(prefrencesProvider)
+        .read(preferencesProvider)
         .unitIndexes[widget.category]!;
 
     setState(() {
@@ -64,11 +64,11 @@ class _ConversionScreenState extends ConsumerState<ConversionScreen> {
 
   void changeSelectedIndex(int index) {
     final [firstFieldIndex, secondFieldIndex] = ref
-        .read(prefrencesProvider)
+        .read(preferencesProvider)
         .unitIndexes[widget.category]!;
 
     ref
-        .read(prefrencesProvider.notifier)
+        .read(preferencesProvider.notifier)
         .setUnitIndexes(
           widget.category,
           _isFirstLabelSelected
@@ -81,7 +81,7 @@ class _ConversionScreenState extends ConsumerState<ConversionScreen> {
 
   void swapUnits() {
     final [firstFieldIndex, secondFieldIndex] = ref
-        .read(prefrencesProvider)
+        .read(preferencesProvider)
         .unitIndexes[widget.category]!;
 
     final firstValue = _firstFieldController.text;
@@ -94,7 +94,7 @@ class _ConversionScreenState extends ConsumerState<ConversionScreen> {
       _isFirstLabelSelected = !_isFirstLabelSelected;
     });
 
-    ref.read(prefrencesProvider.notifier).setUnitIndexes(widget.category, [
+    ref.read(preferencesProvider.notifier).setUnitIndexes(widget.category, [
       secondFieldIndex,
       firstFieldIndex,
     ]);
@@ -123,11 +123,14 @@ class _ConversionScreenState extends ConsumerState<ConversionScreen> {
   Widget build(BuildContext context) {
     final p = Palette.of(context);
     final [firstFieldIndex, secondFieldIndex] = ref
-        .watch(prefrencesProvider)
+        .watch(preferencesProvider)
         .unitIndexes[widget.category]!;
 
     final bool sameUnit = firstFieldIndex == secondFieldIndex;
-    final String? rateLine = sameUnit || widget.category == Units.temperature
+    final String? rateLine =
+        sameUnit ||
+            widget.category == Units.temperature ||
+            widget.category == Units.fuel
         ? null
         : '1 ${_units[firstFieldIndex].id} = '
               '${_plain((_units[secondFieldIndex].rate! / _units[firstFieldIndex].rate!).toString())} '
@@ -136,9 +139,9 @@ class _ConversionScreenState extends ConsumerState<ConversionScreen> {
     return Scaffold(
       backgroundColor: p.bg,
       extendBodyBehindAppBar: true,
-      appBar: GlassTopBar(
+      appBar: TopBar(
         title: widget.category.label,
-        trailing: GlassAction(
+        trailing: TopBarAction(
           icon: AppIcons.swap,
           tooltip: 'Swap units',
           onPressed: swapUnits,

@@ -31,5 +31,6 @@ class AppShapes extends ThemeExtension<AppShapes> {
   AppShapes copyWith({ButtonShape? shape}) => AppShapes(shape ?? this.shape);
 
   @override
-  AppShapes lerp(covariant ThemeExtension<AppShapes>? other, double t) => this;
+  AppShapes lerp(covariant ThemeExtension<AppShapes>? other, double t) =>
+      other is AppShapes && t >= 0.5 ? other : this;
 }

@@ -14,7 +14,7 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     final container = ProviderContainer.test();
 
-    final preferences = container.read(prefrencesProvider);
+    final preferences = container.read(preferencesProvider);
 
     expect(preferences.themeMode, ThemeMode.system);
     expect(preferences.unitIndexes[Units.area], [8, 7]);
@@ -27,10 +27,10 @@ void main() {
     });
     final container = ProviderContainer.test();
 
-    container.read(prefrencesProvider);
+    container.read(preferencesProvider);
     await settle();
 
-    final preferences = container.read(prefrencesProvider);
+    final preferences = container.read(preferencesProvider);
     expect(preferences.themeMode, ThemeMode.dark);
     expect(preferences.unitIndexes[Units.area], [1, 2]);
     // Keys without a stored value keep their defaults.
@@ -47,10 +47,10 @@ void main() {
       });
       final container = ProviderContainer.test();
 
-      container.read(prefrencesProvider);
+      container.read(preferencesProvider);
       await settle();
 
-      expect(container.read(prefrencesProvider).themeMode, ThemeMode.system);
+      expect(container.read(preferencesProvider).themeMode, ThemeMode.system);
     },
   );
 
@@ -58,11 +58,11 @@ void main() {
     SharedPreferences.setMockInitialValues({'buttonShape': 'square'});
     final container = ProviderContainer.test();
 
-    container.read(prefrencesProvider);
+    container.read(preferencesProvider);
     await settle();
 
     expect(
-      container.read(prefrencesProvider).buttonShape,
+      container.read(preferencesProvider).buttonShape,
       ButtonShape.squircle,
     );
   });
@@ -71,13 +71,13 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     final container = ProviderContainer.test();
 
-    container.read(prefrencesProvider);
+    container.read(preferencesProvider);
     await settle();
 
-    container.read(prefrencesProvider.notifier).setThemeMode(ThemeMode.light);
+    container.read(preferencesProvider.notifier).setThemeMode(ThemeMode.light);
     await settle();
 
-    expect(container.read(prefrencesProvider).themeMode, ThemeMode.light);
+    expect(container.read(preferencesProvider).themeMode, ThemeMode.light);
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getString('themeMode'), 'light');
   });
@@ -86,16 +86,16 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     final container = ProviderContainer.test();
 
-    container.read(prefrencesProvider);
+    container.read(preferencesProvider);
     await settle();
 
-    container.read(prefrencesProvider.notifier).setUnitIndexes(Units.area, [
+    container.read(preferencesProvider.notifier).setUnitIndexes(Units.area, [
       3,
       4,
     ]);
     await settle();
 
-    expect(container.read(prefrencesProvider).unitIndexes[Units.area], [3, 4]);
+    expect(container.read(preferencesProvider).unitIndexes[Units.area], [3, 4]);
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getStringList(Units.area.toString()), ['3', '4']);
   });
@@ -106,20 +106,20 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     final container = ProviderContainer.test();
 
-    container.read(prefrencesProvider);
+    container.read(preferencesProvider);
     await settle();
 
     var notifications = 0;
-    container.listen(prefrencesProvider, (_, _) => notifications++);
+    container.listen(preferencesProvider, (_, _) => notifications++);
 
-    container.read(prefrencesProvider.notifier).setUnitIndexes(Units.currency, [
+    container.read(preferencesProvider.notifier).setUnitIndexes(Units.currency, [
       2,
       5,
     ]);
     await settle();
 
     expect(notifications, 1);
-    expect(container.read(prefrencesProvider).unitIndexes[Units.currency], [
+    expect(container.read(preferencesProvider).unitIndexes[Units.currency], [
       2,
       5,
     ]);
@@ -129,13 +129,13 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     final container = ProviderContainer.test();
 
-    container.read(prefrencesProvider);
+    container.read(preferencesProvider);
     await settle();
 
     var notifications = 0;
-    container.listen(prefrencesProvider, (_, _) => notifications++);
+    container.listen(preferencesProvider, (_, _) => notifications++);
 
-    container.read(prefrencesProvider.notifier).setThemeMode(ThemeMode.dark);
+    container.read(preferencesProvider.notifier).setThemeMode(ThemeMode.dark);
 
     expect(notifications, 1);
   });
@@ -170,7 +170,7 @@ class _ThemeProbe extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(prefrencesProvider).themeMode;
+    final themeMode = ref.watch(preferencesProvider).themeMode;
 
     return MaterialApp(
       themeMode: themeMode,
@@ -181,13 +181,13 @@ class _ThemeProbe extends ConsumerWidget {
           children: [
             TextButton(
               onPressed: () => ref
-                  .read(prefrencesProvider.notifier)
+                  .read(preferencesProvider.notifier)
                   .setThemeMode(ThemeMode.light),
               child: const Text('light'),
             ),
             TextButton(
               onPressed: () => ref
-                  .read(prefrencesProvider.notifier)
+                  .read(preferencesProvider.notifier)
                   .setThemeMode(ThemeMode.dark),
               child: const Text('dark'),
             ),

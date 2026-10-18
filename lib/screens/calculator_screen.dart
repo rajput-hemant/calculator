@@ -19,8 +19,6 @@ import '../widgets/main_appbar.dart';
 const double _minDisplayHeight = 160;
 
 final RegExp _plainNumber = RegExp(r'^[\d.]+$');
-final RegExp _logCall = RegExp(r'log\s*\(\s*([^,]+)\s*\)?');
-final RegExp _trigCall = RegExp(r'\b(sin|cos|tan)\(([^()]*)\)');
 
 class CalculatorScreen extends ConsumerStatefulWidget {
   const CalculatorScreen({super.key});
@@ -89,7 +87,12 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
 
   void _edited() {
     setState(() => _justEvaluated = false);
-    parseExpressionOnChange(_expressionController.text);
+    _preview(_expressionController.text);
+  }
+
+  void _toggleDeg() {
+    setState(() => _degMode = !_degMode);
+    if (!_justEvaluated) _preview(_expressionController.text);
   }
 
   void _equals() {
@@ -117,58 +120,11 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     });
   }
 
-  void parseExpressionOnChange(String expression) {
-    if (expression.isEmpty) {
-      setState(() => _output = "");
-      return;
-    }
-
-    // Close open parentheses so mid-typing previews see complete calls.
-    var open = 0;
-    for (var code in expression.runes) {
-      final char = String.fromCharCode(code);
-      if (char == "(") {
-        open++;
-      } else if (char == ")") {
-        open--;
-      }
-    }
-    final balanced = expression + ")" * (open < 0 ? 0 : open);
-
-    String transformed = balanced;
-    transformed = transformed.replaceAll("sin⁻¹", "arcsin");
-    transformed = transformed.replaceAll("cos⁻¹", "arccos");
-    transformed = transformed.replaceAll("tan⁻¹", "arctan");
-    transformed = transformed.replaceAll("²", "^2");
-    transformed = transformed.replaceAll("π", "*3.141592653589793");
-    transformed = transformed.replaceAll("x", "*");
-    transformed = transformed.replaceAll("±", "-");
-    transformed = transformed.replaceAll("√", "sqrt(");
-    transformed = transformed.replaceAllMapped(
-      _logCall,
-      (match) => 'log(${match.group(1)}, 10)',
-    );
-
-    // Angles are typed in degrees and converted to radians for the parser.
-    if (_degMode) {
-      transformed = transformed.replaceAllMapped(
-        _trigCall,
-        (match) => '${match.group(1)}(${match.group(2)}*0.017453292519943295)',
-      );
-    }
-
-    String result = MathParser.parseExpression(transformed);
-
-    if (result == "Expression Error") {
-      return;
-    }
-
-    if (_plainNumber.hasMatch(expression)) {
-      return;
-    }
-
-    result = formatResult(result);
-    setState(() => _output = result);
+  void _preview(String expression) {
+    final result = _plainNumber.hasMatch(expression)
+        ? null
+        : MathParser.evaluate(expression, degrees: _degMode);
+    setState(() => _output = result == null ? '' : formatResult(result));
   }
 
   @override
@@ -216,7 +172,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                 showScientific: _showScientific,
                 degMode: _degMode,
                 justEvaluated: () => _justEvaluated,
-                onDegToggle: () => setState(() => _degMode = !_degMode),
+                onDegToggle: _toggleDeg,
                 onChanged: _edited,
                 onPressed: _equals,
                 onClear: () => setState(() {

@@ -35,18 +35,12 @@ abstract final class AppIcons {
     0xe89e,
     fontFamily: _font,
   ); // open_in_new
-  static const IconData settings = IconData(0xe8b8, fontFamily: _font);
-  static const IconData info = IconData(0xe88e, fontFamily: _font);
   static const IconData code = IconData(0xe86f, fontFamily: _font);
   static const IconData bug = IconData(0xe868, fontFamily: _font); // bug_report
   static const IconData licenses = IconData(
     0xe873,
     fontFamily: _font,
   ); // description
-  static const IconData haptics = IconData(
-    0xf2cb,
-    fontFamily: _font,
-  ); // vibration
 
   static const IconData currencyExchange = IconData(0xeb70, fontFamily: _font);
   static const IconData thermostat = IconData(0xf076, fontFamily: _font);

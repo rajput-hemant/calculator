@@ -8,7 +8,9 @@ String formatResult(String result) {
   // throws) or < 1e-6 (where fixed decimals would lose information), so those
   // results are kept exactly as produced.
   if (value == null || !value.isFinite || result.contains("e")) {
-    return result.endsWith(".0") ? result.substring(0, result.length - 2) : result;
+    return result.endsWith(".0")
+        ? result.substring(0, result.length - 2)
+        : result;
   }
 
   var text = value.toStringAsPrecision(15);
