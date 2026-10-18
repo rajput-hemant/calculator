@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Calculator redesign - directions</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--foreground,#18181B);background:var(--background,#F4F4F2);padding:0 0 64px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.eyebrow{font:600 12px Inter;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-foreground,#71717A)}
+h1{font:700 34px/1.15 Inter;letter-spacing:-.02em;margin:6px 0 10px}
+h2{font:700 28px/1.2 Inter;letter-spacing:-.02em;margin:4px 0 6px}
+h3{font:600 14px Inter;margin:28px 0 12px;color:var(--muted-foreground,#52525B)}
+p{max-width:760px;color:var(--muted-foreground,#52525B);font-size:15px}
+a{color:var(--accent,#1F6FD9)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:16px;margin-top:20px}
+.card{border:1px solid var(--border,#DADAD5);border-radius:var(--radius,14px);padding:18px 20px;background:var(--card,#fff);min-width:0}
+.card h4{font:600 15px Inter;margin-bottom:6px}
+.card ul{padding-left:18px;font-size:14px;color:var(--muted-foreground,#52525B)}
+.card li{margin:3px 0}
+.tag{display:inline-block;font:600 11px Inter;padding:2px 8px;border-radius:999px;margin-right:6px}
+.tag.no{background:#FDE8E4;color:#9F2A16}.tag.part{background:#FFF3D6;color:#7A5200}
+.reco{border:2px solid var(--accent,#1F6FD9)}
+.dir{margin-top:56px;padding-top:32px;border-top:1px solid var(--border,#DADAD5)}
+.dir-head{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.dir-head>div:first-child{min-width:0;flex:1}
+.links{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.links a{font:600 13px Inter;text-decoration:none;border:1px solid var(--border,#DADAD5);border-radius:999px;padding:6px 12px;color:var(--foreground,#18181B)}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.meta span{font:500 12px Inter;border:1px solid var(--border,#DADAD5);border-radius:999px;padding:4px 10px}
+.sw{display:flex;gap:6px;margin-top:12px}.sw i{width:22px;height:22px;border-radius:6px;box-shadow:0 0 0 1px rgba(0,0,0,.1)}
+.hero{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;margin-top:20px}
+.hero img{width:100%;height:auto;display:block}
+figure figcaption{font:500 12px Inter;color:var(--muted-foreground,#71717A);text-align:center;margin-top:2px}
+.strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.strip img{width:100%;height:auto;display:block}
+.audit{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:14px}
+.audit img{width:100%;border-radius:10px;display:block}
+</style></head><body><div class="wrap">
+<header style="padding-top:28px">
+  <div class="eyebrow">Calculator redesign - phase 1, design only</div>
+  <h1>Design A - Paper, Android and iOS</h1>
+  <p>Chosen direction. Implementation follows the iOS frames on both platforms; the Android page is kept as an earlier exploration. Open a direction's pages for full-size frames. Sources: <a href="../AUDIT.md">AUDIT.md</a>, <a href="../PLATFORM-RESEARCH.md">PLATFORM-RESEARCH.md</a>.</p>
+</header>
+
+<div class="grid2">
+  <div class="card"><h4>Audit - top issues in the current build</h4><ul>
+    <li>Display hierarchy inverted: 56 px bold expression in accent over a smaller answer in a second accent.</li>
+    <li>No type system: default Roboto, proportional digits, ad-hoc sizes; About references an unbundled font.</li>
+    <li>Settings look like a debug panel: a tinted slab, stacked controls, a 17-color swatch wall.</li>
+    <li>Muddy light-mode keys, and a red AC block that outweighs equals.</li>
+    <li>Two different converter layouts, a hard-coded blue logo, hyphen used as minus.</li></ul>
+    <div class="audit"><img src="../audit/01-calc-dark.png" alt=""><img src="../audit/12-calc-light.png" alt=""><img src="../audit/08-settings-dark.png" alt=""><img src="../audit/05-conversion-dark.png" alt=""></div></div>
+  <div class="card"><h4>Platform support in Flutter (checked 18 Oct 2026)</h4><ul>
+    <li><span class="tag part">partial</span><b>Material 3 Expressive</b>: not in the SDK. Official work started in <code>material_ui</code> (the M3E IconButton has landed, other components are pending). The mocks build M3E on stock M3 theming plus custom widgets.</li>
+    <li><span class="tag no">not yet</span><b>Liquid Glass</b>: not in Cupertino. <code>cupertino_ui</code> glass PRs opened on 17 Oct and are unmerged. The mocks use a Cupertino base with blur, tint and rim glass (Flutter BackdropFilter) on floating chrome only.</li>
+    <li>On iOS: SF Pro for chrome and the brand numeral font for keys. CupertinoIcons in the app.</li></ul></div>
+</div>
+
+
+<section class="dir" id="dir-a">
+  <div class="dir-head">
+    <div><div class="eyebrow">Direction A - chosen</div><h2>Paper</h2><p>Refined minimal. Neutral paper and graphite surfaces, one accent for the answer and operators only, thin Inter numerals, circular keys, hairline grouped lists.</p>
+      <div class="meta"><span>Inter 300 / 400 / 500 / 600 (GoogleFonts.inter), tnum + cv11</span><span>iOS: Clear glass on white and black, iOS semantic colors, SF Pro chrome.</span></div>
+      <div class="sw"><i style="background:#FAFAF8"></i><i style="background:#F0F0EC"></i><i style="background:#E3E3DE"></i><i style="background:#111113"></i><i style="background:#1F6FD9"></i><i style="background:#D2402C"></i></div></div>
+    <div class="links"><a href="direction-a/index.html">Android page</a><a href="direction-a/ios.html">iOS page</a><a href="direction-a/tokens.json">tokens.json</a></div>
+  </div>
+  <div class="hero">
+    <figure><img src="shots/a-android-01.png" alt=""><figcaption>Android - Material 3 Expressive</figcaption></figure>
+    <figure><img src="shots/a-ios-01.png" alt=""><figcaption>iOS - Liquid Glass approximation</figcaption></figure>
+  </div>
+  <h3>All screens - Android (light | dark)</h3><div class="strip"><figure><img src="shots/a-android-01.png" alt="Calculator"><figcaption>1. Calculator</figcaption></figure><figure><img src="shots/a-android-02.png" alt="Scientific"><figcaption>2. Scientific</figcaption></figure><figure><img src="shots/a-android-03.png" alt="History"><figcaption>3. History</figcaption></figure><figure><img src="shots/a-android-04.png" alt="Categories"><figcaption>4. Categories</figcaption></figure><figure><img src="shots/a-android-05.png" alt="Length"><figcaption>5. Length</figcaption></figure><figure><img src="shots/a-android-06.png" alt="Unit sheet"><figcaption>6. Unit sheet</figcaption></figure><figure><img src="shots/a-android-07.png" alt="Settings"><figcaption>7. Settings</figcaption></figure><figure><img src="shots/a-android-08.png" alt="About"><figcaption>8. About</figcaption></figure><figure><img src="shots/a-android-09.png" alt="Currency"><figcaption>9. Currency</figcaption></figure></div>
+  <h3>All screens - iOS (light | dark)</h3><div class="strip"><figure><img src="shots/a-ios-01.png" alt="Calculator"><figcaption>1. Calculator</figcaption></figure><figure><img src="shots/a-ios-02.png" alt="Scientific"><figcaption>2. Scientific</figcaption></figure><figure><img src="shots/a-ios-03.png" alt="History"><figcaption>3. History</figcaption></figure><figure><img src="shots/a-ios-04.png" alt="Categories"><figcaption>4. Categories</figcaption></figure><figure><img src="shots/a-ios-05.png" alt="Length"><figcaption>5. Length</figcaption></figure><figure><img src="shots/a-ios-06.png" alt="Unit sheet"><figcaption>6. Unit sheet</figcaption></figure><figure><img src="shots/a-ios-07.png" alt="Settings"><figcaption>7. Settings</figcaption></figure><figure><img src="shots/a-ios-08.png" alt="About"><figcaption>8. About</figcaption></figure><figure><img src="shots/a-ios-09.png" alt="Currency"><figcaption>9. Currency</figcaption></figure></div>
+</section>
+</div></body></html>

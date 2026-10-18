@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App icon preview</title>
+<style>
+  :root{ --bg:#F5F7FA; --text:#171C24; --sub:#404753; --card:#fff; --primary:#005EB2; --dark:#171B20; --tiled:#2D3237; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;padding:48px 24px;}
+  .wrap{max-width:1100px;margin:0 auto;}
+  header{margin-bottom:48px;}
+  h1{font-size:36px;font-weight:700;letter-spacing:-.03em;margin:0 0 10px;}
+  .sub{font-size:15px;color:var(--sub);max-width:640px;}
+  .badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#E4EBF5;color:#005EB2;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-top:16px;}
+  .section{margin:48px 0;}
+  .section h2{font-size:18px;font-weight:600;margin:0 0 20px;padding-bottom:10px;border-bottom:1px solid #DCE2EB;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;}
+  .card{background:var(--card);border-radius:20px;padding:24px;box-shadow:0 1px 3px rgba(16,24,40,.06),0 8px 24px -12px rgba(16,24,40,.1);}
+  .card h3{margin:0 0 12px;font-size:14px;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;}
+  .swatch{display:flex;align-items:center;gap:12px;margin-top:12px;}
+  .swatch .dot{width:36px;height:36px;border-radius:10px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);}
+  .swatch span{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--sub);}
+  .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:12px;}
+  .row img{border-radius:14px;border:1px solid #E6E9EF;box-shadow:0 2px 8px rgba(16,24,40,.06);}
+  .label{font-size:11px;color:var(--sub);margin-top:6px;}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid #DCE2EB;font-size:12px;color:var(--sub);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Calculator app icon</h1>
+    <p class="sub">Modern craft from the existing brand arrangement: minus and plus keys left, one tall equals key right. Three variants rendered for review.</p>
+    <span class="badge">Material 3 + theme seed #207CDF</span>
+  </header>
+
+  <section class="section">
+    <h2>Master SVG</h2>
+    <div class="card">
+      <h3>Light (default)</h3>
+      <p>The active design. Deep neutral left tiles (#2D3237), primary blue equals tile (#005EB2), white glyphs, two-tone tile depth with soft inset shadow, 14% corner radius.</p>
+      <div class="swatch">
+        <div class="dot" style="background:#005EB2;"></div>
+        <div class="dot" style="background:#2D3237;"></div>
+        <span>#005EB2 primary / #2D3237 neutral / #FFFFFF glyph</span>
+      </div>
+      <div class="row">
+        <img src="../proof/mark-128.png" alt="light" width="96" height="96">
+        <img src="../proof/mark-256.png" alt="light" width="96" height="96">
+        <img src="../proof/mark-512.png" alt="light" width="96" height="96">
+      </div>
+      <div class="label">Light at 128 / 256 / 512 px</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Variants</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Dark</h3>
+        <p>Lifted charcoal left tiles (#6B7280, 3.36:1 on #1C2125), light primary equals (#A7C8FF), white glyphs for legibility.</p>
+        <div class="swatch">
+          <div class="dot" style="background:#A7C8FF;"></div>
+          <div class="dot" style="background:#6B7280;"></div>
+          <span>#A7C8FF / #6B7280 / #FFFFFF</span>
+        </div>
+        <div class="row"><img src="../proof/dark-128.png" alt="dark" width="80" height="80"><img src="../proof/dark-256.png" alt="dark" width="80" height="80"></div>
+      </div>
+      <div class="card">
+        <h3>Tinted (iOS 18+)</h3>
+        <p>Single-colour grayscale + alpha. All tiles and glyphs in grayscale with alpha so the OS can recolour. No solid colour left.</p>
+        <div class="swatch">
+          <div class="dot" style="background:#A0A2A8;opacity:.85;"></div>
+          <span>#A0A0A0 grayscale base / #FFFFFF alpha glyphs</span>
+        </div>
+        <div class="row"><img src="../proof/mark-128.png" alt="tinted" width="80" height="80"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Android adaptive</h2>
+    <div class="card">
+      <p>Foreground art is within the 66% safe zone. Background colour resource at <code>values/ic_launcher_background.xml</code> (#005EB2). Monochrome layer included for Android 13+ themed icons. Legacy mipmap PNGs regenerated at mdpi (48) through xxxhdpi (192).</p>
+      <div class="swatch">
+        <div class="dot" style="background:#005EB2;"></div>
+        <span>#005EB2 adaptive background / #2D3237 left tiles / #005EB2 right tile / #FFFFFF glyph</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>iOS assets</h2>
+    <div class="card">
+      <p>Contents.json kept valid (light images only). Dark (+-dark) and tinted (+-tinted) PNG variants exist in the appiconset folder. The exact iOS 18 appearance keys schema for dark/tinted was not confirmed, so they are not wired in Contents.json - add them when the schema is verified.</p>
+      <div class="swatch">
+        <div class="dot" style="background:#005EB2;"></div>
+        <div class="dot" style="background:#A7C8FF;"></div>
+        <span>Light / Dark / Tinted PNGs present; Contents.json light-only pending schema confirmation</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Proof renders</h2>
+    <p class="sub">All proof PNG files in <code>design/app-icon/proof/</code>: mark at 48/64/96/128/256/512; dark at same sizes; light/dark/tinted tiles; Android adaptive under circle/squircle/rounded-rect masks; monochrome-on-wallpaper pair; home-screen strip with neighbouring tiles.</p>
+  </section>
+
+  <footer>
+    Source: <code>design/app-icon/app-icon-master.svg</code> &middot; Variants: light, dark, tinted &middot; Regenerate: open master in Chrome and screenshot at target size, or use <code>sips -z H W master.svg output.png</code>.
+  </footer>
+</div>
+</body>
+</html>
