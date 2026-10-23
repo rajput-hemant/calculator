@@ -44,4 +44,18 @@ void main() {
   test('division by zero is not a finite result', () {
     expect(MathParser.evaluate('1/0', degrees: true), isNull);
   });
+
+  test('factorial', () {
+    expect(double.parse(MathParser.evaluate('5!', degrees: true)!), 120);
+    expect(double.parse(MathParser.evaluate('(2+1)!+1', degrees: true)!), 7);
+  });
+
+  test('percent of a base and as a plain fraction', () {
+    double v(String e) => double.parse(MathParser.evaluate(e, degrees: true)!);
+    expect(v('1000+10%'), closeTo(1100, 1e-9));
+    expect(v('1000-10%'), closeTo(900, 1e-9));
+    expect(v('1000x10%'), closeTo(100, 1e-9));
+    expect(v('1000/10%'), closeTo(10000, 1e-9));
+    expect(v('2+3x4+50%'), closeTo(21, 1e-9));
+  });
 }

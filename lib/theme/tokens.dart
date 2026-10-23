@@ -6,6 +6,9 @@ abstract final class Tokens {
   /// Brand seed. Every colour in the app is derived from this, never picked
   /// by hand. Change it here and the whole app follows.
   static const int seedValue = 0xFF207CDF;
+
+  /// Accent preference meaning "follow the system (Material You) colour".
+  static const int systemAccent = 0;
   static const Color seed = Color(seedValue);
 
   /// Touch targets are never smaller than this, however small the drawing is.

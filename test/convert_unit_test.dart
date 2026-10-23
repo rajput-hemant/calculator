@@ -62,7 +62,6 @@ void main() {
 
     convertUnit(from, to, 5, 0, Length.lengthList, true);
 
-    // The untouched field survives, and so does what the user typed.
     expect(to.text, '400');
     expect(from.text, fromValue);
   });

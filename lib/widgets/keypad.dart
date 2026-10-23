@@ -46,7 +46,7 @@ class Keypad extends ConsumerStatefulWidget {
   final bool Function()? justEvaluated;
   final VoidCallback? onDegToggle;
 
-  /// AC was pressed; the expression is already cleared.
+  /// C (clear) was pressed; the expression is already cleared.
   final VoidCallback? onClear;
 
   @override
@@ -104,6 +104,14 @@ class _KeypadState extends ConsumerState<Keypad> {
       selection: TextSelection.collapsed(offset: deleteFrom),
     );
     widget.onChanged();
+  }
+
+  /// Closes an open parenthesis once an operand has been typed, else opens one.
+  String _parenAction() {
+    final text = widget.controller.text;
+    final open = '('.allMatches(text).length - ')'.allMatches(text).length;
+    final afterOperand = RegExp(r'[\d.)!%πe²]$').hasMatch(text);
+    return open > 0 && afterOperand ? ')' : '(';
   }
 
   void _smartDot() {
@@ -185,9 +193,20 @@ class _KeypadState extends ConsumerState<Keypad> {
       () => insertText(d),
     );
 
-    Widget symbol(String label, String spoken, VoidCallback onTap) => cell(
+    Widget symbol(
+      String label,
+      String spoken,
+      VoidCallback onTap, {
+      Color? textColor,
+    }) => cell(
       spoken,
-      Text(label, style: numeral.copyWith(color: p.label)),
+      Text(
+        label,
+        style: numeral.copyWith(
+          color: textColor ?? p.label,
+          fontSize: numeral.fontSize! * 0.8,
+        ),
+      ),
       onTap,
       color: p.keyFn,
     );
@@ -202,22 +221,14 @@ class _KeypadState extends ConsumerState<Keypad> {
 
     Widget ac() => cell(
       'Clear',
-      Text(
-        'AC',
-        // Letters read larger than digits at the same size (mockup: 24 of 32).
-        style: numeral.copyWith(
-          color: p.danger,
-          fontWeight: FontWeight.w500,
-          fontSize: numeral.fontSize! * 0.75,
-        ),
-      ),
+      Text('C', style: numeral.copyWith(color: p.danger)),
       _clear,
       color: p.keyFn,
     );
 
     Widget backspace() => cell(
       'Delete',
-      Icon(AppIcons.backspace, size: 26, color: p.label),
+      Icon(AppIcons.backspace, size: numeral.fontSize, color: p.danger),
       _backspace,
       color: p.keyFn,
     );
@@ -234,7 +245,7 @@ class _KeypadState extends ConsumerState<Keypad> {
       spoken,
       FittedBox(
         fit: BoxFit.scaleDown,
-        child: Text(label, style: stripLabel.copyWith(color: p.label)),
+        child: Text(label, style: stripLabel.copyWith(color: p.accent)),
       ),
       () => insertText(text),
       color: p.fill,
@@ -259,10 +270,20 @@ class _KeypadState extends ConsumerState<Keypad> {
     final keypad = [
       [
         ac(),
-        symbol('( )', 'Parentheses', () => insertText('(')),
+        backspace(),
         scientific
-            ? backspace()
-            : symbol('%', 'Percent', () => insertText('%')),
+            ? symbol(
+                'x!',
+                'Factorial',
+                () => insertText('!'),
+                textColor: p.accent,
+              )
+            : symbol(
+                '%',
+                'Percent',
+                () => insertText('%'),
+                textColor: p.accent,
+              ),
         op('÷', 'Divide', '/', bigOpGlyph),
       ],
       [
@@ -274,7 +295,7 @@ class _KeypadState extends ConsumerState<Keypad> {
       [digit('4'), digit('5'), digit('6'), op('−', 'Minus', '-', opGlyph)],
       [digit('1'), digit('2'), digit('3'), op('+', 'Plus', '+', opGlyph)],
       [
-        symbol('±', 'Plus or minus', () => insertText('±')),
+        symbol('()', 'Parentheses', () => insertText(_parenAction())),
         digit('0'),
         cell('Point', Text('.', style: numeral.copyWith(color: p.label)), dot),
         widget.isCalculator ? equals() : backspace(),

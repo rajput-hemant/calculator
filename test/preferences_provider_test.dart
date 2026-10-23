@@ -33,7 +33,6 @@ void main() {
     final preferences = container.read(preferencesProvider);
     expect(preferences.themeMode, ThemeMode.dark);
     expect(preferences.unitIndexes[Units.area], [1, 2]);
-    // Keys without a stored value keep their defaults.
     expect(preferences.unitIndexes[Units.length], [5, 0]);
   });
 
@@ -112,10 +111,10 @@ void main() {
     var notifications = 0;
     container.listen(preferencesProvider, (_, _) => notifications++);
 
-    container.read(preferencesProvider.notifier).setUnitIndexes(Units.currency, [
-      2,
-      5,
-    ]);
+    container.read(preferencesProvider.notifier).setUnitIndexes(
+      Units.currency,
+      [2, 5],
+    );
     await settle();
 
     expect(notifications, 1);
@@ -150,7 +149,6 @@ void main() {
 
     MaterialApp app() => tester.widget<MaterialApp>(find.byType(MaterialApp));
 
-    // The default is to follow the system, never a baked-in dark or light.
     expect(app().themeMode, ThemeMode.system);
 
     await tester.tap(find.text('light'));

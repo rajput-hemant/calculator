@@ -113,7 +113,6 @@ void main() {
       );
       final data = merged['data'] as Map<String, double>;
 
-      // EUR is published by both; the primary value must win.
       expect(data['EUR'], 0.89057);
       expect(data['EUR'], isNot((fallback['rates'] as Map)['EUR']));
 
@@ -175,7 +174,6 @@ void main() {
       Currency.currenciesList.singleWhere((c) => c.id == 'VED').symbol,
       isNull,
     );
-    // Codes v2 covers pick up its v2 symbols.
     final mad = Currency.currenciesList.singleWhere((c) => c.id == 'MAD');
     expect(mad.symbol, 'د.م.');
     expect(mad.name, 'Moroccan Dirham');
@@ -212,7 +210,6 @@ void main() {
       client: client,
     );
 
-    // Cache was just written and is inside the TTL, so this reads it back.
     final fromCache = await MoneyConverter.fetchRates();
 
     expect(fromCache, equals(fromNetwork));
@@ -287,7 +284,7 @@ void main() {
       SharedPreferences.setMockInitialValues({
         'rates': jsonEncode(primaryOnly),
         'lastUpdated': DateTime.now().millisecondsSinceEpoch,
-        'Units.currency': ['31', '144'], // USD -> VED
+        'Units.currency': ['31', '144'],
       });
 
       await tester.pumpWidget(
@@ -305,8 +302,6 @@ void main() {
       // chip is a longer string, so match on the badge.
       expect(find.text('🇻🇪'), findsOneWidget);
 
-      // Simulate the picker returning VED for the second field: USD -> VED has
-      // no rate in a primary-only cache, so the conversion must be skipped.
       tester
           .widget<FieldListTile>(find.byType(FieldListTile).last)
           .changeSelectedIndex(26);

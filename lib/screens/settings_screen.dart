@@ -57,7 +57,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ],
             ),
-            const SectionHeader('Keys'),
+            const SectionHeader('Touch'),
             InsetGroup(
               children: [
                 GroupCell(
@@ -136,6 +136,7 @@ class _AccentSwatches extends StatelessWidget {
     ('Green', 0xFF43A047),
     ('Teal', 0xFF00897B),
     ('Slate', 0xFF546E7A),
+    ('System', Tokens.systemAccent),
   ];
 
   @override
@@ -176,9 +177,18 @@ class _AccentSwatches extends StatelessWidget {
                           width: _swatch,
                           height: _swatch,
                           decoration: ShapeDecoration(
-                            color: Color(color),
+                            color: color == Tokens.systemAccent
+                                ? p.label3
+                                : Color(color),
                             shape: shapes.border(_swatch / 2),
                           ),
+                          child: color == Tokens.systemAccent
+                              ? Icon(
+                                  Icons.auto_awesome,
+                                  size: 16,
+                                  color: p.label,
+                                )
+                              : null,
                         ),
                       ],
                     ),

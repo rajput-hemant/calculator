@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../routes/routes.dart';
+import '../screens/history_screen.dart';
 import '../theme/app_icons.dart';
 import '../theme/palette.dart';
 import '../theme/tokens.dart';
@@ -28,7 +29,19 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: TopBarAction(
         icon: AppIcons.history,
         tooltip: 'History',
-        onPressed: () => Navigator.pushNamed(context, Routes.historyScreen),
+        onPressed: () => Navigator.push(
+          context,
+          PageRouteBuilder<void>(
+            settings: const RouteSettings(name: Routes.historyScreen),
+            pageBuilder: (_, _, _) => const HistoryScreen(),
+            transitionsBuilder: (_, animation, _, child) => SlideTransition(
+              position: Tween(begin: const Offset(-1, 0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeOutCubic))
+                  .animate(animation),
+              child: child,
+            ),
+          ),
+        ),
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,

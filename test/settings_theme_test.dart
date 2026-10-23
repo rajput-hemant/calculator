@@ -75,7 +75,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(tester.takeException(), isNull);
-    // Only the Theme (System) and Shape (Round) segments are selected.
     final selected = find.byWidgetPredicate(
       (w) =>
           w is Semantics &&

@@ -10,7 +10,6 @@ class Area implements Unit {
   @override
   String? get symbol => null;
 
-  // Base Unit Square metre
   static const areaList = [
     Area(id: 'ac', name: 'Acre', rate: 0.0002471),
     Area(id: 'ar', name: 'Are', rate: 0.01),

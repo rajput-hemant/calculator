@@ -1,1 +1,1 @@
-simple Material Calculator and Unit Converter
+Simple, elegant calculator with unit and currency converter

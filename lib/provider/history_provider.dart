@@ -41,9 +41,7 @@ class HistoryNotifier extends Notifier<List<HistoryEntry>> {
               timestamp: DateTime.parse(tsStr),
             ),
           );
-        } catch (_) {
-          // Ignore malformed entries
-        }
+        } catch (_) {}
       }
       state = loaded;
     } else {

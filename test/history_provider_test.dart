@@ -13,11 +13,13 @@ void main() {
 
       await notifier.clearAll();
       for (int i = 0; i < 5; i++) {
-        await notifier.add(HistoryEntry(
-          expression: '$i+1',
-          result: '${i + 1}',
-          timestamp: DateTime.now(),
-        ));
+        await notifier.add(
+          HistoryEntry(
+            expression: '$i+1',
+            result: '${i + 1}',
+            timestamp: DateTime.now(),
+          ),
+        );
       }
 
       final entries = container.read(historyProvider);
@@ -30,11 +32,9 @@ void main() {
       final container = ProviderContainer();
       final notifier = container.read(historyProvider.notifier);
 
-      await notifier.add(HistoryEntry(
-        expression: '2+2',
-        result: '4',
-        timestamp: DateTime.now(),
-      ));
+      await notifier.add(
+        HistoryEntry(expression: '2+2', result: '4', timestamp: DateTime.now()),
+      );
 
       await notifier.clearAll();
       expect(container.read(historyProvider), isEmpty);
@@ -44,13 +44,10 @@ void main() {
       SharedPreferences.setMockInitialValues({});
       final container1 = ProviderContainer();
       final notifier1 = container1.read(historyProvider.notifier);
-      await notifier1.add(HistoryEntry(
-        expression: '1+1',
-        result: '2',
-        timestamp: DateTime.now(),
-      ));
+      await notifier1.add(
+        HistoryEntry(expression: '1+1', result: '2', timestamp: DateTime.now()),
+      );
 
-      // Recreate provider container (simulating app restart)
       final container2 = ProviderContainer();
       final notifier2 = container2.read(historyProvider.notifier);
       await notifier2.load();

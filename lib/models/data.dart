@@ -10,7 +10,6 @@ class Data implements Unit {
   @override
   String? get symbol => null;
 
-  // Base Unit Megabit
   static const dataList = [
     Data(id: 'b', name: 'Bit', rate: 1048576),
     Data(id: 'B', name: 'Byte', rate: 131072),

@@ -6,9 +6,9 @@
 
 # Calculator
 
-**v0.2.5**
+**v0.3.2**
 
-### A Simple but elegant Calculator app made with Flutter using Google's Material Design with Currency (Exchange Rate) and Unit Converter.
+### A simple but elegant Calculator app made with Flutter and its own Paper design system, with Currency (Exchange Rate) and Unit Converter.
 
 ## ![][android] Download APK
 
@@ -29,10 +29,9 @@
 
 <details><summary> Click here to expand </summary>
 
-| ![][1] | ![][2] | ![][3] |
+| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.jpg" width="250"> | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.jpg" width="250"> | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.jpg" width="250"> |
 | :----: | :----: | :----: |
-| ![][4] | ![][5] | ![][6] |
-| ![][7] | ![][8] | ![][9] |
+| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.jpg" width="250"> | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.jpg" width="250"> | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.jpg" width="250"> |
 
 </details>
 
@@ -69,28 +68,19 @@ This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) 
 
 <!----------------------------------{ Screenshots }--------------------------------->
 
-[1]: https://graph.org/file/9b81e5cd961e6b41d7e1e.jpg
-[2]: https://graph.org/file/9b0b318ec9f4f281ceac9.jpg
-[3]: https://graph.org/file/4e23fead48c34a1534e61.jpg
-[4]: https://graph.org/file/a67873cc5044cbef9d21f.jpg
-[5]: https://graph.org/file/e675d889a9ee13433ab36.jpg
-[6]: https://graph.org/file/9c68ca2b2abd03e972921.jpg
-[7]: https://graph.org/file/d021ac5969a9a64ab8185.jpg
-[8]: https://graph.org/file/e5d8cccebd8e69603c7b1.jpg
-[9]: https://graph.org/file/98abd8747f8920d1ce0ef.jpg
 [android]: https://telegra.ph/file/f2f70a74d2d92c3c7f688.png
 
 <!------------------------------------{ apk }----------------------------------->
 
-[universal-release]: https://github.com/rajput-hemant/calculator/releases/download/v0.2.5/Calculator-v0.2.5-universal-release.apk
-[arm64]: https://github.com/rajput-hemant/calculator/releases/download/v0.2.5/Calculator-v0.2.5-arm64-v8a-release.apk
-[armabi]: https://github.com/rajput-hemant/calculator/releases/download/v0.2.5/Calculator-v0.2.5-armeabi-v7a-release.apk
-[x86]: https://github.com/rajput-hemant/calculator/releases/download/v0.2.5/Calculator-v0.2.5-x86_64-release.apk
+[universal-release]: https://github.com/rajput-hemant/calculator/releases/download/v0.3.2/Calculator-v0.3.2-universal-release.apk
+[arm64]: https://github.com/rajput-hemant/calculator/releases/download/v0.3.2/Calculator-v0.3.2-arm64-v8a-release.apk
+[armabi]: https://github.com/rajput-hemant/calculator/releases/download/v0.3.2/Calculator-v0.3.2-armeabi-v7a-release.apk
+[x86]: https://github.com/rajput-hemant/calculator/releases/download/v0.3.2/Calculator-v0.3.2-x86_64-release.apk
 
 <!--------------------------------{ source code }------------------------------->
 
-[sc-zip]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.2.5.zip
-[sc-tar.gz]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.2.5.tar.gz
+[sc-zip]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.3.2.zip
+[sc-tar.gz]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.3.2.tar.gz
 
 <!----------------------------------{ Labels }--------------------------------->
 

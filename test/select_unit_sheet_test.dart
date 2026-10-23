@@ -40,22 +40,18 @@ void main() {
       int? picked;
       await openSheet(tester, onPicked: (i) => picked = i);
 
-      // Floating sheet at about 70% of the screen, not the whole one.
       expect(find.byType(SelectUnitSheet), findsOneWidget);
       final sheetHeight = tester.getSize(find.byType(SelectUnitSheet)).height;
       expect(sheetHeight, 600 * 0.7);
       expect(find.byTooltip('Close'), findsOneWidget);
 
-      // Display is name-sorted, so the alphabetically first row leads.
       final firstRow = tester.getTopLeft(find.textContaining('Afghan Afghani'));
       final secondRow = tester.getTopLeft(find.textContaining('Albanian Lek'));
       expect(firstRow.dy, lessThan(secondRow.dy));
 
-      // Flag sits to the left of the name in the row.
       final flag = tester.getTopLeft(find.text('🇦🇫'));
       expect(flag.dx, lessThan(firstRow.dx));
 
-      // Tapping the sorted row still resolves to its true index in the list.
       await tester.tap(find.textContaining('Afghan Afghani'));
       await tester.pumpAndSettle();
 
@@ -69,7 +65,6 @@ void main() {
     int? picked;
     await openSheet(tester, onPicked: (i) => picked = i);
 
-    // XOF appears only in the id; the name is West African CFA Franc.
     final searchField = find.descendant(
       of: find.byType(SearchField),
       matching: find.byType(EditableText),

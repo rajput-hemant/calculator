@@ -9,7 +9,6 @@ class Length implements Unit {
   final double rate;
   @override
   String? get symbol => null;
-  // Base Unit Metre
   static const lengthList = [
     Length(id: 'cm', name: 'Centimetre', rate: 100.0),
     Length(id: 'dm', name: 'Decimetre', rate: 10.0),
