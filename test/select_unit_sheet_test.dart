@@ -80,4 +80,24 @@ void main() {
 
     expect(picked, Currency.currenciesList.indexWhere((c) => c.id == 'XOF'));
   });
+
+  testWidgets('picker list has equal side, bottom and search insets', (
+    tester,
+  ) async {
+    await openSheet(tester, onPicked: (_) {});
+
+    final sheet = tester.getRect(find.byType(SelectUnitSheet));
+    final list = tester.getRect(
+      find.descendant(
+        of: find.byType(SelectUnitSheet),
+        matching: find.byWidgetPredicate(
+          (w) => w is Material && w.clipBehavior == Clip.antiAlias,
+        ),
+      ),
+    );
+    final search = tester.getRect(find.byType(SearchField));
+    expect(sheet.bottom - list.bottom, list.left - sheet.left);
+    expect(sheet.right - list.right, list.left - sheet.left);
+    expect(list.top - search.bottom, list.left - sheet.left);
+  });
 }

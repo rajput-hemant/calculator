@@ -112,12 +112,7 @@ class _SelectUnitSheetState extends State<SelectUnitSheet> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(
-            Gaps.lg,
-            Gaps.md,
-            Gaps.lg,
-            Gaps.md,
-          ),
+          padding: const EdgeInsets.all(Gaps.lg),
           child: SearchField(
             hint: 'Search $countText',
             controller: _searchController,
@@ -126,13 +121,13 @@ class _SelectUnitSheetState extends State<SelectUnitSheet> {
         ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Gaps.lg),
+            padding: const EdgeInsets.fromLTRB(Gaps.lg, 0, Gaps.lg, Gaps.lg),
             child: Material(
               color: p.cell,
               shape: AppShapes.of(context).border(Radii.card),
               clipBehavior: Clip.antiAlias,
               child: ListView.builder(
-                padding: const EdgeInsets.only(bottom: Gaps.lg),
+                padding: EdgeInsets.zero,
                 itemCount: _rows.length,
                 itemBuilder: (context, i) {
                   final (:index, :unit) = _rows[i];

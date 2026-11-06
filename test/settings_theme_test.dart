@@ -83,4 +83,42 @@ void main() {
     );
     expect(selected, findsNWidgets(2));
   });
+
+  testWidgets('accent selection stays square and centered on a narrow screen', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: MaterialApp(
+          theme: buildAppTheme(Tokens.seed, Brightness.light),
+          home: const SettingsScreen(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final decorations = find.descendant(
+      of: find.bySemanticsLabel('Accent colour Blue'),
+      matching: find.byWidgetPredicate(
+        (w) => w is Container && w.decoration is ShapeDecoration,
+      ),
+    );
+    expect(decorations, findsNWidgets(2));
+    final ring = Rect.fromPoints(
+      tester.getTopLeft(decorations.first),
+      tester.getBottomRight(decorations.first),
+    );
+    final swatch = Rect.fromPoints(
+      tester.getTopLeft(decorations.last),
+      tester.getBottomRight(decorations.last),
+    );
+    expect(ring.width, closeTo(ring.height, 0.01));
+    expect(swatch.width, closeTo(swatch.height, 0.01));
+    expect((ring.center - swatch.center).distance, lessThan(0.01));
+  });
 }

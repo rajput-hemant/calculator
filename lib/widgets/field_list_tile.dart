@@ -149,7 +149,7 @@ class _FieldListTileState extends State<FieldListTile> {
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: Gaps.lg, vertical: 4),
-      padding: const EdgeInsets.fromLTRB(Gaps.lg, Gaps.md, Gaps.lg, Gaps.lg),
+      padding: const EdgeInsets.all(Gaps.lg),
       decoration: ShapeDecoration(
         color: p.card,
         shape: AppShapes.of(context).border(Radii.card),
@@ -175,8 +175,7 @@ class _FieldListTileState extends State<FieldListTile> {
                   child: Tooltip(
                     message: isCurrency ? 'Select currency' : 'Select unit',
                     child: Material(
-                      color: p.fill,
-                      shape: pill,
+                      type: MaterialType.transparency,
                       child: InkWell(
                         customBorder: pill,
                         onTap: _pickUnit,
@@ -184,45 +183,47 @@ class _FieldListTileState extends State<FieldListTile> {
                           constraints: const BoxConstraints(
                             minHeight: Tokens.minTapTarget,
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(
-                              isCurrency ? 4 : 14,
-                              0,
-                              10,
-                              0,
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                if (isCurrency)
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 6),
-                                    child: CurrencyBadge(code: unit.id),
-                                  ),
-                                Flexible(
-                                  child: Text(
-                                    unit.name,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppText.title.copyWith(
-                                      color: p.label,
+                          child: Center(
+                            widthFactor: 1,
+                            child: Ink(
+                              decoration: ShapeDecoration(
+                                color: p.fill,
+                                shape: pill,
+                              ),
+                              padding: const EdgeInsets.all(Gaps.sm),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (isCurrency)
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 6),
+                                      child: CurrencyBadge(code: unit.id),
+                                    ),
+                                  Flexible(
+                                    child: Text(
+                                      unit.name,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: AppText.title.copyWith(
+                                        color: p.label,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  unit.id,
-                                  style: AppText.callout.copyWith(
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    unit.id,
+                                    style: AppText.callout.copyWith(
+                                      color: p.label2,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 2),
+                                  Icon(
+                                    AppIcons.expand,
+                                    size: 16,
                                     color: p.label2,
                                   ),
-                                ),
-                                const SizedBox(width: 2),
-                                Icon(
-                                  AppIcons.expand,
-                                  size: 16,
-                                  color: p.label2,
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),

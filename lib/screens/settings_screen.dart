@@ -157,40 +157,49 @@ class _AccentSwatches extends StatelessWidget {
                 child: SizedBox(
                   height: Tokens.minTapTarget,
                   child: Center(
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      alignment: Alignment.center,
-                      children: [
-                        if (color == selected)
-                          Container(
-                            width: _ring,
-                            height: _ring,
-                            decoration: ShapeDecoration(
-                              shape: shapes
-                                  .border(_ring / 2)
-                                  .copyWith(
-                                    side: BorderSide(color: p.label2, width: 2),
-                                  ),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: SizedBox.square(
+                        dimension: _ring,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          alignment: Alignment.center,
+                          children: [
+                            if (color == selected)
+                              Container(
+                                width: _ring,
+                                height: _ring,
+                                decoration: ShapeDecoration(
+                                  shape: shapes
+                                      .border(_ring / 2)
+                                      .copyWith(
+                                        side: BorderSide(
+                                          color: p.label2,
+                                          width: 2,
+                                        ),
+                                      ),
+                                ),
+                              ),
+                            Container(
+                              width: _swatch,
+                              height: _swatch,
+                              decoration: ShapeDecoration(
+                                color: color == Tokens.systemAccent
+                                    ? p.label3
+                                    : Color(color),
+                                shape: shapes.border(_swatch / 2),
+                              ),
+                              child: color == Tokens.systemAccent
+                                  ? Icon(
+                                      Icons.auto_awesome,
+                                      size: 16,
+                                      color: p.label,
+                                    )
+                                  : null,
                             ),
-                          ),
-                        Container(
-                          width: _swatch,
-                          height: _swatch,
-                          decoration: ShapeDecoration(
-                            color: color == Tokens.systemAccent
-                                ? p.label3
-                                : Color(color),
-                            shape: shapes.border(_swatch / 2),
-                          ),
-                          child: color == Tokens.systemAccent
-                              ? Icon(
-                                  Icons.auto_awesome,
-                                  size: 16,
-                                  color: p.label,
-                                )
-                              : null,
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
