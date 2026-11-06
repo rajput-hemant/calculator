@@ -31,6 +31,7 @@ class Preferences {
       Units.power: [9, 6],
       Units.pressure: [0, 7],
       Units.speed: [1, 2],
+      Units.temperature: [0, 1],
       Units.time: [8, 7],
       Units.volume: [9, 1],
       Units.weight: [3, 2],

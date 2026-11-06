@@ -53,6 +53,35 @@ void main() {
     expect(find.byType(Keypad), findsOneWidget);
   });
 
+  testWidgets('temperature opens and converts without saved preferences', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    await tester.pumpWidget(
+      app(const ConversionScreen(category: Units.temperature)),
+    );
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+    expect(find.text('Celsius'), findsOneWidget);
+    expect(find.text('Fahrenheit'), findsOneWidget);
+    expect(find.text('33.800000'), findsOneWidget);
+
+    await tester.tap(find.text('C'));
+    await tester.tap(find.text('0'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('32.000000'), findsOneWidget);
+
+    await tester.tap(find.text('Fahrenheit'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Kelvin'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('273.150000'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('length screen shows the conversion and swap works', (
     tester,
   ) async {

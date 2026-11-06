@@ -26,15 +26,23 @@ class Calculator extends ConsumerWidget {
 
     return DynamicColorBuilder(
       builder: (lightDynamic, darkDynamic) {
-        Color seed(ColorScheme? dynamic) => accent == Tokens.systemAccent
-            ? dynamic?.primary ?? Tokens.seed
+        Color seed(Color? systemPrimary) => accent == Tokens.systemAccent
+            ? systemPrimary ?? Tokens.seed
             : Color(accent);
 
         return MaterialApp(
           title: 'Calculator',
           debugShowCheckedModeBanner: false,
-          theme: buildAppTheme(seed(lightDynamic), Brightness.light, shape),
-          darkTheme: buildAppTheme(seed(darkDynamic), Brightness.dark, shape),
+          theme: buildAppTheme(
+            seed(lightDynamic?.primary),
+            Brightness.light,
+            shape,
+          ),
+          darkTheme: buildAppTheme(
+            seed(darkDynamic?.primary),
+            Brightness.dark,
+            shape,
+          ),
           themeMode: themeMode,
           builder: (context, child) => BackdropGroup(child: child!),
           home: const CalculatorScreen(),

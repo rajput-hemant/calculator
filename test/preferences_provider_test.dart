@@ -20,6 +20,33 @@ void main() {
     expect(preferences.unitIndexes[Units.area], [8, 7]);
   });
 
+  test('every category has a valid default unit pair', () {
+    const preferences = Preferences();
+
+    for (final category in Units.values) {
+      final indexes = preferences.unitIndexes[category];
+      expect(indexes, hasLength(2), reason: category.name);
+      for (final index in indexes!) {
+        expect(index, inInclusiveRange(0, category.units.length - 1));
+      }
+    }
+  });
+
+  test('loads saved temperature units', () async {
+    SharedPreferences.setMockInitialValues({
+      Units.temperature.toString(): ['2', '0'],
+    });
+    final container = ProviderContainer.test();
+
+    container.read(preferencesProvider);
+    await settle();
+
+    expect(container.read(preferencesProvider).unitIndexes[Units.temperature], [
+      2,
+      0,
+    ]);
+  });
+
   test('loads stored preferences', () async {
     SharedPreferences.setMockInitialValues({
       'themeMode': 'dark',
