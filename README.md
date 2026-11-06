@@ -6,13 +6,13 @@
 
 # Calculator
 
-**v0.3.3 (upcoming)**
+**v0.3.3**
 
 ### A simple but elegant Calculator app made with Flutter and its own Paper design system, with Currency (Exchange Rate) and Unit Converter.
 
 ## ![][android] Download APK
 
-Latest published release: **v0.3.2**.
+Latest published release: **v0.3.3**.
 
 ---
 
@@ -74,15 +74,15 @@ This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) 
 
 <!------------------------------------{ apk }----------------------------------->
 
-[universal-release]: https://github.com/rajput-hemant/calculator/releases/download/v0.3.2/Calculator-v0.3.2-universal-release.apk
-[arm64]: https://github.com/rajput-hemant/calculator/releases/download/v0.3.2/Calculator-v0.3.2-arm64-v8a-release.apk
-[armabi]: https://github.com/rajput-hemant/calculator/releases/download/v0.3.2/Calculator-v0.3.2-armeabi-v7a-release.apk
-[x86]: https://github.com/rajput-hemant/calculator/releases/download/v0.3.2/Calculator-v0.3.2-x86_64-release.apk
+[universal-release]: https://github.com/rajput-hemant/calculator/releases/download/v0.3.3/Calculator-v0.3.3-universal-release.apk
+[arm64]: https://github.com/rajput-hemant/calculator/releases/download/v0.3.3/Calculator-v0.3.3-arm64-v8a-release.apk
+[armabi]: https://github.com/rajput-hemant/calculator/releases/download/v0.3.3/Calculator-v0.3.3-armeabi-v7a-release.apk
+[x86]: https://github.com/rajput-hemant/calculator/releases/download/v0.3.3/Calculator-v0.3.3-x86_64-release.apk
 
 <!--------------------------------{ source code }------------------------------->
 
-[sc-zip]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.3.2.zip
-[sc-tar.gz]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.3.2.tar.gz
+[sc-zip]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.3.3.zip
+[sc-tar.gz]: https://github.com/rajput-hemant/calculator/archive/refs/tags/v0.3.3.tar.gz
 
 <!----------------------------------{ Labels }--------------------------------->
 
