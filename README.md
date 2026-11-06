@@ -6,11 +6,13 @@
 
 # Calculator
 
-**v0.3.2**
+**v0.3.3 (upcoming)**
 
 ### A simple but elegant Calculator app made with Flutter and its own Paper design system, with Currency (Exchange Rate) and Unit Converter.
 
 ## ![][android] Download APK
+
+Latest published release: **v0.3.2**.
 
 ---
 
@@ -29,9 +31,9 @@
 
 <details><summary> Click here to expand </summary>
 
-| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.jpg" width="250"> | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.jpg" width="250"> | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.jpg" width="250"> |
+| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.jpg" alt="Calculator" width="250"> | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.jpg" alt="Scientific calculator" width="250"> | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.jpg" alt="Unit converter categories" width="250"> |
 | :----: | :----: | :----: |
-| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.jpg" width="250"> | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.jpg" width="250"> | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.jpg" width="250"> |
+| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.jpg" alt="Unit converter" width="250"> | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.jpg" alt="Currency converter" width="250"> | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.jpg" alt="Appearance settings" width="250"> |
 
 </details>
 
