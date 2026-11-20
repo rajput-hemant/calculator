@@ -132,7 +132,7 @@ class _SelectUnitSheetState extends State<SelectUnitSheet> {
               children: [
                 Text(
                   widget.title,
-                  style: AppText.headline.copyWith(color: p.label),
+                  style: AppText.title.copyWith(color: p.label),
                 ),
                 const SizedBox(width: Gaps.md),
                 Expanded(
