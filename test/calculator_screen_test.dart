@@ -204,4 +204,29 @@ void main() {
     await tester.pumpAndSettle();
     expect(displayResult('5+4'), findsOneWidget);
   });
+
+  testWidgets(
+    'tapping on expression repositions cursor for editing (issue #207)',
+    (tester) async {
+      await pumpScreen(tester);
+
+      for (final digit in ['1', '2', '3', '4']) {
+        await tester.tap(find.text(digit));
+        await tester.pumpAndSettle();
+      }
+
+      final lineFinder = find.byType(SingleChildScrollView);
+      expect(lineFinder, findsWidgets);
+
+      await tester.tapAt(
+        tester.getTopLeft(lineFinder.first) + const Offset(10, 10),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('+'));
+      await tester.pumpAndSettle();
+
+      expect(tester.takeException(), isNull);
+    },
+  );
 }

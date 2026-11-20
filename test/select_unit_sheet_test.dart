@@ -100,4 +100,39 @@ void main() {
     expect(sheet.right - list.right, list.left - sheet.left);
     expect(list.top - search.bottom, list.left - sheet.left);
   });
+
+  testWidgets('sheet remains stable when keyboard insets appear (issue #208)', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildAppTheme(Tokens.seed, Brightness.light),
+        home: MediaQuery(
+          data: const MediaQueryData(
+            size: Size(400, 800),
+            viewInsets: EdgeInsets.only(bottom: 280),
+          ),
+          child: Scaffold(
+            body: FieldListTile(
+              controller: TextEditingController(),
+              list: Currency.currenciesList,
+              isCurrency: true,
+              title: 'Currency',
+              isFieldSelected: false,
+              onFieldSelect: () {},
+              onLabelSelect: () {},
+              fieldIndex: 31,
+              changeSelectedIndex: (_) {},
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.byIcon(AppIcons.expand));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(SelectUnitSheet), findsOneWidget);
+    expect(find.byType(SearchField), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 }

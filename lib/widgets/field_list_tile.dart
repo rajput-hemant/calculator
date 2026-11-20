@@ -110,19 +110,32 @@ class _FieldListTileState extends State<FieldListTile> {
       constraints: const BoxConstraints(maxWidth: ReadableWidth.maxWidth),
       barrierColor: Palette.of(context).scrim,
       builder: (context) {
-        final size = MediaQuery.sizeOf(context);
-        final keyboard = MediaQuery.viewInsetsOf(context).bottom;
-        final bottom = math.max(keyboard, MediaQuery.paddingOf(context).bottom);
-        final topSafe = MediaQuery.paddingOf(context).top;
-        return Padding(
-          padding: EdgeInsets.fromLTRB(8, 0, 8, 8 + bottom),
+        final media = MediaQuery.of(context);
+        final keyboard = media.viewInsets.bottom;
+        final topSafe = media.padding.top;
+        final bottomSafe = media.padding.bottom;
+        final isCompactLandscape =
+            media.orientation == Orientation.landscape && media.size.height < 500;
+
+        final targetFactor = isCompactLandscape ? 0.9 : 0.7;
+        final baseHeight = media.size.height * targetFactor;
+        final availableHeight = media.size.height - keyboard - topSafe - 16;
+        final sheetHeight =
+            math.min(baseHeight, math.max(160.0, availableHeight));
+
+        return AnimatedPadding(
+          padding: EdgeInsets.fromLTRB(
+            8,
+            0,
+            8,
+            8 + math.max(keyboard, bottomSafe),
+          ),
+          duration: Motion.gentle,
+          curve: Motion.enter,
           child: Glass(
             shape: AppShapes.of(context).border(Radii.sheet),
             child: SizedBox(
-              height: math.min(
-                0.7 * size.height,
-                size.height - keyboard - topSafe - 16,
-              ),
+              height: sheetHeight,
               child: SelectUnitSheet(
                 title: widget.title,
                 list: widget.list,

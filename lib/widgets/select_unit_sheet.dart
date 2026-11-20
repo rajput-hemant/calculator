@@ -36,6 +36,7 @@ class SelectUnitSheet extends StatefulWidget {
 
 class _SelectUnitSheetState extends State<SelectUnitSheet> {
   final TextEditingController _searchController = textEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
   late List<_Row> _rows;
 
   @override
@@ -47,6 +48,7 @@ class _SelectUnitSheetState extends State<SelectUnitSheet> {
   @override
   void dispose() {
     _searchController.dispose();
+    _searchFocusNode.dispose();
     super.dispose();
   }
 
@@ -74,51 +76,83 @@ class _SelectUnitSheetState extends State<SelectUnitSheet> {
   @override
   Widget build(BuildContext context) {
     final p = Palette.of(context);
+    final media = MediaQuery.of(context);
+    final isCompactLandscape =
+        media.orientation == Orientation.landscape && media.size.height < 500;
     final countText = widget.isCurrency
         ? '${widget.list.length} currencies'
         : '${widget.list.length} units';
 
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: Gaps.sm),
-          child: Container(
-            width: 36,
-            height: 5,
-            decoration: BoxDecoration(
-              color: p.label3,
-              borderRadius: BorderRadius.circular(3),
+        if (!isCompactLandscape) ...[
+          Padding(
+            padding: const EdgeInsets.only(top: Gaps.sm),
+            child: Container(
+              width: 36,
+              height: 5,
+              decoration: BoxDecoration(
+                color: p.label3,
+                borderRadius: BorderRadius.circular(3),
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(Gaps.xxl, Gaps.sm, Gaps.sm, 0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
+          Padding(
+            padding: const EdgeInsets.fromLTRB(Gaps.xxl, Gaps.sm, Gaps.sm, 0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    widget.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.title.copyWith(color: p.label),
+                  ),
+                ),
+                TopBarAction(
+                  icon: AppIcons.close,
+                  tooltip: 'Close',
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(Gaps.lg),
+            child: SearchField(
+              hint: 'Search $countText',
+              controller: _searchController,
+              focusNode: _searchFocusNode,
+              onChanged: _filterList,
+            ),
+          ),
+        ] else ...[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(Gaps.lg, Gaps.xs, Gaps.xs, Gaps.xs),
+            child: Row(
+              children: [
+                Text(
                   widget.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                   style: AppText.title.copyWith(color: p.label),
                 ),
-              ),
-              TopBarAction(
-                icon: AppIcons.close,
-                tooltip: 'Close',
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
+                const SizedBox(width: Gaps.md),
+                Expanded(
+                  child: SearchField(
+                    hint: 'Search $countText',
+                    controller: _searchController,
+                    focusNode: _searchFocusNode,
+                    onChanged: _filterList,
+                  ),
+                ),
+                TopBarAction(
+                  icon: AppIcons.close,
+                  tooltip: 'Close',
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(Gaps.lg),
-          child: SearchField(
-            hint: 'Search $countText',
-            controller: _searchController,
-            onChanged: _filterList,
-          ),
-        ),
+        ],
         Expanded(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(Gaps.lg, 0, Gaps.lg, Gaps.lg),

@@ -6,6 +6,7 @@ import '../theme/app_shapes.dart';
 import '../theme/palette.dart';
 import '../theme/tokens.dart';
 import '../utils/glyphs.dart';
+import '../utils/text_editing.dart';
 
 /// The calculator display: earlier equations stacked on top, then the
 /// right-aligned expression with a caret and the result below it. In
@@ -60,6 +61,7 @@ class CalcDisplay extends StatelessWidget {
             ),
           Expanded(
             child: _TapeRoller(
+              controller: controller,
               lines: [
                 for (final (i, line) in tape.indexed)
                   displayGlyphs(i == editing ? controller.text : line),
@@ -147,6 +149,7 @@ class _TapeRoller extends StatefulWidget {
     required this.focus,
     this.caret,
     this.onTap,
+    this.controller,
   });
 
   final List<String> lines;
@@ -155,6 +158,7 @@ class _TapeRoller extends StatefulWidget {
   /// The line being typed into, if any.
   final int? caret;
   final ValueChanged<int>? onTap;
+  final TextEditingController? controller;
 
   @override
   State<_TapeRoller> createState() => _TapeRollerState();
@@ -225,33 +229,111 @@ class _TapeRollerState extends State<_TapeRoller> {
       physics: const FixedExtentScrollPhysics(),
       childDelegate: ListWheelChildBuilderDelegate(
         childCount: widget.lines.length,
-        builder: (context, i) => Padding(
-          padding: EdgeInsets.only(right: width),
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => widget.onTap?.call(i),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
+        builder: (context, i) {
+          final isActive = i == widget.caret && widget.controller != null;
+          return Padding(
+            padding: EdgeInsets.only(right: width),
+            child: isActive
+                ? Align(
+                    alignment: Alignment.centerRight,
+                    child: _ActiveExpressionLine(
+                      controller: widget.controller!,
+                      style: style,
+                      accentColor: p.accent,
+                      maxWidth: width,
+                    ),
+                  )
+                : GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => widget.onTap?.call(i),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          widget.lines[i],
+                          maxLines: 1,
+                          style: style,
+                        ),
+                      ),
+                    ),
+                  ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _ActiveExpressionLine extends StatelessWidget {
+  const _ActiveExpressionLine({
+    required this.controller,
+    required this.style,
+    required this.accentColor,
+    required this.maxWidth,
+  });
+
+  final TextEditingController controller;
+  final TextStyle style;
+  final Color accentColor;
+  final double maxWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: controller,
+      builder: (context, _) {
+        final text = controller.text;
+        final glyphs = displayGlyphs(text);
+        final cursor = caretOffset(controller).clamp(0, glyphs.length);
+        final before = glyphs.substring(0, cursor);
+        final after = glyphs.substring(cursor);
+
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          reverse: true,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minWidth: maxWidth, minHeight: 40),
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTapUp: (details) {
+                final painter = TextPainter(
+                  text: TextSpan(text: glyphs, style: style),
+                  textDirection: TextDirection.ltr,
+                )..layout();
+                final textOffset = painter.width < maxWidth
+                    ? maxWidth - painter.width
+                    : 0.0;
+                final textLocalOffset = Offset(
+                  details.localPosition.dx - textOffset,
+                  details.localPosition.dy,
+                );
+                final pos = painter.getPositionForOffset(textLocalOffset);
+                controller.selection =
+                    TextSelection.collapsed(offset: pos.offset);
+                painter.dispose();
+              },
+              child: Align(
+                alignment: Alignment.centerRight,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(widget.lines[i], maxLines: 1, style: style),
-                    if (i == widget.caret)
-                      Container(
-                        width: 2,
-                        height: 28,
-                        margin: const EdgeInsets.only(left: 2),
-                        color: p.accent,
-                      ),
+                    Text(before, style: style, maxLines: 1),
+                    Container(
+                      width: 2,
+                      height: 28,
+                      margin: const EdgeInsets.symmetric(horizontal: 1),
+                      color: accentColor,
+                    ),
+                    Text(after, style: style, maxLines: 1),
                   ],
                 ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
