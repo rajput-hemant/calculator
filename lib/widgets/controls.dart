@@ -118,11 +118,13 @@ class SearchField extends StatelessWidget {
     super.key,
     required this.hint,
     this.controller,
+    this.focusNode,
     this.onChanged,
   });
 
   final String hint;
   final TextEditingController? controller;
+  final FocusNode? focusNode;
   final ValueChanged<String>? onChanged;
 
   @override
@@ -135,6 +137,7 @@ class SearchField extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
+        focusNode: focusNode,
         onChanged: onChanged,
         textInputAction: TextInputAction.search,
         style: AppText.body.copyWith(color: p.label),
