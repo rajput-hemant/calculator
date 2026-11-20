@@ -114,9 +114,10 @@ class _FieldListTileState extends State<FieldListTile> {
         final keyboard = media.viewInsets.bottom;
         final topSafe = media.padding.top;
         final bottomSafe = media.padding.bottom;
-        final isLandscape = media.orientation == Orientation.landscape;
+        final isCompactLandscape =
+            media.orientation == Orientation.landscape && media.size.height < 500;
 
-        final targetFactor = isLandscape ? 0.9 : 0.7;
+        final targetFactor = isCompactLandscape ? 0.9 : 0.7;
         final baseHeight = media.size.height * targetFactor;
         final availableHeight = media.size.height - keyboard - topSafe - 16;
         final sheetHeight =

@@ -76,15 +76,16 @@ class _SelectUnitSheetState extends State<SelectUnitSheet> {
   @override
   Widget build(BuildContext context) {
     final p = Palette.of(context);
-    final isLandscape =
-        MediaQuery.orientationOf(context) == Orientation.landscape;
+    final media = MediaQuery.of(context);
+    final isCompactLandscape =
+        media.orientation == Orientation.landscape && media.size.height < 500;
     final countText = widget.isCurrency
         ? '${widget.list.length} currencies'
         : '${widget.list.length} units';
 
     return Column(
       children: [
-        if (!isLandscape) ...[
+        if (!isCompactLandscape) ...[
           Padding(
             padding: const EdgeInsets.only(top: Gaps.sm),
             child: Container(
